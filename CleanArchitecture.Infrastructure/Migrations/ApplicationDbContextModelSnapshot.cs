@@ -91,7 +91,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                             Code = "ASW123",
                             Deleted = false,
                             Name = "Arquitectura de Software",
-                            ResearchGroupId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c42")
+                            ResearchGroupId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41")
                         });
                 });
 

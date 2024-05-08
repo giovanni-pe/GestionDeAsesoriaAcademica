@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240508043458_AddResearchGroup")]
-    partial class AddResearchGroup
+    [Migration("20240508060813_AddResearchGroupAndLine")]
+    partial class AddResearchGroupAndLine
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
@@ -50,6 +54,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41"),
+                            Code = "SW123",
                             Deleted = false,
                             Name = "INGENIERIA DE SOFTWARE"
                         });
@@ -60,6 +65,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
@@ -82,9 +91,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c42"),
+                            Code = "ASW123",
                             Deleted = false,
                             Name = "Arquitectura de Software",
-                            ResearchGroupId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c42")
+                            ResearchGroupId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41")
                         });
                 });
 
