@@ -14,4 +14,14 @@ public static class MaxLengths
     {
         public const int Name = 255;
     }
+    public static class ResearchGroup
+    {
+        public const int Name = 250;
+        public const int Code = 9;
+    }
+    public static class ResearchLine
+    {
+        public const int Name = 250;
+        public const int Code = 9;
+    }
 }

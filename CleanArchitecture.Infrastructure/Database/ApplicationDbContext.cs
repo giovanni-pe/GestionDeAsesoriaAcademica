@@ -9,6 +9,9 @@ public partial class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Tenant> Tenants { get; set; } = null!;
+    public DbSet<ResearchGroup> ResearchGroups { get; set; } = null!;
+    public DbSet<ResearchLine> ResearchLines { get; set; } = null!;
+ 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -41,5 +44,7 @@ public partial class ApplicationDbContext : DbContext
     {
         builder.ApplyConfiguration(new UserConfiguration());
         builder.ApplyConfiguration(new TenantConfiguration());
+        builder.ApplyConfiguration(new ResearchGroupConfiguration());
+        builder.ApplyConfiguration(new ResearchLineConfiguration());
     }
 }

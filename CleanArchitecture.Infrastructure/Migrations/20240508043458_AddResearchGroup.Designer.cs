@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240508043458_AddResearchGroup")]
+    partial class AddResearchGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,10 +34,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
@@ -51,7 +50,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41"),
-                            Code = "SW123",
                             Deleted = false,
                             Name = "INGENIERIA DE SOFTWARE"
                         });
@@ -62,10 +60,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
@@ -88,7 +82,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c42"),
-                            Code = "ASW123",
                             Deleted = false,
                             Name = "Arquitectura de Software",
                             ResearchGroupId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c42")
