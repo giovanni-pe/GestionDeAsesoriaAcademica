@@ -1,6 +1,9 @@
 using CleanArchitecture.Domain.Commands.Tenants.CreateTenant;
 using CleanArchitecture.Domain.Commands.Tenants.DeleteTenant;
 using CleanArchitecture.Domain.Commands.Tenants.UpdateTenant;
+using CleanArchitecture.Domain.Commands.ResearchGroups.CreateResearchGroup;
+using CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
+using CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
 using CleanArchitecture.Domain.Commands.Users.ChangePassword;
 using CleanArchitecture.Domain.Commands.Users.CreateUser;
 using CleanArchitecture.Domain.Commands.Users.DeleteUser;
@@ -10,6 +13,7 @@ using CleanArchitecture.Domain.EventHandler;
 using CleanArchitecture.Domain.EventHandler.Fanout;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Shared.Events.Tenant;
+using CleanArchitecture.Shared.Events.ResearchGroup;
 using CleanArchitecture.Shared.Events.User;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +35,10 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<CreateTenantCommand>, CreateTenantCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateTenantCommand>, UpdateTenantCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteTenantCommand>, DeleteTenantCommandHandler>();
+         // ResearchGroup
+        services.AddScoped<IRequestHandler<CreateResearchGroupCommand>, CreateResearchGroupCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateResearchGroupCommand>, UpdateResearchGroupCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteResearchGroupCommand>, DeleteResearchGroupCommandHandler>();
 
         return services;
     }
@@ -50,7 +58,10 @@ public static class ServiceCollectionExtension
         services.AddScoped<INotificationHandler<TenantCreatedEvent>, TenantEventHandler>();
         services.AddScoped<INotificationHandler<TenantUpdatedEvent>, TenantEventHandler>();
         services.AddScoped<INotificationHandler<TenantDeletedEvent>, TenantEventHandler>();
-
+        // ResearchGroup
+        services.AddScoped<INotificationHandler<ResearchGroupCreatedEvent>, ResearchGroupEventHandler>();
+        services.AddScoped<INotificationHandler<ResearchGroupUpdatedEvent>, ResearchGroupEventHandler>();
+        services.AddScoped<INotificationHandler<ResearchGroupDeletedEvent>, ResearchGroupEventHandler>();
         return services;
     }
 

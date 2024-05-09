@@ -12,7 +12,7 @@ public class ResearchLine : Entity
         public ResearchLine(Guid id, string name, Guid researchGroupId,string code) : base(id)
         {
          Name = name;
-            ResearchGroupId = researchGroupId;
+         ResearchGroupId = researchGroupId;
         Code = code;
         }
 

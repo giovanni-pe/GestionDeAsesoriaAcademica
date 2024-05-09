@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CleanArchitecture.Application.Queries.Tenants.GetAll;
 
 public sealed class GetAllTenantsQueryHandler :
-    IRequestHandler<GetAllTenantsQuery, PagedResult<TenantViewModel>>
+    IRequestHandler<TenantsQuery, PagedResult<TenantViewModel>>
 {
     private readonly ISortingExpressionProvider<TenantViewModel, Tenant> _sortingExpressionProvider;
     private readonly ITenantRepository _tenantRepository;
@@ -27,7 +27,7 @@ public sealed class GetAllTenantsQueryHandler :
     }
 
     public async Task<PagedResult<TenantViewModel>> Handle(
-        GetAllTenantsQuery request,
+        TenantsQuery request,
         CancellationToken cancellationToken)
     {
         var tenantsQuery = _tenantRepository

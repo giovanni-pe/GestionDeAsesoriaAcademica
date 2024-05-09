@@ -71,6 +71,6 @@ public sealed class TenantService : ITenantService
         string searchTerm = "",
         SortQuery? sortQuery = null)
     {
-        return await _bus.QueryAsync(new GetAllTenantsQuery(query, includeDeleted, searchTerm, sortQuery));
+        return await _bus.QueryAsync(new TenantsQuery(query, includeDeleted, searchTerm, sortQuery));
     }
 }
