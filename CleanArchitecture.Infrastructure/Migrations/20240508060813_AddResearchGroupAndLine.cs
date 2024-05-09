@@ -74,6 +74,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
+                /// <checked />
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);

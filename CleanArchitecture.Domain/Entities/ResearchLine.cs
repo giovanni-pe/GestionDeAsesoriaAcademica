@@ -20,7 +20,7 @@ public class ResearchLine : Entity
         {
          Name = name;
         }
-
+    // creado entidad 
         public void SetResearchGroupId(Guid researchGroupId)
         {
             ResearchGroupId = researchGroupId;

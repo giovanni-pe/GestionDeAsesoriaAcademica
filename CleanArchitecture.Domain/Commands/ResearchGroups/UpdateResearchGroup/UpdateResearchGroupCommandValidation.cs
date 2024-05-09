@@ -3,7 +3,7 @@ using CleanArchitecture.Domain.Errors;
 using FluentValidation;
 
 namespace CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
-
+//creado respositorio 
 public sealed class UpdateResearchGroupCommandValidation : AbstractValidator<UpdateResearchGroupCommand>
 {
     public UpdateResearchGroupCommandValidation()
