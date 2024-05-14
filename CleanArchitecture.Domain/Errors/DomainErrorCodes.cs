@@ -48,4 +48,14 @@ public static class DomainErrorCodes
         // General
         public const string AlreadyExists = "RESEARCHGROUP_ALREADY_EXISTS";
     }
+    public static class ResearchLine
+    {
+        // Tenant Validation
+        public const string EmptyId = "RESEARCHLINE_EMPTY_ID";
+        public const string EmptyName = "RESEARCHLINE_EMPTY_NAME";
+        public const string NameExceedsMaxLength = "RESEARCHLINE_NAME_EXCEEDS_MAX_LENGTH";
+
+        // General
+        public const string AlreadyExists = "RESEARCHLINE_ALREADY_EXISTS";
+    }
 }

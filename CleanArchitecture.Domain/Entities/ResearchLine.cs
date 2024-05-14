@@ -13,7 +13,7 @@ public class ResearchLine : Entity
         {
          Name = name;
          ResearchGroupId = researchGroupId;
-        Code = code;
+         Code = code;
         }
 
         public void SetName(string name)
