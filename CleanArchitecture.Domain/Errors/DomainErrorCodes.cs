@@ -48,4 +48,27 @@ public static class DomainErrorCodes
         // General
         public const string AlreadyExists = "RESEARCHGROUP_ALREADY_EXISTS";
     }
+    public static class Estudiante
+    {
+        // Tenant Validation
+        public const string EmptyId = "ESTUDIANTE_EMPTY_ID";
+        public const string EmptyFirstName = "ESTUDIANTE_EMPTY_NAME";
+        public const string FirstNameExceedsMaxLength = "ESTUDIANTE_NAME_EXCEEDS_MAX_LENGTH";
+        
+
+        // General
+        public const string AlreadyExists = "ESTUDIANTE_ALREADY_EXISTS";
+    }
+    public static class Asesore
+    {
+        // Tenant Validation
+        public const string EmptyId = "ASESOR_EMPTY_ID";
+        public const string EmptyNombre = "ASESOR_EMPTY_NAME";
+        public const string NombreExceedsMaxLength = "ASESOR_NAME_EXCEEDS_MAX_LENGTH";
+        
+
+        // General
+        public const string AlreadyExists = "ASESOR_ALREADY_EXISTS";
+    }
+    
 }

@@ -4,6 +4,13 @@ using CleanArchitecture.Domain.Commands.Tenants.UpdateTenant;
 using CleanArchitecture.Domain.Commands.ResearchGroups.CreateResearchGroup;
 using CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
 using CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
+using CleanArchitecture.Domain.Commands.Estudiantes.CreateEstudiante;
+using CleanArchitecture.Domain.Commands.Estudiantes.DeleteEstudiante;
+using CleanArchitecture.Domain.Commands.Estudiantes.UpdateEstudiante;
+
+using CleanArchitecture.Domain.Commands.Asesores.CreateAsesore;
+using CleanArchitecture.Domain.Commands.Asesores.DeleteAsesore;
+using CleanArchitecture.Domain.Commands.Asesores.UpdateAsesore;
 using CleanArchitecture.Domain.Commands.Users.ChangePassword;
 using CleanArchitecture.Domain.Commands.Users.CreateUser;
 using CleanArchitecture.Domain.Commands.Users.DeleteUser;
@@ -14,7 +21,10 @@ using CleanArchitecture.Domain.EventHandler.Fanout;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Shared.Events.Tenant;
 using CleanArchitecture.Shared.Events.ResearchGroup;
+using CleanArchitecture.Shared.Events.Estudiante;
+using CleanArchitecture.Shared.Events.Asesore;
 using CleanArchitecture.Shared.Events.User;
+
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,9 +46,22 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<UpdateTenantCommand>, UpdateTenantCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteTenantCommand>, DeleteTenantCommandHandler>();
          // ResearchGroup
+        services.AddScoped<IRequestHandler<CreateEstudianteCommand>, CreateEstudianteCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEstudianteCommand>, UpdateEstudianteCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteEstudianteCommand>, DeleteEstudianteCommandHandler>();
+
+           
+        services.AddScoped<IRequestHandler<CreateAsesoreCommand>, CreateAsesoreCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateAsesoreCommand>, UpdateAsesoreCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteAsesoreCommand>, DeleteAsesoreCommandHandler>();
+
         services.AddScoped<IRequestHandler<CreateResearchGroupCommand>, CreateResearchGroupCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateResearchGroupCommand>, UpdateResearchGroupCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteResearchGroupCommand>, DeleteResearchGroupCommandHandler>();
+        /*
+         services.AddScoped<IRequestHandler<CreateCitaCommand>, CreateCitaCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateCitaCommand>, UpdateCitaCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteCitaCommand>, DeleteCitaCommandHandler>();*/
 
         return services;
     }
@@ -62,6 +85,18 @@ public static class ServiceCollectionExtension
         services.AddScoped<INotificationHandler<ResearchGroupCreatedEvent>, ResearchGroupEventHandler>();
         services.AddScoped<INotificationHandler<ResearchGroupUpdatedEvent>, ResearchGroupEventHandler>();
         services.AddScoped<INotificationHandler<ResearchGroupDeletedEvent>, ResearchGroupEventHandler>();
+
+        services.AddScoped<INotificationHandler<EstudianteCreatedEvent>, EstudianteEventHandler>();
+        services.AddScoped<INotificationHandler<EstudianteUpdatedEvent>, EstudianteEventHandler>();
+        services.AddScoped<INotificationHandler<EstudianteDeletedEvent>, EstudianteEventHandler>();
+
+        services.AddScoped<INotificationHandler<AsesoreCreatedEvent>, AsesoreEventHandler>();
+        services.AddScoped<INotificationHandler<AsesoreUpdatedEvent>, AsesoreEventHandler>();
+        services.AddScoped<INotificationHandler<AsesoreDeletedEvent>, AsesoreEventHandler>();
+        /*
+        services.AddScoped<INotificationHandler<CitaCreatedEvent>, CitaEventHandler>();
+        services.AddScoped<INotificationHandler<CitaUpdatedEvent>, CitaEventHandler>();
+        services.AddScoped<INotificationHandler<CitaDeletedEvent>, CitaEventHandler>();*/
         return services;
     }
 

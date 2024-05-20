@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Queries.Tenants.GetAll;
 using CleanArchitecture.Application.Queries.Tenants.GetTenantById;
 using CleanArchitecture.Application.Queries.ResearchGroups.GetAll;
 using CleanArchitecture.Application.Queries.ResearchGroups.GetResearchGroupById;
+
 using CleanArchitecture.Application.Queries.Users.GetAll;
 using CleanArchitecture.Application.Queries.Users.GetUserById;
 using CleanArchitecture.Application.Services;
@@ -11,10 +12,13 @@ using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Sorting;
 using CleanArchitecture.Application.ViewModels.Tenants;
 using CleanArchitecture.Application.ViewModels.ResearchGroups;
+
 using CleanArchitecture.Application.ViewModels.Users;
 using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Shared.Estudiante;
+
 
 namespace CleanArchitecture.Application.Extensions;
 
@@ -25,6 +29,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITenantService, TenantService>();
         services.AddScoped<IResearchGroupService, ResearchGroupService>();
+        //services.AddScoped<IEstudianteService, EstudianteService>();
+
         return services;
     }
 
@@ -42,6 +48,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetResearchGroupByIdQuery, ResearchGroupViewModel?>, GetResearchGroupByIdQueryHandler>();
         services
             .AddScoped<IRequestHandler<ResearchGroupsQuery, PagedResult<ResearchGroupViewModel>>, GetAllResearchGroupsQueryHandler>();
+
+
+       // services.AddScoped<IRequestHandler<GetEstudianteByIdQuery, EstudianteViewModel?>, GetEstudianteByIdQueryHandler>();
+        /*services
+            .AddScoped<IRequestHandler<EstudiantesQuery, PagedResult<EstudianteViewModel>>, GetAllEstudiantesQueryHandler>();*/
         return services;
     }
 
@@ -50,6 +61,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISortingExpressionProvider<TenantViewModel, Tenant>, TenantViewModelSortProvider>();
          services.AddScoped<ISortingExpressionProvider<ResearchGroupViewModel, ResearchGroup>, ResearchGroupViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<UserViewModel, User>, UserViewModelSortProvider>();
+      //  services.AddScoped<ISortingExpressionProvider<EstudianteViewModel, Estudiante>, EstudianteViewModelSortProvider>();
 
         return services;
     }

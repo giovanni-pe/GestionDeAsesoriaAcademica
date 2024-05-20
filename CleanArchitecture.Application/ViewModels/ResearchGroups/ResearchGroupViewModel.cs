@@ -4,6 +4,7 @@ using System.Linq;
 using CleanArchitecture.Application.ViewModels.Users;
 using CleanArchitecture.Domain.Entities;
 
+
 namespace CleanArchitecture.Application.ViewModels.ResearchGroups;
 
 public sealed class ResearchGroupViewModel

@@ -8,8 +8,11 @@ namespace CleanArchitecture.Infrastructure.Database;
 public partial class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
+    
     public DbSet<Tenant> Tenants { get; set; } = null!;
     public DbSet<ResearchGroup> ResearchGroups { get; set; } = null!;
+    public DbSet<Estudiante> Estudiantes { get; set; } = null!;
+    public DbSet<Asesore> Asesores { get; set; } = null!;
     public DbSet<ResearchLine> ResearchLines { get; set; } = null!;
  
 
@@ -43,8 +46,11 @@ public partial class ApplicationDbContext : DbContext
     private static void ApplyConfigurations(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new UserConfiguration());
+     
         builder.ApplyConfiguration(new TenantConfiguration());
         builder.ApplyConfiguration(new ResearchGroupConfiguration());
         builder.ApplyConfiguration(new ResearchLineConfiguration());
+        builder.ApplyConfiguration(new EstudianteConfiguration());
+        builder.ApplyConfiguration(new AsesoreConfiguration());
     }
 }

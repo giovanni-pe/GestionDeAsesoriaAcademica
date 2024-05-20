@@ -10,5 +10,8 @@ public static class Ids
         public static readonly Guid TenantId = new("b542bf25-134c-47a2-a0df-84ed14d03c4a");
         public static readonly Guid ResearchGroupId = new("b542bf25-134c-47a2-a0df-84ed14d03c41");
         public static readonly Guid ResearchLineId = new("b542bf25-134c-47a2-a0df-84ed14d03c42");
+        public static readonly Guid EstudianteId = new("b542bf25-134c-47a2-a0df-84ed14d03c43");
+        public static readonly Guid AsesoreId = new("b642bf25-134c-47a2-a0df-84ed14d03c43");
+        public static readonly Guid CitaId = new("8e3892c0-9374-49fa-a3fd-53db637a40ae");
     }
 }

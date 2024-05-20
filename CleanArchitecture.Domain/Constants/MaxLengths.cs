@@ -9,6 +9,11 @@ public static class MaxLengths
         public const int LastName = 100;
         public const int Password = 128;
     }
+    public static class Cita
+    {
+        public const int Namecita = 320;
+    
+    }
 
     public static class Tenant
     {
@@ -23,5 +28,15 @@ public static class MaxLengths
     {
         public const int Name = 250;
         public const int Code = 9;
+    }
+    public static class Estudiante
+    {
+        public const int FirstName = 250;
+        public const int LastName = 100;
+    }
+    public static class Asesore
+    {
+        public const int Nombre = 250;
+        public const int Apellido = 100;
     }
 }

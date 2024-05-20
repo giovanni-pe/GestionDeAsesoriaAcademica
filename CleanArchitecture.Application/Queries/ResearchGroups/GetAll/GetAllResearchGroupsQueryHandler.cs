@@ -9,6 +9,7 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using CleanArchitecture.Shared.ResearchGRoup;
 
 namespace CleanArchitecture.Application.Queries.ResearchGroups.GetAll;
 
