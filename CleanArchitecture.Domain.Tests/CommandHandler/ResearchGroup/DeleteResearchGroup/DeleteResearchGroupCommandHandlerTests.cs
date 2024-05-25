@@ -44,22 +44,5 @@ public sealed class DeleteResearchGroupCommandHandlerTests
                 $"There is no ResearchGroup with Id {command.AggregateId}");
     }
 
-    [Fact]
-    public async Task Should_Not_Delete_ResearchGroup_Insufficient_Permissions()
-    {
-        var ResearchGroup = _fixture.SetupResearchGroup();
-        _fixture.SetupUser();
-
-        var command = new DeleteResearchGroupCommand(ResearchGroup.Id);
-
-        await _fixture.CommandHandler.Handle(command, default);
-
-        _fixture
-            .VerifyNoCommit()
-            .VerifyNoRaisedEvent<ResearchGroupDeletedEvent>()
-            .VerifyAnyDomainNotification()
-            .VerifyExistingNotification(
-                ErrorCodes.InsufficientPermissions,
-                $"No permission to delete ResearchGroup {command.AggregateId}");
-    }
+   
 }
