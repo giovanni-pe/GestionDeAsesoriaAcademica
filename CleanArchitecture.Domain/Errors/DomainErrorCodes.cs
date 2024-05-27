@@ -58,4 +58,25 @@ public static class DomainErrorCodes
         // General
         public const string AlreadyExists = "RESEARCHLINE_ALREADY_EXISTS";
     }
+
+    public static class Student
+    {
+        // Student Validation
+        public const string EmptyId = "STUDENT_EMPTY_ID";
+        public const string EmptyCode = "STUDENT_EMPTY_CODE";
+        public const string CodeExceedsMaxLength = "STUDENT_CODE_EXCEEDS_MAX_LENGTH";
+
+        // General
+        public const string AlreadyExists = "STUDENT_ALREADY_EXISTS";
+    }
+    public static class Professor
+    {
+        // Professor Validation
+        public const string EmptyId = "PROFESSOR_EMPTY_ID";
+        public const string EmptyCode = "PROFESSOR_EMPTY_CODE";
+        public const string CodeExceedsMaxLength = "PROFESSOR_CODE_EXCEEDS_MAX_LENGTH";
+
+        // General
+        public const string AlreadyExists = "PROFESSOR_ALREADY_EXISTS";
+    }
 }

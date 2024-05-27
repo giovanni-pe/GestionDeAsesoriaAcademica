@@ -7,6 +7,12 @@ using CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
 using CleanArchitecture.Domain.Commands.ResearchLines.CreateResearchLine;
 using CleanArchitecture.Domain.Commands.ResearchLines.DeleteResearchLine;
 using CleanArchitecture.Domain.Commands.ResearchLines.UpdateResearchLine;
+using CleanArchitecture.Domain.Commands.Students.CreateStudent;
+using CleanArchitecture.Domain.Commands.Students.DeleteStudent;
+using CleanArchitecture.Domain.Commands.Students.UpdateStudent;
+using CleanArchitecture.Domain.Commands.Professors.CreateProfessor;
+using CleanArchitecture.Domain.Commands.Professors.DeleteProfessor;
+using CleanArchitecture.Domain.Commands.Professors.UpdateProfessor;
 using CleanArchitecture.Domain.Commands.Users.ChangePassword;
 using CleanArchitecture.Domain.Commands.Users.CreateUser;
 using CleanArchitecture.Domain.Commands.Users.DeleteUser;
@@ -18,6 +24,8 @@ using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Shared.Events.Tenant;
 using CleanArchitecture.Shared.Events.ResearchGroup;
 using CleanArchitecture.Shared.Events.ResearchLine;
+using CleanArchitecture.Shared.Events.Student;
+using CleanArchitecture.Shared.Events.Professor;
 using CleanArchitecture.Shared.Events.User;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,7 +55,14 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<CreateResearchLineCommand>, CreateResearchLineCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateResearchLineCommand>, UpdateResearchLineCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteResearchLineCommand>, DeleteResearchLineCommandHandler>();
-
+        //  Student  
+        services.AddScoped<IRequestHandler<CreateStudentCommand>, CreateStudentCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateStudentCommand>, UpdateStudentCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteStudentCommand>, DeleteStudentCommandHandler>();
+        //  Professor  
+        services.AddScoped<IRequestHandler<CreateProfessorCommand>, CreateProfessorCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProfessorCommand>, UpdateProfessorCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteProfessorCommand>, DeleteProfessorCommandHandler>();
         return services;
     }
 
@@ -75,6 +90,14 @@ public static class ServiceCollectionExtension
         services.AddScoped<INotificationHandler<ResearchLineCreatedEvent>, ResearchLineEventHandler>();
         services.AddScoped<INotificationHandler<ResearchLineUpdatedEvent>, ResearchLineEventHandler>();
         services.AddScoped<INotificationHandler<ResearchLineDeletedEvent>, ResearchLineEventHandler>();
+        //  Student  
+        services.AddScoped<IRequestHandler<CreateStudentCommand>, CreateStudentCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateStudentCommand>, UpdateStudentCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteStudentCommand>, DeleteStudentCommandHandler>();
+        //  Professor  
+        services.AddScoped<IRequestHandler<CreateProfessorCommand>, CreateProfessorCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProfessorCommand>, UpdateProfessorCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteProfessorCommand>, DeleteProfessorCommandHandler>();
         return services;
     }
 

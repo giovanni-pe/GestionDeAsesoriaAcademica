@@ -18,7 +18,7 @@ public sealed class ResearchGroupViewModel
         {
             Id = ResearchGroup.Id,
             Name = ResearchGroup.Name,
-           // Users = ResearchGroup.Users.Select(UserViewModel.FromUser).ToList()
+           //Users = ResearchGroup.Users.Select(UserViewModel.FromUser).ToList()
         };
     }
 }

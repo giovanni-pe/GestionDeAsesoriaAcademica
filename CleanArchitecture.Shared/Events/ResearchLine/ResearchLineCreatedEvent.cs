@@ -4,10 +4,10 @@ namespace CleanArchitecture.Shared.Events.ResearchLine;
 
 public sealed class ResearchLineCreatedEvent : DomainEvent
 {
-    public string Name { get; set; }
+    public Guid ResearchGroupId { get; set; }
 
-    public ResearchLineCreatedEvent(Guid ResearchLineId, string name) : base(ResearchLineId)
+    public ResearchLineCreatedEvent(Guid ResearchLineId, Guid researchGroupId) : base(ResearchLineId)
     {
-        Name = name;
+        ResearchGroupId = researchGroupId;
     }
 }

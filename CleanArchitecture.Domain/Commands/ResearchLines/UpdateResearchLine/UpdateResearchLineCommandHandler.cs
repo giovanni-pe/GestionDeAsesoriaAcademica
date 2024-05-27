@@ -64,7 +64,7 @@ public sealed class UpdateResearchLineCommandHandler : CommandHandlerBase,
         {
             await Bus.RaiseEventAsync(new ResearchLineUpdatedEvent(
                 ResearchLine.Id,
-                ResearchLine.Name));
+                ResearchLine.ResearchGroupId));
         }
     }
 }

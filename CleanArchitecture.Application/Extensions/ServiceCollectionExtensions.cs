@@ -5,6 +5,10 @@ using CleanArchitecture.Application.Queries.ResearchGroups.GetAll;
 using CleanArchitecture.Application.Queries.ResearchGroups.GetResearchGroupById;
 using CleanArchitecture.Application.Queries.ResearchLines.GetAll;
 using CleanArchitecture.Application.Queries.ResearchLines.GetResearchLineById;
+using CleanArchitecture.Application.Queries.Students.GetAll;
+using CleanArchitecture.Application.Queries.Students.GetStudentById;
+using CleanArchitecture.Application.Queries.Professors.GetAll;
+using CleanArchitecture.Application.Queries.Professors.GetProfessorById;
 using CleanArchitecture.Application.Queries.Users.GetAll;
 using CleanArchitecture.Application.Queries.Users.GetUserById;
 using CleanArchitecture.Application.Services;
@@ -14,6 +18,8 @@ using CleanArchitecture.Application.ViewModels.Sorting;
 using CleanArchitecture.Application.ViewModels.Tenants;
 using CleanArchitecture.Application.ViewModels.ResearchGroups;
 using CleanArchitecture.Application.ViewModels.ResearchLines;
+using CleanArchitecture.Application.ViewModels.Students;
+using CleanArchitecture.Application.ViewModels.Professors;
 using CleanArchitecture.Application.ViewModels.Users;
 using CleanArchitecture.Domain.Entities;
 using MediatR;
@@ -28,6 +34,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITenantService, TenantService>();
         services.AddScoped<IResearchGroupService, ResearchGroupService>();
+        services.AddScoped<IResearchLineService, ResearchLineService>();
+        services.AddScoped<IStudentService, StudentService>();
+        services.AddScoped<IProfessorService, ProfessorService>();
         return services;
     }
 
@@ -49,6 +58,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetResearchLineByIdQuery, ResearchLineViewModel?>, GetResearchLineByIdQueryHandler>();
         services
             .AddScoped<IRequestHandler<ResearchLinesQuery, PagedResult<ResearchLineViewModel>>, GetAllResearchLinesQueryHandler>();
+        // Student
+        services.AddScoped<IRequestHandler<GetStudentByIdQuery, StudentViewModel?>, GetStudentByIdQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<StudentsQuery, PagedResult<StudentViewModel>>, GetAllStudentsQueryHandler>();
+        // Professor
+        services.AddScoped<IRequestHandler<GetProfessorByIdQuery, ProfessorViewModel?>, GetProfessorByIdQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<ProfessorsQuery, PagedResult<ProfessorViewModel>>, GetAllProfessorsQueryHandler>();
         return services;
     }
 
@@ -57,6 +74,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISortingExpressionProvider<TenantViewModel, Tenant>, TenantViewModelSortProvider>();
          services.AddScoped<ISortingExpressionProvider<ResearchGroupViewModel, ResearchGroup>, ResearchGroupViewModelSortProvider>();
          services.AddScoped<ISortingExpressionProvider<ResearchLineViewModel, ResearchLine>, ResearchLineViewModelSortProvider>();
+        services.AddScoped<ISortingExpressionProvider<StudentViewModel, Student>, StudentViewModelSortProvider>();
+        services.AddScoped<ISortingExpressionProvider<ProfessorViewModel, Professor>, ProfessorViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<UserViewModel, User>, UserViewModelSortProvider>();
 
         return services;

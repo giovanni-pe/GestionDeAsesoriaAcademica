@@ -72,7 +72,7 @@ public sealed class DeleteResearchLineCommandHandler : CommandHandlerBase,
 
         if (await CommitAsync())
         {
-            await Bus.RaiseEventAsync(new ResearchLineDeletedEvent(ResearchLine.Id));
+            await Bus.RaiseEventAsync(new ResearchLineDeletedEvent(ResearchLine.Id,ResearchLine.ResearchGroupId));
         }
     }
 }

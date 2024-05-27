@@ -25,6 +25,117 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.AdvisoryContract", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("ProfessorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ResearchLineId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ThesisTopic")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.HasIndex("ResearchLineId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("AdvisoryContracts");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CalendarId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ProfessorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProfessorProgress")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StudentProgress")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Professor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCoordinator")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ResearchGroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResearchGroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Professors");
+                });
+
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ResearchGroup", b =>
                 {
                     b.Property<Guid>("Id")
@@ -93,6 +204,28 @@ namespace CleanArchitecture.Infrastructure.Migrations
                             Name = "Arquitectura de Software",
                             ResearchGroupId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41")
                         });
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Student", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Tenant", b =>
@@ -184,6 +317,71 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.AdvisoryContract", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.Professor", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitecture.Domain.Entities.ResearchLine", "ResearchLine")
+                        .WithMany()
+                        .HasForeignKey("ResearchLineId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitecture.Domain.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Professor");
+
+                    b.Navigation("ResearchLine");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.Professor", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitecture.Domain.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Professor");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Professor", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.ResearchGroup", "ResearchGroup")
+                        .WithMany()
+                        .HasForeignKey("ResearchGroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitecture.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ResearchGroup");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ResearchLine", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Entities.ResearchGroup", "ResearchGroup")
@@ -193,6 +391,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ResearchGroup");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Student", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.User", b =>

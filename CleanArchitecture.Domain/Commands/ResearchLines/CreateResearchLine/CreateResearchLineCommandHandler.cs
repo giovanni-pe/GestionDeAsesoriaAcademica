@@ -16,16 +16,19 @@ public sealed class CreateResearchLineCommandHandler : CommandHandlerBase,
 {
     private readonly IResearchLineRepository _ResearchLineRepository;
     private readonly IUser _user;
+    private readonly IResearchGroupRepository _researchGroupRepository;
 
     public CreateResearchLineCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,
         IResearchLineRepository ResearchLineRepository,
+        IResearchGroupRepository researchGroupRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
         _ResearchLineRepository = ResearchLineRepository;
         _user = user;
+        _researchGroupRepository = researchGroupRepository;
     }
 
     public async Task Handle(CreateResearchLineCommand request, CancellationToken cancellationToken)
@@ -35,15 +38,15 @@ public sealed class CreateResearchLineCommandHandler : CommandHandlerBase,
             return;
         }
 
-        if (_user.GetUserRole() != UserRole.Admin)
-        {
-            await NotifyAsync(
-                new DomainNotification(
+       if (_user.GetUserRole() != UserRole.Admin)
+       {
+           await NotifyAsync(
+               new DomainNotification(
                     request.MessageType,
-                    $"No permission to create ResearchLine {request.AggregateId}",
-                    ErrorCodes.InsufficientPermissions));
+                  $"No permission to create ResearchLine {request.AggregateId}",
+                   ErrorCodes.InsufficientPermissions));
 
-            return;
+           return;
         }
 
         if (await _ResearchLineRepository.ExistsAsync(request.AggregateId))
@@ -58,8 +61,8 @@ public sealed class CreateResearchLineCommandHandler : CommandHandlerBase,
         }
 
         var ResearchLine = new ResearchLine(
-            request.AggregateId,
-            request.Name,request.AggregateId,request.Code);
+            request.ResearchLineId,
+            request.Name,request.ResearchGroupId,request.Code);
 
         _ResearchLineRepository.Add(ResearchLine);
 
@@ -67,7 +70,7 @@ public sealed class CreateResearchLineCommandHandler : CommandHandlerBase,
         {
             await Bus.RaiseEventAsync(new ResearchLineCreatedEvent(
                 ResearchLine.Id,
-                ResearchLine.Name));
+                ResearchLine.ResearchGroupId));
         }
     }
 }

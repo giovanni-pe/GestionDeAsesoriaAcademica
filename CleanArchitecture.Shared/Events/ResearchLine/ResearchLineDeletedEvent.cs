@@ -4,7 +4,10 @@ namespace CleanArchitecture.Shared.Events.ResearchLine;
 
 public sealed class ResearchLineDeletedEvent : DomainEvent
 {
-    public ResearchLineDeletedEvent(Guid ResearchLineId) : base(ResearchLineId)
+    public Guid ResearchGroupId { get; set; }
+
+    public ResearchLineDeletedEvent(Guid ResearchLineId, Guid researchGroupId) : base(ResearchLineId)
     {
+        ResearchGroupId = researchGroupId;
     }
 }

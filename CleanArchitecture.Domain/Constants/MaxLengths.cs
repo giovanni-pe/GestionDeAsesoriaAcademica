@@ -24,4 +24,12 @@ public static class MaxLengths
         public const int Name = 250;
         public const int Code = 9;
     }
+    public static class Student
+    {
+        public const int Code = 9;
+    }
+    public static class Professor
+    {
+        public const int Code = 9;
+    }
 }

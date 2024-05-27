@@ -1,3 +1,4 @@
-namespace CleanArchitecture.Application.ViewModels.ResearchLines;
+using System;
 
-public sealed record CreateResearchLineViewModel(string Name,string Code);
+namespace CleanArchitecture.Application.ViewModels.ResearchLines;
+public sealed record CreateResearchLineViewModel(Guid ResearchGroupId,string Name,string Code);

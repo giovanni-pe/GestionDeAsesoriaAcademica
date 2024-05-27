@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CleanArchitecture.Domain.Enums;
 
 namespace CleanArchitecture.Domain.Entities;
@@ -17,7 +18,7 @@ public class User : Entity
 
     public Guid TenantId { get; private set; }
     public virtual Tenant Tenant { get; private set; } = null!;
-
+    public virtual ICollection<Student> Users { get; private set; } = new HashSet<Student>();
     public User(
         Guid id,
         Guid tenantId,

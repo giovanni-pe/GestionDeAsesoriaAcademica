@@ -1,3 +1,4 @@
+using System.Data;
 using System.Linq;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Configurations;
@@ -9,8 +10,12 @@ public partial class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Tenant> Tenants { get; set; } = null!;
+    public DbSet<Student> Students { get; set; } = null!;
+    public DbSet<Professor> Professors { get; set; } = null!;
     public DbSet<ResearchGroup> ResearchGroups { get; set; } = null!;
     public DbSet<ResearchLine> ResearchLines { get; set; } = null!;
+    public DbSet<Appointment> Appointments { get; set; } = null!;
+    public DbSet<AdvisoryContract> AdvisoryContracts { get; set; } = null!;
  
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -44,7 +49,12 @@ public partial class ApplicationDbContext : DbContext
     {
         builder.ApplyConfiguration(new UserConfiguration());
         builder.ApplyConfiguration(new TenantConfiguration());
+        builder.ApplyConfiguration(new StudentConfiguration());
+        builder.ApplyConfiguration(new ProfessorConfiguration());
         builder.ApplyConfiguration(new ResearchGroupConfiguration());
         builder.ApplyConfiguration(new ResearchLineConfiguration());
+        builder.ApplyConfiguration(new AppointmentConfiguration());
+        builder.ApplyConfiguration(new AdvisoryContractConfiguration());
+
     }
 }
