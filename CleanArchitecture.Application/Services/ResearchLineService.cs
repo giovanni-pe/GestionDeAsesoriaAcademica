@@ -40,7 +40,7 @@ public sealed class ResearchLineService : IResearchLineService
     public async Task UpdateResearchLineAsync(UpdateResearchLineViewModel ResearchLine)
     {
         await _bus.SendCommandAsync(new UpdateResearchLineCommand(
-            ResearchLine.Id,
+            ResearchLine.Id,ResearchLine.ResearchGroupId,
             ResearchLine.Code));
     }
 

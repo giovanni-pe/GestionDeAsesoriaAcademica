@@ -139,4 +139,4 @@ public sealed class ResearchGroupControllerTests : IClassFixture<ResearchGroupTe
         var response = await _fixture.ServerClient.GetAsync($"/api/v1/ResearchGroup/{nonExistingId}");
 
     }
- }
+ } 
