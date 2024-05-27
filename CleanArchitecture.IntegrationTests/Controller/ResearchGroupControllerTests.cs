@@ -127,4 +127,16 @@ public sealed class ResearchGroupControllerTests : IClassFixture<ResearchGroupTe
 
         ResearchGroupResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
-}
+    /// <summary>
+    /// Caso negativo: Intentar obtener un grupo de investigación que no existe
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    [Priority(25)]
+    public async Task Should_Not_Get_Non_Existing_ResearchGroup()
+    {
+        var nonExistingId = Guid.NewGuid();
+        var response = await _fixture.ServerClient.GetAsync($"/api/v1/ResearchGroup/{nonExistingId}");
+
+    }
+ }
