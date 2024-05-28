@@ -29,6 +29,12 @@ using CleanArchitecture.Shared.Events.Professor;
 using CleanArchitecture.Shared.Events.User;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Shared.Events.ResearchGroup;
+using CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
+using CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
+using CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment;
+using CleanArchitecture.Domain.Commands.Appointments.DeleteAppointment;
+using CleanArchitecture.Shared.Events.Appointment;
 
 namespace CleanArchitecture.Domain.Extensions;
 
@@ -51,6 +57,12 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<CreateResearchGroupCommand>, CreateResearchGroupCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateResearchGroupCommand>, UpdateResearchGroupCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteResearchGroupCommand>, DeleteResearchGroupCommandHandler>();
+        //Appointment
+
+        services.AddScoped<IRequestHandler<CreateAppointmentCommand>, CreateAppointmentCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateAppointmentCommand>, UpdateAppointmentCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteAppointmentCommand>, DeleteAppointmentCommandHandler>();
+
         //  ResearchLine  
         services.AddScoped<IRequestHandler<CreateResearchLineCommand>, CreateResearchLineCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateResearchLineCommand>, UpdateResearchLineCommandHandler>();
@@ -85,6 +97,10 @@ public static class ServiceCollectionExtension
         services.AddScoped<INotificationHandler<ResearchGroupCreatedEvent>, ResearchGroupEventHandler>();
         services.AddScoped<INotificationHandler<ResearchGroupUpdatedEvent>, ResearchGroupEventHandler>();
         services.AddScoped<INotificationHandler<ResearchGroupDeletedEvent>, ResearchGroupEventHandler>();
+        //Appointment
+        services.AddScoped<INotificationHandler<AppointmentCreatedEvent>, AppointmentEventHandler>();
+        services.AddScoped<INotificationHandler<AppointmentUpdatedEvent>, AppointmentEventHandler>();
+        services.AddScoped<INotificationHandler<AppointmentDeletedEvent>, AppointmentEventHandler>();
 
         // ResearchLine
         services.AddScoped<INotificationHandler<ResearchLineCreatedEvent>, ResearchLineEventHandler>();

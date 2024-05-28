@@ -14,7 +14,7 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Extensions;
 using CleanArchitecture.Domain.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
-
+using CleanArchitecture.Domain.Commands;
 namespace CleanArchitecture.Application.Services;
 
 public sealed class ResearchGroupService : IResearchGroupService
