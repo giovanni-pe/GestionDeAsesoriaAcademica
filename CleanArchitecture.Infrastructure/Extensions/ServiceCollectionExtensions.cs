@@ -51,6 +51,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IResearchLineRepository, ResearchLineRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IProfessorRepository, ProfessorRepository>();
+        services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         return services;
     }
 }

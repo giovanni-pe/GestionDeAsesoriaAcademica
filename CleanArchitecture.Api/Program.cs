@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,6 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>()
     .AddApplicationStatus();
-
 
 if (builder.Environment.IsProduction())
 {
@@ -50,8 +50,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseLazyLoadingProxies();
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("CleanArchitecture.Infrastructure"));
-
-
 });
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -61,7 +59,6 @@ builder.Services.AddStackExchangeRedisCache(options =>
         EndPoints = { "localhost:6379" }
     };
 });
-
 
 builder.Services.AddSwagger();
 builder.Services.AddAuth(builder.Configuration);
@@ -93,13 +90,18 @@ if (builder.Environment.IsProduction() || !string.IsNullOrWhiteSpace(builder.Con
         options.InstanceName = "clean-architecture";
     });
 }
-
 else
 {
     builder.Services.AddDistributedMemoryCache();
 }
 
+// Registro antes de Build
+Console.WriteLine("Antes de llamar a Build");
+
 var app = builder.Build();
+
+// Registro después de Build
+Console.WriteLine("Después de llamar a Build");
 
 using (var scope = app.Services.CreateScope())
 {
@@ -136,7 +138,6 @@ app.MapGrpcService<TenantsApiImplementation>();
 app.Run();
 
 // Needed for integration tests web application factory
-
 public partial class Program
 {
 }

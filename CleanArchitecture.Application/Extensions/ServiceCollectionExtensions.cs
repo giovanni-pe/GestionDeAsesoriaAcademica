@@ -37,6 +37,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IResearchLineService, ResearchLineService>();
         services.AddScoped<IStudentService, StudentService>();
         services.AddScoped<IProfessorService, ProfessorService>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
         return services;
     }
 

@@ -42,7 +42,7 @@ public sealed class AppointmentService : IAppointmentService
     public async Task UpdateAppointmentAsync(UpdateAppointmentViewModel Appointment)
     {
         await _bus.SendCommandAsync(new UpdateAppointmentCommand(
-             AppointmentId, Appointment.professorId, Appointment.studentId, Appointment.calendarId, Appointment.dateTime, Appointment.professorProgress, Appointment.studentProgress));
+              Appointment.appointmentId,Appointment.professorId, Appointment.studentId, Appointment.calendarId, Appointment.dateTime, Appointment.professorProgress, Appointment.studentProgress));
     }
 
     public async Task DeleteAppointmentAsync(Guid AppointmentId)

@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.ViewModels.Appointments;
 
 public sealed class AppointmentViewModel
 {
-    public Guid Id { get; set; };
+    public Guid Id { get; set; }
     public Guid ProfessorId { get; set; }
     public Guid StudentId { get; set; }
     public Guid CalendarId { get; set; }
