@@ -8,7 +8,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.ResearchGroup.CreateRese
 
 public sealed class CreateResearchGroupCommandTestFixture : CommandHandlerFixtureBase
 {
-    public CreateAppointmentCommandHandler CommandHandler { get; }
+    public CreateResearchGroupCommandHandler CommandHandler { get; }
 
     private IResearchGroupRepository ResearchGroupRepository { get; }
 

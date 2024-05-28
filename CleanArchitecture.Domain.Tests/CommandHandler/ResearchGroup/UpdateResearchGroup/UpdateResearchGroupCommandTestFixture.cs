@@ -8,7 +8,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.ResearchGroup.UpdateRese
 
 public sealed class UpdateResearchGroupCommandTestFixture : CommandHandlerFixtureBase
 {
-    public UpdateAppointmentCommandHandler CommandHandler { get; }
+    public UpdateResearchGroupCommandHandler CommandHandler { get; }
 
     private IResearchGroupRepository ResearchGroupRepository { get; }
 

@@ -6,7 +6,7 @@ using Xunit;
 namespace CleanArchitecture.Domain.Tests.CommandHandler.ResearchGroup.DeleteResearchGroup;
 
 public sealed class DeleteResearchGroupCommandValidationTests :
-    ValidationTestBase<DeleteResearchGroupCommand, DeleteAppointmentCommandValidation>
+    ValidationTestBase<DeleteResearchGroupCommand, DeleteResearchGroupCommandValidation>
 {
     public DeleteResearchGroupCommandValidationTests() : base(new DeleteResearchGroupCommandValidation())
     {

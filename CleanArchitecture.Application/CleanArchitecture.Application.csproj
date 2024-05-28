@@ -10,8 +10,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CleanArchitecture.Domain\CleanArchitecture.Domain.csproj"/>
-        <ProjectReference Include="..\CleanArchitecture.Proto\CleanArchitecture.Proto.csproj"/>
+        <ProjectReference Include="..\CleanArchitecture.Domain\CleanArchitecture.Domain.csproj" />
+        <ProjectReference Include="..\CleanArchitecture.Proto\CleanArchitecture.Proto.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Queries\Appointment\" />
     </ItemGroup>
 
 
