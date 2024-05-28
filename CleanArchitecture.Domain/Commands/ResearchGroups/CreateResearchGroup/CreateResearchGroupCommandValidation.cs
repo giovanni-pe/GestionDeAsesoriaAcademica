@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace CleanArchitecture.Domain.Commands.ResearchGroups.CreateResearchGroup;
 
-public sealed class CreateAppointmentCommandValidation : AbstractValidator<CreateResearchGroupCommand>
+public sealed class CreateResearchGroupCommandValidation : AbstractValidator<CreateResearchGroupCommand>
 {
-    public CreateAppointmentCommandValidation()
+    public CreateResearchGroupCommandValidation()
     {
         AddRuleForId();
         AddRuleForName();

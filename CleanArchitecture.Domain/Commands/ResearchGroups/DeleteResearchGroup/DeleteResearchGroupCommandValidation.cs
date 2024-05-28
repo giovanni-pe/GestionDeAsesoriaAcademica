@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
 
-public sealed class DeleteAppointmentCommandValidation : AbstractValidator<DeleteResearchGroupCommand>
+public sealed class DeleteResearchGroupCommandValidation : AbstractValidator<DeleteResearchGroupCommand>
 {
-    public DeleteAppointmentCommandValidation()
+    public DeleteResearchGroupCommandValidation()
     {
         AddRuleForId();
     }

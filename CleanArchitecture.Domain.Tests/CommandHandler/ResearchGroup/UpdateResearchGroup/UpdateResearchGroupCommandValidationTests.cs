@@ -6,7 +6,7 @@ using Xunit;
 namespace CleanArchitecture.Domain.Tests.CommandHandler.ResearchGroup.UpdateResearchGroup;
 
 public sealed class UpdateResearchGroupCommandValidationTests :
-    ValidationTestBase<UpdateResearchGroupCommand, UpdateResearchGroupCommandValidation>
+    ValidationTestBase<UpdateAppointmentCommand, UpdateAppointmentCommandValidation>
 {
     public UpdateResearchGroupCommandValidationTests() : base(new UpdateResearchGroupCommandValidation())
     {
@@ -42,7 +42,7 @@ public sealed class UpdateResearchGroupCommandValidationTests :
             "Name may not be empty");
     }
 
-    private static UpdateResearchGroupCommand CreateTestCommand(
+    private static UpdateAppointmentCommand CreateTestCommand(
         Guid? id = null,
         string? name = null)
     {

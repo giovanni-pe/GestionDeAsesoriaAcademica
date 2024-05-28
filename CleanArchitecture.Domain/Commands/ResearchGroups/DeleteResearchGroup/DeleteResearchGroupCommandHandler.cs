@@ -11,14 +11,14 @@ using MediatR;
 
 namespace CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
 
-public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
+public sealed class DeleteResearchGroupCommandHandler : CommandHandlerBase,
     IRequestHandler<DeleteResearchGroupCommand>
 {
     private readonly IResearchGroupRepository _ResearchGroupRepository;
    // private readonly IReserchLine _user;
     private readonly IUserRepository _userRepository;
 
-    public DeleteAppointmentCommandHandler(
+    public DeleteResearchGroupCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,

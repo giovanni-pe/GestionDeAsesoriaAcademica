@@ -4,7 +4,7 @@ namespace CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
 
 public sealed class DeleteResearchGroupCommand : CommandBase
 {
-    private static readonly DeleteAppointmentCommandValidation s_validation = new();
+    private static readonly DeleteResearchGroupCommandValidation s_validation = new();
 
     public DeleteResearchGroupCommand(Guid ResearchGroupId) : base(ResearchGroupId)
     {

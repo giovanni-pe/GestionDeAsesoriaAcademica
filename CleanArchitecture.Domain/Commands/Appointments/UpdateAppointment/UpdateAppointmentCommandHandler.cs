@@ -5,29 +5,29 @@ using CleanArchitecture.Domain.Errors;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using CleanArchitecture.Domain.Notifications;
-using CleanArchitecture.Shared.Events.ResearchGroup;
+using CleanArchitecture.Shared.Events.Appointment;
 using MediatR;
 
-namespace CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
+namespace CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment;
 
-public sealed class UpdateResearchGroupCommandHandler : CommandHandlerBase,
-    IRequestHandler<UpdateResearchGroupCommand>
+public sealed class UpdateAppointmentCommandHandler : CommandHandlerBase,
+    IRequestHandler<UpdateAppointmentCommand>
 {
-    private readonly IResearchGroupRepository _ResearchGroupRepository;
+    private readonly IAppointmentRepository _AppointmentRepository;
     private readonly IUser _user;
 
-    public UpdateResearchGroupCommandHandler(
+    public UpdateAppointmentCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,
-        IResearchGroupRepository ResearchGroupRepository,
+        IAppointmentRepository AppointmentRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
-        _ResearchGroupRepository = ResearchGroupRepository;
+        _AppointmentRepository = AppointmentRepository;
         _user = user;
     }
 
-    public async Task Handle(UpdateResearchGroupCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
     {
         if (!await TestValidityAsync(request))
         {
@@ -39,32 +39,31 @@ public sealed class UpdateResearchGroupCommandHandler : CommandHandlerBase,
             await NotifyAsync(
                 new DomainNotification(
                     request.MessageType,
-                    $"No permission to update ResearchGroup {request.AggregateId}",
+                    $"No permission to update Appointment {request.AggregateId}",
                     ErrorCodes.InsufficientPermissions));
 
             return;
         }
 
-        var ResearchGroup = await _ResearchGroupRepository.GetByIdAsync(request.AggregateId);
+        var Appointment = await _AppointmentRepository.GetByIdAsync(request.AggregateId);
 
-        if (ResearchGroup is null)
+        if (Appointment is null)
         {
             await NotifyAsync(
                 new DomainNotification(
                     request.MessageType,
-                    $"There is no ResearchGroup with Id {request.AggregateId}",
+                    $"There is no Appointment with Id {request.AggregateId}",
                     ErrorCodes.ObjectNotFound));
 
             return;
         }
 
-        ResearchGroup.SetName(request.Name);
+        Appointment.SetDateTime(request.DateTime);
 
         if (await CommitAsync())
         {
-            await Bus.RaiseEventAsync(new ResearchGroupUpdatedEvent(
-                ResearchGroup.Id,
-                ResearchGroup.Name));
+            await Bus.RaiseEventAsync(new AppointmentUpdatedEvent(
+                Appointment.Id, Appointment.ProfessorId , Appointment.StudentId ,  Appointment.CalendarId ));
         }
     }
 }
