@@ -6,7 +6,7 @@ using Xunit;
 namespace CleanArchitecture.Domain.Tests.CommandHandler.ResearchGroup.CreateResearchGroup;
 
 public sealed class CreateResearchGroupCommandValidationTests :
-    ValidationTestBase<CreateResearchGroupCommand, CreateResearchGroupCommandValidation>
+    ValidationTestBase<CreateResearchGroupCommand, CreateAppointmentCommandValidation>
 {
     public CreateResearchGroupCommandValidationTests() : base(new CreateResearchGroupCommandValidation())
     {

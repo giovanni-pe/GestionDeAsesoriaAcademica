@@ -11,13 +11,13 @@ using MediatR;
 
 namespace CleanArchitecture.Domain.Commands.ResearchGroups.CreateResearchGroup;
 
-public sealed class CreateResearchGroupCommandHandler : CommandHandlerBase,
+public sealed class CreateAppointmentCommandHandler : CommandHandlerBase,
     IRequestHandler<CreateResearchGroupCommand>
 {
     private readonly IResearchGroupRepository _ResearchGroupRepository;
     private readonly IUser _user;
 
-    public CreateResearchGroupCommandHandler(
+    public CreateAppointmentCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,

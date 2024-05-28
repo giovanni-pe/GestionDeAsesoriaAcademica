@@ -8,7 +8,7 @@ using Microsoft.Extensions.Caching.Distributed;
 namespace CleanArchitecture.Domain.EventHandler;
 
 public sealed class ResearchGroupEventHandler :
-    INotificationHandler<ResearchGroupCreatedEvent>,
+    INotificationHandler<AppointmentCreatedEvent>,
     INotificationHandler<ResearchGroupDeletedEvent>,
     INotificationHandler<ResearchGroupUpdatedEvent>
 {
@@ -19,7 +19,7 @@ public sealed class ResearchGroupEventHandler :
         _distributedCache = distributedCache;
     }
 
-    public Task Handle(ResearchGroupCreatedEvent notification, CancellationToken cancellationToken)
+    public Task Handle(AppointmentCreatedEvent notification, CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
     }

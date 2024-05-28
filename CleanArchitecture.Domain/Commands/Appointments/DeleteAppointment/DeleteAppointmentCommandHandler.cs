@@ -6,15 +6,15 @@ using CleanArchitecture.Domain.Errors;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using CleanArchitecture.Domain.Notifications;
-using CleanArchitecture.Shared.Events.ResearchGroup;
+using CleanArchitecture.Shared.Events.Appointment;
 using MediatR;
 
-namespace CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
+namespace CleanArchitecture.Domain.Commands.Appointments.DeleteAppointment;
 
 public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
-    IRequestHandler<DeleteResearchGroupCommand>
+    IRequestHandler<DeleteAppointmentCommand>
 {
-    private readonly IResearchGroupRepository _ResearchGroupRepository;
+    private readonly IAppointmentRepository _AppointmentRepository;
    // private readonly IReserchLine _user;
     private readonly IUserRepository _userRepository;
 
@@ -22,16 +22,16 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,
-        IResearchGroupRepository ResearchGroupRepository,
+        IAppointmentRepository AppointmentRepository,
         IUserRepository userRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
-        _ResearchGroupRepository = ResearchGroupRepository;
+        _AppointmentRepository = AppointmentRepository;
       //  _userRepository = userRepository;
        // _user = user;
     }
 
-    public async Task Handle(DeleteResearchGroupCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteAppointmentCommand request, CancellationToken cancellationToken)
     {
         if (!await TestValidityAsync(request))
         {
@@ -43,36 +43,36 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
             await NotifyAsync(
                 new DomainNotification(
                     request.MessageType,
-                    $"No permission to delete ResearchGroup {request.AggregateId}",
+                    $"No permission to delete Appointment {request.AggregateId}",
                     ErrorCodes.InsufficientPermissions));
 
             return;
         }*/
 
-        var ResearchGroup = await _ResearchGroupRepository.GetByIdAsync(request.AggregateId);
+        var Appointment = await _AppointmentRepository.GetByIdAsync(request.AggregateId);
 
-        if (ResearchGroup is null)
+        if (Appointment is null)
         {
             await NotifyAsync(
                 new DomainNotification(
                     request.MessageType,
-                    $"There is no ResearchGroup with Id {request.AggregateId}",
+                    $"There is no Appointment with Id {request.AggregateId}",
                     ErrorCodes.ObjectNotFound));
 
             return;
         }
 /*
-        var ResearchGroupUsers = _userRepository
+        var AppointmentUsers = _userRepository
             .GetAll()
-            .Where(x => x.ResearchGroupId == request.AggregateId);
+            .Where(x => x.AppointmentId == request.AggregateId);
 
-        _userRepository.RemoveRange(ResearchGroupUsers);*/
+        _userRepository.RemoveRange(AppointmentUsers);*/
 
-        _ResearchGroupRepository.Remove(ResearchGroup);
+        _AppointmentRepository.Remove(Appointment);
 
         if (await CommitAsync())
         {
-            await Bus.RaiseEventAsync(new ResearchGroupDeletedEvent(ResearchGroup.Id));
+            await Bus.RaiseEventAsync(new AppointmentDeletedEvent(Appointment.Id));
         }
     }
 }

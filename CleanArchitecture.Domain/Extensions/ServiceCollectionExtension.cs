@@ -48,9 +48,9 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<UpdateTenantCommand>, UpdateTenantCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteTenantCommand>, DeleteTenantCommandHandler>();
          // ResearchGroup
-        services.AddScoped<IRequestHandler<CreateResearchGroupCommand>, CreateResearchGroupCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateResearchGroupCommand>, CreateAppointmentCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateResearchGroupCommand>, UpdateResearchGroupCommandHandler>();
-        services.AddScoped<IRequestHandler<DeleteResearchGroupCommand>, DeleteResearchGroupCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteResearchGroupCommand>, DeleteAppointmentCommandHandler>();
         //  ResearchLine  
         services.AddScoped<IRequestHandler<CreateResearchLineCommand>, CreateResearchLineCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateResearchLineCommand>, UpdateResearchLineCommandHandler>();
@@ -82,7 +82,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<INotificationHandler<TenantUpdatedEvent>, TenantEventHandler>();
         services.AddScoped<INotificationHandler<TenantDeletedEvent>, TenantEventHandler>();
         // ResearchGroup
-        services.AddScoped<INotificationHandler<ResearchGroupCreatedEvent>, ResearchGroupEventHandler>();
+        services.AddScoped<INotificationHandler<AppointmentCreatedEvent>, ResearchGroupEventHandler>();
         services.AddScoped<INotificationHandler<ResearchGroupUpdatedEvent>, ResearchGroupEventHandler>();
         services.AddScoped<INotificationHandler<ResearchGroupDeletedEvent>, ResearchGroupEventHandler>();
 

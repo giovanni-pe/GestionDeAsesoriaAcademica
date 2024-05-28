@@ -4,7 +4,7 @@ namespace CleanArchitecture.Domain.Commands.ResearchGroups.CreateResearchGroup;
 
 public sealed class CreateResearchGroupCommand : CommandBase
 {
-    private static readonly CreateResearchGroupCommandValidation s_validation = new();
+    private static readonly CreateAppointmentCommandValidation s_validation = new();
 
     public string Name { get; }
     public string Code { get; }

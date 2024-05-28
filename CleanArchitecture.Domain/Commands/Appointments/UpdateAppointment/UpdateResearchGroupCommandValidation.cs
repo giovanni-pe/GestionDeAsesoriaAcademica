@@ -2,11 +2,11 @@ using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Errors;
 using FluentValidation;
 
-namespace CleanArchitecture.Domain.Commands.ResearchGroups.CreateResearchGroup;
+namespace CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
 
-public sealed class CreateAppointmentCommandValidation : AbstractValidator<CreateResearchGroupCommand>
+public sealed class UpdateResearchGroupCommandValidation : AbstractValidator<UpdateResearchGroupCommand>
 {
-    public CreateAppointmentCommandValidation()
+    public UpdateResearchGroupCommandValidation()
     {
         AddRuleForId();
         AddRuleForName();

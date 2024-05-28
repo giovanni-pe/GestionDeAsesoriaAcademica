@@ -1,13 +1,15 @@
+using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Errors;
 using FluentValidation;
 
-namespace CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
+namespace CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
 
-public sealed class DeleteAppointmentCommandValidation : AbstractValidator<DeleteResearchGroupCommand>
+public sealed class CreateAppointmentCommandValidation : AbstractValidator<CreateAppointmentCommand>
 {
-    public DeleteAppointmentCommandValidation()
+    public CreateAppointmentCommandValidation()
     {
         AddRuleForId();
+        
     }
 
     private void AddRuleForId()
@@ -17,4 +19,6 @@ public sealed class DeleteAppointmentCommandValidation : AbstractValidator<Delet
             .WithErrorCode(DomainErrorCodes.ResearchGroup.EmptyId)
             .WithMessage("ResearchGroup id may not be empty");
     }
+
+
 }

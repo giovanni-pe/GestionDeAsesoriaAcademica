@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CleanArchitecture.Domain.Enums;
@@ -9,45 +8,42 @@ using CleanArchitecture.Domain.Notifications;
 using CleanArchitecture.Shared.Events.ResearchGroup;
 using MediatR;
 
-namespace CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
+namespace CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
 
-public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
-    IRequestHandler<DeleteResearchGroupCommand>
+public sealed class UpdateResearchGroupCommandHandler : CommandHandlerBase,
+    IRequestHandler<UpdateResearchGroupCommand>
 {
     private readonly IResearchGroupRepository _ResearchGroupRepository;
-   // private readonly IReserchLine _user;
-    private readonly IUserRepository _userRepository;
+    private readonly IUser _user;
 
-    public DeleteAppointmentCommandHandler(
+    public UpdateResearchGroupCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,
         IResearchGroupRepository ResearchGroupRepository,
-        IUserRepository userRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
         _ResearchGroupRepository = ResearchGroupRepository;
-      //  _userRepository = userRepository;
-       // _user = user;
+        _user = user;
     }
 
-    public async Task Handle(DeleteResearchGroupCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateResearchGroupCommand request, CancellationToken cancellationToken)
     {
         if (!await TestValidityAsync(request))
         {
             return;
         }
-/*
+
         if (_user.GetUserRole() != UserRole.Admin)
         {
             await NotifyAsync(
                 new DomainNotification(
                     request.MessageType,
-                    $"No permission to delete ResearchGroup {request.AggregateId}",
+                    $"No permission to update ResearchGroup {request.AggregateId}",
                     ErrorCodes.InsufficientPermissions));
 
             return;
-        }*/
+        }
 
         var ResearchGroup = await _ResearchGroupRepository.GetByIdAsync(request.AggregateId);
 
@@ -61,18 +57,14 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
 
             return;
         }
-/*
-        var ResearchGroupUsers = _userRepository
-            .GetAll()
-            .Where(x => x.ResearchGroupId == request.AggregateId);
 
-        _userRepository.RemoveRange(ResearchGroupUsers);*/
-
-        _ResearchGroupRepository.Remove(ResearchGroup);
+        ResearchGroup.SetName(request.Name);
 
         if (await CommitAsync())
         {
-            await Bus.RaiseEventAsync(new ResearchGroupDeletedEvent(ResearchGroup.Id));
+            await Bus.RaiseEventAsync(new ResearchGroupUpdatedEvent(
+                ResearchGroup.Id,
+                ResearchGroup.Name));
         }
     }
 }

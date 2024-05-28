@@ -1,12 +1,12 @@
 using System;
 
-namespace CleanArchitecture.Domain.Commands.ResearchGroups.DeleteResearchGroup;
+namespace CleanArchitecture.Domain.Commands.Appointments.DeleteAppointment;
 
-public sealed class DeleteResearchGroupCommand : CommandBase
+public sealed class DeleteAppointmentCommand : CommandBase
 {
     private static readonly DeleteAppointmentCommandValidation s_validation = new();
 
-    public DeleteResearchGroupCommand(Guid ResearchGroupId) : base(ResearchGroupId)
+    public DeleteAppointmentCommand(Guid AppointmentId) : base(AppointmentId)
     {
     }
 

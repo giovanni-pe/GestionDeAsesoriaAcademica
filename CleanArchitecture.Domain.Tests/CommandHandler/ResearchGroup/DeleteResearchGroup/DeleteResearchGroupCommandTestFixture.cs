@@ -8,7 +8,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.ResearchGroup.DeleteRese
 
 public sealed class DeleteResearchGroupCommandTestFixture : CommandHandlerFixtureBase
 {
-    public DeleteResearchGroupCommandHandler CommandHandler { get; }
+    public DeleteAppointmentCommandHandler CommandHandler { get; }
 
     private IResearchGroupRepository ResearchGroupRepository { get; }
     private IUserRepository UserRepository { get; }
