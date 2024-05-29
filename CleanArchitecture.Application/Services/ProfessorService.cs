@@ -1,15 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.Interfaces;
-using CleanArchitecture.Application.Queries.Students.GetAll;
-using CleanArchitecture.Application.Queries.Students.GetStudentById;
+using CleanArchitecture.Application.Queries.Professors.GetAll;
+using CleanArchitecture.Application.Queries.Professors.GetProfessorById;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Sorting;
-using CleanArchitecture.Application.ViewModels.Students;
+using CleanArchitecture.Application.ViewModels.Professors;
 using CleanArchitecture.Domain;
-using CleanArchitecture.Domain.Commands.Students.CreateStudent;
-using CleanArchitecture.Domain.Commands.Students.DeleteStudent;
-using CleanArchitecture.Domain.Commands.Students.UpdateStudent;
+using CleanArchitecture.Domain.Commands.Professors.CreateProfessor;
+using CleanArchitecture.Domain.Commands.Professors.DeleteProfessor;
+using CleanArchitecture.Domain.Commands.Professors.UpdateProfessor;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Extensions;
 using CleanArchitecture.Domain.Interfaces;
@@ -17,58 +17,57 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace CleanArchitecture.Application.Services;
 
-public sealed class StudentService : IStudentService
+public sealed class ProfessorService : IProfessorService
 {
     private readonly IMediatorHandler _bus;
     private readonly IDistributedCache _distributedCache;
 
-    public StudentService(IMediatorHandler bus, IDistributedCache distributedCache)
+    public ProfessorService(IMediatorHandler bus, IDistributedCache distributedCache)
     {
         _bus = bus;
         _distributedCache = distributedCache;
     }
 
-    public async Task<Guid> CreateStudentAsync(CreateStudentViewModel Student)
+    public async Task<Guid> CreateProfessorAsync(CreateProfessorViewModel Professor)
     {
-        var StudentId = Guid.NewGuid();
-        await _bus.SendCommandAsync(new CreateStudentCommand(
-            StudentId,Student.UserId,Student.Code));
+        var ProfessorId = Guid.NewGuid();
+        await _bus.SendCommandAsync(new CreateProfessorCommand(
+            ProfessorId,Professor.UserId,Professor.ResearchGroupId,Professor.IsCoordinator));
 
-        return StudentId;
+        return ProfessorId;
     }
 
-    public async Task UpdateStudentAsync(UpdateStudentViewModel Student)
+    public async Task UpdateProfessorAsync(UpdateProfessorViewModel Professor)
     {
-        await _bus.SendCommandAsync(new UpdateStudentCommand(
-            Student.Id,Student.UserId,
-            Student.Code));
+        await _bus.SendCommandAsync(new UpdateProfessorCommand(
+            Professor.Id,Professor.UserId,Professor.ResearchGroupId,Professor.IsCoordinator));
     }
 
-    public async Task DeleteStudentAsync(Guid StudentId)
+    public async Task DeleteProfessorAsync(Guid ProfessorId)
     {
-        await _bus.SendCommandAsync(new DeleteStudentCommand(StudentId));
+        await _bus.SendCommandAsync(new DeleteProfessorCommand(ProfessorId));
     }
 
-    public async Task<StudentViewModel?> GetStudentByIdAsync(Guid StudentId)
+    public async Task<ProfessorViewModel?> GetProfessorByIdAsync(Guid ProfessorId)
     {
-        var cachedStudent = await _distributedCache.GetOrCreateJsonAsync(
-            CacheKeyGenerator.GetEntityCacheKey<Student>(StudentId),
-            async () => await _bus.QueryAsync(new GetStudentByIdQuery(StudentId)),
+        var cachedProfessor = await _distributedCache.GetOrCreateJsonAsync(
+            CacheKeyGenerator.GetEntityCacheKey<Professor>(ProfessorId),
+            async () => await _bus.QueryAsync(new GetProfessorByIdQuery(ProfessorId)),
             new DistributedCacheEntryOptions
             {
                 SlidingExpiration = TimeSpan.FromDays(3),
                 AbsoluteExpiration = DateTimeOffset.Now.AddDays(30)
             });
 
-        return cachedStudent;
+        return cachedProfessor;
     }
 
-    public async Task<PagedResult<StudentViewModel>> GetAllStudentsAsync(
+    public async Task<PagedResult<ProfessorViewModel>> GetAllProfessorsAsync(
         PageQuery query,
         bool includeDeleted,
         string searchTerm = "",
         SortQuery? sortQuery = null)
     {
-        return await _bus.QueryAsync(new StudentsQuery(query, includeDeleted, searchTerm, sortQuery));
+        return await _bus.QueryAsync(new ProfessorsQuery(query, includeDeleted, searchTerm, sortQuery));
     }
 }

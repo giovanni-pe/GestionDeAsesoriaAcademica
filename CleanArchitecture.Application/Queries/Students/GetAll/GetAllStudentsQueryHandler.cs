@@ -2,7 +2,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.Extensions;
+using CleanArchitecture.Application.Queries.Professors.GetAll;
 using CleanArchitecture.Application.ViewModels;
+using CleanArchitecture.Application.ViewModels.Professors;
 using CleanArchitecture.Application.ViewModels.Sorting;
 using CleanArchitecture.Application.ViewModels.Students;
 using CleanArchitecture.Domain.Entities;
@@ -57,3 +59,4 @@ public sealed class GetAllStudentsQueryHandler :
             totalCount, Students, request.Query.Page, request.Query.PageSize);
     }
 }
+

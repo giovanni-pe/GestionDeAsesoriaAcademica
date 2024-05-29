@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.ResearchGroups;
@@ -59,7 +60,7 @@ public sealed class ResearchGroupControllerTests : IClassFixture<ResearchGroupTe
             .Should().NotBeNull();
 
     }
-
+/*
     [Fact]
     [Priority(10)]
     public async Task Should_Create_ResearchGroup()
@@ -84,9 +85,69 @@ public sealed class ResearchGroupControllerTests : IClassFixture<ResearchGroupTe
 
         ResearchGroupMessage!.Data!.Id.Should().Be(ResearchGroupId!.Value);
         ResearchGroupMessage.Data.Name.Should().Be(request.Name);
+    }*/
+
+
+
+
+[Fact]
+[Priority(10)]
+   public void Should_Create_ResearchGroup_Using_ThreadPool()
+   {
+    const int numberOfThreads = 5;
+    ManualResetEvent[] doneEvents = new ManualResetEvent[numberOfThreads];
+
+    for (int i = 0; i < numberOfThreads; i++)
+    {
+        doneEvents[i] = new ManualResetEvent(false);
+        ThreadPool.QueueUserWorkItem(new WaitCallback(async (state) =>
+        {
+            var index = (int)state;
+            try
+            {
+                await Should_Create_ResearchGroup();
+            }
+            catch (Exception ex)
+            {
+                
+                throw new Exception($"Error en el hilo {index}: {ex.Message}");
+            }
+            finally
+            {
+                doneEvents[index].Set();
+            }
+        }), i);
     }
 
-    [Fact]
+    WaitHandle.WaitAll(doneEvents);
+}
+
+public async Task Should_Create_ResearchGroup()
+{
+    var request = new CreateResearchGroupViewModel("Test ResearchGroup 2", "sw123");
+
+    var response = await _fixture.ServerClient.PostAsJsonAsync("/api/v1/ResearchGroup", request);
+
+    response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+    var message = await response.Content.ReadAsJsonAsync<Guid>();
+    var ResearchGroupId = message?.Data;
+
+    // Check if ResearchGroup exists
+    var ResearchGroupResponse = await _fixture.ServerClient.GetAsync($"/api/v1/ResearchGroup/{ResearchGroupId}");
+
+    ResearchGroupResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+    var ResearchGroupMessage = await ResearchGroupResponse.Content.ReadAsJsonAsync<ResearchGroupViewModel>();
+
+    ResearchGroupMessage?.Data.Should().NotBeNull();
+
+    ResearchGroupMessage!.Data!.Id.Should().Be(ResearchGroupId!.Value);
+    ResearchGroupMessage.Data.Name.Should().Be(request.Name);
+}
+
+
+[Fact]
     [Priority(15)]
     public async Task Should_Update_ResearchGroup()
     {

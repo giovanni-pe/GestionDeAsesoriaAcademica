@@ -10,18 +10,18 @@ public sealed class StudentViewModel
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    public UserViewModel User { get; set; }
     public string Code { get; set; } = string.Empty;
-    //public IEnumerable<UserViewModel> Users { get; set; } = new List<UserViewModel>();
+    
 
-    public static StudentViewModel FromStudent(Student Student)
+    public static StudentViewModel FromStudent(Student student)
     {
         return new StudentViewModel
         {
-            Id = Student.Id,
-            Code = Student.Code,
-            UserId = Student.UserId,
-
-           // Users = Student.Users.Select(UserViewModel.FromUser).ToList()
+            Id = student.Id,
+            Code = student.Code,
+            UserId = student.UserId,
+            User = UserViewModel.FromUser(student.User)
         };
     }
 }
