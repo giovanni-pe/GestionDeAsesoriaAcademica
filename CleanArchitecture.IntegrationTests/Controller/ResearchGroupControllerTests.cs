@@ -200,4 +200,4 @@ public async Task Should_Create_ResearchGroup()
         var response = await _fixture.ServerClient.GetAsync($"/api/v1/ResearchGroup/{nonExistingId}");
 
     }
- }
+ } 
