@@ -32,4 +32,8 @@ public static class MaxLengths
     {
         public const int Code = 9;
     }
+    public static class AdvisoryContract
+    {
+        public const int Status = 20;
+    }
 }

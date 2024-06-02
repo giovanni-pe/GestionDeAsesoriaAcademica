@@ -29,6 +29,10 @@ using CleanArchitecture.Shared.Events.Professor;
 using CleanArchitecture.Shared.Events.User;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Domain.Commands.AdvisoryContracts.CreateAdvisoryContract;
+using CleanArchitecture.Domain.Commands.AdvisoryContracts.UpdateAdvisoryContract;
+using CleanArchitecture.Domain.Commands.AdvisoryContracts.DeleteAdvisoryContract;
+using CleanArchitecture.Shared.Events.AdvisoryContract;
 
 namespace CleanArchitecture.Domain.Extensions;
 
@@ -63,6 +67,10 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<CreateProfessorCommand>, CreateProfessorCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProfessorCommand>, UpdateProfessorCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteProfessorCommand>, DeleteProfessorCommandHandler>();
+        //  AdvisoryContract 
+        services.AddScoped<IRequestHandler<CreateAdvisoryContractCommand>, CreateAdvisoryContractCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateAdvisoryContractCommand>, UpdateAdvisoryContractCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteAdvisoryContractCommand>, DeleteAdvisoryContractCommandHandler>();
         return services;
     }
 
@@ -91,13 +99,18 @@ public static class ServiceCollectionExtension
         services.AddScoped<INotificationHandler<ResearchLineUpdatedEvent>, ResearchLineEventHandler>();
         services.AddScoped<INotificationHandler<ResearchLineDeletedEvent>, ResearchLineEventHandler>();
         //  Student  
-        services.AddScoped<IRequestHandler<CreateStudentCommand>, CreateStudentCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateStudentCommand>, UpdateStudentCommandHandler>();
-        services.AddScoped<IRequestHandler<DeleteStudentCommand>, DeleteStudentCommandHandler>();
+        services.AddScoped<INotificationHandler<StudentCreatedEvent>, StudentEventHandler>();
+        services.AddScoped<INotificationHandler<StudentUpdatedEvent>, StudentEventHandler>();
+        services.AddScoped<INotificationHandler<StudentDeletedEvent>, StudentEventHandler>();
         //  Professor  
-        services.AddScoped<IRequestHandler<CreateProfessorCommand>, CreateProfessorCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProfessorCommand>, UpdateProfessorCommandHandler>();
-        services.AddScoped<IRequestHandler<DeleteProfessorCommand>, DeleteProfessorCommandHandler>();
+        services.AddScoped<INotificationHandler<ProfessorCreatedEvent>, ProfessorEventHandler>();
+        services.AddScoped<INotificationHandler<ProfessorUpdatedEvent>, ProfessorEventHandler>();
+        services.AddScoped<INotificationHandler<ProfessorDeletedEvent>, ProfessorEventHandler>();
+
+        //  AdvisoryContract  
+        services.AddScoped<INotificationHandler<AdvisoryContractCreatedEvent>, AdvisoryContractEventHandler>();
+        services.AddScoped<INotificationHandler<AdvisoryContractUpdatedEvent>,AdvisoryContractEventHandler>();
+        services.AddScoped<INotificationHandler<AdvisoryContractDeletedEvent>,AdvisoryContractEventHandler>();
         return services;
     }
 

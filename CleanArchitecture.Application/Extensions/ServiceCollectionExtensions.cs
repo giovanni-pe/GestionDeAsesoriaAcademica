@@ -24,6 +24,9 @@ using CleanArchitecture.Application.ViewModels.Users;
 using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Application.ViewModels.AdvisoryContracts;
+using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractById;
+using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
 
 namespace CleanArchitecture.Application.Extensions;
 
@@ -37,6 +40,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IResearchLineService, ResearchLineService>();
         services.AddScoped<IStudentService, StudentService>();
         services.AddScoped<IProfessorService, ProfessorService>();
+        services.AddScoped<IAdvisoryContractService, AdvisoryContractService>();
         return services;
     }
 
@@ -66,6 +70,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetProfessorByIdQuery, ProfessorViewModel?>, GetProfessorByIdQueryHandler>();
         services
             .AddScoped<IRequestHandler<ProfessorsQuery, PagedResult<ProfessorViewModel>>, GetAllProfessorsQueryHandler>();
+        // AdvisoryContract
+        services.AddScoped<IRequestHandler<GetAdvisoryContractByIdQuery, AdvisoryContractViewModel?>, GetAdvisoryContractByIdQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<AdvisoryContractsQuery, PagedResult<AdvisoryContractViewModel>>, GetAllAdvisoryContractsQueryHandler>();
         return services;
     }
 
@@ -76,6 +84,7 @@ public static class ServiceCollectionExtensions
          services.AddScoped<ISortingExpressionProvider<ResearchLineViewModel, ResearchLine>, ResearchLineViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<StudentViewModel, Student>, StudentViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<ProfessorViewModel, Professor>, ProfessorViewModelSortProvider>();
+        services.AddScoped<ISortingExpressionProvider<AdvisoryContractViewModel, AdvisoryContract>, AdvisoryContractViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<UserViewModel, User>, UserViewModelSortProvider>();
 
         return services;

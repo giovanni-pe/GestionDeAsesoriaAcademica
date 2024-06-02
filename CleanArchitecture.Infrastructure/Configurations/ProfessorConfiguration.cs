@@ -13,7 +13,7 @@ namespace CleanArchitecture.Infrastructure.Configurations
                 .Property(professor => professor.IsCoordinator)
                 .IsRequired();
 
-            builder
+           /* builder
                 .HasOne(professor => professor.User)
                 .WithMany()
                 .HasForeignKey(professor => professor.UserId);
@@ -21,7 +21,7 @@ namespace CleanArchitecture.Infrastructure.Configurations
             builder
                 .HasOne(professor => professor.ResearchGroup)
                 .WithMany()
-                .HasForeignKey(professor => professor.ResearchGroupId);
+                .HasForeignKey(professor => professor.ResearchGroupId);*/
 
             // Seed data or other configurations can be added here
         }

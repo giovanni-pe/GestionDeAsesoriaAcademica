@@ -33,7 +33,8 @@ public sealed class GetAllProfessorsQueryHandler :
         var ProfessorsQuery = _ProfessorRepository
     .GetAllNoTracking()
     .IgnoreQueryFilters()
-    .Include(x => x.User) // Include the related entity without the Where clause
+    .Include(x => x.User)
+      .Include(x => x.ResearchGroup)
     .Where(x => request.IncludeDeleted || !x.Deleted);
 
 

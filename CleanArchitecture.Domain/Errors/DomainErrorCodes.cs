@@ -89,4 +89,15 @@ public static class DomainErrorCodes
         // General
         public const string AlreadyExists = "APPOINTMENT_ALREADY_EXISTS";
     }
+    public static class AdvisoryContract
+    {
+        // Professor Validation
+        public const string EmptyId = "ADVISORYCONTRACT_EMPTY_ID";
+        public const string EmptyCode = "ADVISORYCONTRACT_EMPTY_CODE";
+        public const string CodeExceedsMaxLength = "ADVISORYCONTRACT_CODE_EXCEEDS_MAX_LENGTH";
+
+        // General
+        public const string AlreadyExists = "ADVISORYCONTRACT_ALREADY_EXISTS";
+    }
+
 }
