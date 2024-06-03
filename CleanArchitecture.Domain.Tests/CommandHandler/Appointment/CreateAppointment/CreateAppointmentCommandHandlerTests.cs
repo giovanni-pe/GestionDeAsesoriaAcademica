@@ -82,4 +82,8 @@ public sealed class CreateAppointmentCommandHandlerTests
                 DomainErrorCodes.Appointment.AlreadyExists,
                 $"There is already a Appointment with Id {command.AggregateId}");
     }
+
+
+
+
 }
