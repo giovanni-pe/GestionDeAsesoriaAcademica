@@ -39,7 +39,7 @@ public sealed class CreateAppointmentCommandHandler : CommandHandlerBase,
             return;
         }
 
-        /* if (_user.GetUserRole() != UserRole.Admin)
+         if (_user.GetUserRole() != UserRole.Admin)
          {
              await NotifyAsync(
                  new DomainNotification(
@@ -48,7 +48,7 @@ public sealed class CreateAppointmentCommandHandler : CommandHandlerBase,
                      ErrorCodes.InsufficientPermissions));
 
              return;
-         }*/
+         }
 
         if (await _AppointmentRepository.ExistsAsync(request.AggregateId))
         {
@@ -62,7 +62,7 @@ public sealed class CreateAppointmentCommandHandler : CommandHandlerBase,
         }
 
         var Appointment = new Appointment(
-            request.ProfessorId , request.AppointmentId, request.StudentId, request.CalendarId, request.DateTime , request.ProfessorProgress ,  request.StudentProgress);
+            request.AggregateId ,request.ProfessorId,  request.StudentId, request.CalendarId, request.DateTime , request.ProfessorProgress ,  request.StudentProgress);
         _AppointmentRepository.Add(Appointment);
 
         if (await CommitAsync())

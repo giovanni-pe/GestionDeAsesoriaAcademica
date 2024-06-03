@@ -1,33 +1,34 @@
 using System;
 
-namespace CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
-
-public sealed class CreateAppointmentCommand : CommandBase
+namespace CleanArchitecture.Domain.Commands.Appointments.CreateAppointment
 {
-    private static readonly CreateAppointmentCommandValidation s_validation = new();
-
-    public Guid ProfessorId { get; }
-    public Guid AppointmentId { get; }
-    public Guid StudentId { get; }
-    public Guid CalendarId { get;  }
-    public DateTime DateTime { get;  }
-    public string ProfessorProgress { get;  }
-    public string StudentProgress { get;  }
-
-    public CreateAppointmentCommand(Guid appointmentId, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress) : base(appointmentId)
+    public sealed class CreateAppointmentCommand : CommandBase
     {
-        ProfessorId = professorId;
-        AppointmentId = appointmentId;
-        StudentId = studentId;
-        CalendarId = calendarId;
-        DateTime = dateTime;
-        ProfessorProgress = professorProgress;
-        StudentProgress = studentProgress;
-    }
+        private static readonly CreateAppointmentCommandValidation s_validation = new();
 
-    public override bool IsValid()
-    {
-        ValidationResult = s_validation.Validate(this);
-        return ValidationResult.IsValid;
+        public Guid ProfessorId { get; set; }
+     
+        public Guid StudentId { get; set; }
+        public Guid CalendarId { get; set; }
+        public DateTime DateTime { get; set; }
+        public string ProfessorProgress { get; set; }
+        public string StudentProgress { get; set; }
+
+        public CreateAppointmentCommand(Guid appointmentId, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress) : base(appointmentId)
+        {
+            ProfessorId = professorId;
+         
+            StudentId = studentId;
+            CalendarId = calendarId;
+            DateTime = dateTime;
+            ProfessorProgress = professorProgress;
+            StudentProgress = studentProgress;
+        }
+
+        public override bool IsValid()
+        {
+            ValidationResult = s_validation.Validate(this);
+            return ValidationResult.IsValid;
+        }
     }
 }

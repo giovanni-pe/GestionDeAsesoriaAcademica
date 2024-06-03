@@ -11,16 +11,13 @@ public sealed class AppointmentViewModelSortProvider : ISortingExpressionProvide
 {
     private static readonly Dictionary<string, Expression<Func<Appointment, object>>> s_expressions = new()
     {
-        { "id", Appointment => Appointment.Id },
-        { "ProfessorId", Appointment => Appointment.ProfessorId},
-        { "StudentId", Appointment => Appointment.StudentId},
-        { "CalendarId", Appointment => Appointment.CalendarId },
-        {"CalendarId", Appointment => Appointment.DateTime },
-        { "CalendarId", Appointment => Appointment.ProfessorProgress },
-        { "CalendarId", Appointment => Appointment.StudentProgress
-        }
-
-
+        { "Id", appointment => appointment.Id },
+        { "ProfessorId", appointment => appointment.ProfessorId },
+        { "StudentId", appointment => appointment.StudentId },
+        { "CalendarId", appointment => appointment.CalendarId },
+        { "DateTime", appointment => appointment.DateTime },
+        { "ProfessorProgress", appointment => appointment.ProfessorProgress },
+        { "StudentProgress", appointment => appointment.StudentProgress }
     };
 
     public Dictionary<string, Expression<Func<Appointment, object>>> GetSortingExpressions()

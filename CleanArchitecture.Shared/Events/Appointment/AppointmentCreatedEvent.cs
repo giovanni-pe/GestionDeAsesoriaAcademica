@@ -11,7 +11,7 @@ public sealed class AppointmentCreatedEvent : DomainEvent
     public string ProfessorProgress { get; private set; }
     public string StudentProgress { get; private set; }
 
-    public AppointmentCreatedEvent(Guid appointmentId, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress) : base(appointmentId)
+    public AppointmentCreatedEvent(Guid id, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress) : base(id)
     {
         ProfessorId = professorId;
         StudentId = studentId;

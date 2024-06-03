@@ -1,24 +1,21 @@
-using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Errors;
 using FluentValidation;
 
-namespace CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment;
-
-public sealed class UpdateAppointmentCommandValidation : AbstractValidator<UpdateAppointmentCommand>
+namespace CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment
 {
-    public UpdateAppointmentCommandValidation()
+    public sealed class UpdateAppointmentCommandValidation : AbstractValidator<UpdateAppointmentCommand>
     {
-        AddRuleForId();
-        
+        public UpdateAppointmentCommandValidation()
+        {
+            AddRuleForId();
+        }
+
+        private void AddRuleForId()
+        {
+            RuleFor(cmd => cmd.AggregateId)
+                .NotEmpty()
+                .WithErrorCode(DomainErrorCodes.Appointment.EmptyId)
+                .WithMessage("Appointment id may not be empty");
+        }
     }
-
-    private void AddRuleForId()
-    {
-        RuleFor(cmd => cmd.AggregateId)
-            .NotEmpty()
-            .WithErrorCode(DomainErrorCodes.Appointment.EmptyId)
-            .WithMessage("Appointment id may not be empty");
-    }
-
-
 }

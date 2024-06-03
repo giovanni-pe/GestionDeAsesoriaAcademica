@@ -23,9 +23,7 @@ namespace CleanArchitecture.Domain.Entities
             StudentProgress = studentProgress;
         }
 
-        public Appointment(Guid id, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress) : base(id)
-        {
-        }
+   
 
         public void SetDateTime(DateTime dateTime)
         {

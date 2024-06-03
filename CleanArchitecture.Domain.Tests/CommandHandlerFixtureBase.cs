@@ -1,14 +1,12 @@
-using System;
-using System.Linq.Expressions;
 using CleanArchitecture.Domain.Enums;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.Notifications;
 using CleanArchitecture.Shared.Events;
 using NSubstitute;
+using System.Linq.Expressions;
+using System;
 
-namespace CleanArchitecture.Domain.Tests;
-
-public class CommandHandlerFixtureBase
+public abstract class CommandHandlerFixtureBase
 {
     protected IMediatorHandler Bus { get; }
     protected IUnitOfWork UnitOfWork { get; }

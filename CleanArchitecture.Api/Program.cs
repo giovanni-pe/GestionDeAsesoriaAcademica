@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System;
 
@@ -60,6 +61,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     };
 });
 
+
 builder.Services.AddSwagger();
 builder.Services.AddAuth(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration, "CleanArchitecture.Infrastructure");
@@ -69,6 +71,14 @@ builder.Services.AddSortProviders();
 builder.Services.AddCommandHandlers();
 builder.Services.AddNotificationHandlers();
 builder.Services.AddApiUser();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.ConfigurationOptions = new ConfigurationOptions
+    {
+        AbortOnConnectFail = false,
+        EndPoints = { "localhost:6379" }
+    };
+});
 
 builder.Services.AddRabbitMqHandler(builder.Configuration, "RabbitMQ");
 
