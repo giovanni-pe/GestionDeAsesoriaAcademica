@@ -17,17 +17,9 @@ public sealed class AppointmentTestFixture : TestFixtureBase
 
         context.Appointments.Add(new Appointment(
             Id, ProfessorId, StudentId, CalendarId, DateTime.UtcNow,
-            "Estado de la Appointment", // Estado de la Appointment
-            "Asunto de la Appointment")); // Asunto de la Appointment
+            "Estado de la Appointment", 
+            "Asunto de la Appointment")); 
 
-        // context.Users.Add(new User(
-        //  Guid.NewGuid(),
-        // CreatedResearchGroupId,
-        //"test@user.de",
-        //"test",
-        // "user",
-        // "Test User",
-        // UserRole.User));
 
         context.SaveChanges();
     }

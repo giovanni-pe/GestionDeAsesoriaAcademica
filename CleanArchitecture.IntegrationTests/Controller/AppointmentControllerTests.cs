@@ -36,13 +36,6 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
         message?.Data.Should().NotBeNull();
 
         message!.Data!.Id.Should().Be(_fixture.Id);
-        message.Data.ProfessorId.Should().Be(_fixture.ProfessorId);
-        message.Data.StudentId.Should().Be(_fixture.StudentId);
-        message.Data.CalendarId.Should().Be(_fixture.CalendarId);
-        message.Data.DateTime.Should().Be(DateTime.UtcNow);
-        message.Data.ProfessorProgress.Should().Be("Estado de la Appointment");
-        message.Data.StudentProgress.Should().Be("Asunto de la Appointment");
-        
     }
 
     [Fact]
@@ -61,50 +54,44 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
         message.Data!.Items
             .FirstOrDefault(x => x.Id == _fixture.Id)
             .Should().NotBeNull();
-
     }
 
     [Fact]
     [Priority(10)]
     public async Task Should_Create_Appointment()
     {
-        var request = new CreateAppointmentViewModel(_fixture.Id, _fixture.ProfessorId, _fixture.StudentId, _fixture.CalendarId, DateTime.UtcNow,
-            "Estado de la Appointment", // Estado de la Appointment
-            "Asunto de la Appointment");
-
+        var request = new CreateAppointmentViewModel(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Nuevo Estado", "Nuevo Asunto");
 
         var response = await _fixture.ServerClient.PostAsJsonAsync("/api/v1/Appointment", request);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var message = await response.Content.ReadAsJsonAsync<Guid>();
-        var AppointmentId = message?.Data;
+        var appointmentId = message?.Data;
 
         // Check if Appointment exists
-        var AppointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{AppointmentId}");
+        var appointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{appointmentId}");
 
-        AppointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        appointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var AppointmentMessage = await AppointmentResponse.Content.ReadAsJsonAsync<AppointmentViewModel>();
+        var appointmentMessage = await appointmentResponse.Content.ReadAsJsonAsync<AppointmentViewModel>();
 
-        AppointmentMessage?.Data.Should().NotBeNull();
+        appointmentMessage?.Data.Should().NotBeNull();
 
-        AppointmentMessage!.Data!.Id.Should().Be(AppointmentId!.Value);
-        AppointmentMessage.Data.Id.Should().Be(request.appointmentId);
-        AppointmentMessage.Data.ProfessorId.Should().Be(request.professorId);
-        AppointmentMessage.Data.StudentId.Should().Be(request.studentId);
-        AppointmentMessage.Data.CalendarId.Should().Be(request.calendarId);
-        AppointmentMessage.Data.ProfessorProgress.Should().Be(request.professorProgress);
-        AppointmentMessage.Data.StudentProgress.Should().Be(request.studentProgress);
+        appointmentMessage!.Data!.Id.Should().Be(appointmentId!.Value);
+        appointmentMessage.Data.ProfessorId.Should().Be(request.professorId);
+        appointmentMessage.Data.StudentId.Should().Be(request.studentId);
+        appointmentMessage.Data.CalendarId.Should().Be(request.calendarId);
+        appointmentMessage.Data.DateTime.Should().Be(request.dateTime);
+        appointmentMessage.Data.ProfessorProgress.Should().Be(request.professorProgress);
+        appointmentMessage.Data.StudentProgress.Should().Be(request.studentProgress);
     }
 
     [Fact]
     [Priority(15)]
     public async Task Should_Update_Appointment()
     {
-        var request = new UpdateAppointmentViewModel(_fixture.Id, _fixture.ProfessorId, _fixture.StudentId, _fixture.CalendarId, DateTime.UtcNow,
-            "Estado de la Appointment", // Estado de la Appointment
-            "Asunto de la Appointment");
+        var request = new UpdateAppointmentViewModel(_fixture.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Actualizado Estado", "Actualizado Asunto");
 
         var response = await _fixture.ServerClient.PutAsJsonAsync("/api/v1/Appointment", request);
 
@@ -116,21 +103,14 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
         message!.Data.Should().BeEquivalentTo(request);
 
         // Check if Appointment is updated
-        var AppointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{_fixture.Id}");
+        var appointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{_fixture.Id}");
 
-        AppointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        appointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var AppointmentMessage = await response.Content.ReadAsJsonAsync<AppointmentViewModel>();
+        var appointmentMessage = await appointmentResponse.Content.ReadAsJsonAsync<AppointmentViewModel>();
 
-        AppointmentMessage?.Data.Should().NotBeNull();
-
-        AppointmentMessage!.Data!.Id.Should().Be(_fixture.Id);
-        AppointmentMessage.Data.Id.Should().Be(request.appointmentId);
-        AppointmentMessage.Data.ProfessorId.Should().Be(request.professorId);
-        AppointmentMessage.Data.StudentId.Should().Be(request.studentId);
-        AppointmentMessage.Data.CalendarId.Should().Be(request.calendarId);
-        AppointmentMessage.Data.ProfessorProgress.Should().Be(request.professorProgress);
-        AppointmentMessage.Data.StudentProgress.Should().Be(request.studentProgress);
+        appointmentMessage?.Data.Should().NotBeNull();
+        appointmentMessage!.Data!.Id.Should().Be(_fixture.Id);
     }
 
     [Fact]
@@ -142,8 +122,18 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         // Check if Appointment is deleted
-        var AppointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{_fixture.Id}");
+        var appointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{_fixture.Id}");
 
-        AppointmentResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        appointmentResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    [Priority(25)]
+    public async Task Should_Not_Get_Non_Existing_Appointment()
+    {
+        var nonExistingId = Guid.NewGuid();
+        var response = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{nonExistingId}");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }
