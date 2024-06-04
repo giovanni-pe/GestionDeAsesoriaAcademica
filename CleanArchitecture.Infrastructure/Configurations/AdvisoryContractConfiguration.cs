@@ -4,6 +4,8 @@ using CleanArchitecture.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+//Add advisory contract repository 
+
 namespace CleanArchitecture.Infrastructure.Configurations
 {
     public sealed class AdvisoryContractConfiguration : IEntityTypeConfiguration<AdvisoryContract>
