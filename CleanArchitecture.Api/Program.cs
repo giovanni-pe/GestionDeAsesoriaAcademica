@@ -19,7 +19,17 @@ using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 builder.Services.AddControllers();
+// Agregar configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policyBuilder => policyBuilder.AllowAnyOrigin()
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod());
+});
 builder.Services.AddGrpc();
 builder.Services.AddGrpcReflection();
 builder.Services.AddEndpointsApiExplorer();
@@ -28,7 +38,6 @@ builder.Services
     .AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>()
     .AddApplicationStatus();
-
 
 if (builder.Environment.IsProduction())
 {
@@ -50,8 +59,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseLazyLoadingProxies();
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("CleanArchitecture.Infrastructure"));
-
-
 });
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -61,7 +68,6 @@ builder.Services.AddStackExchangeRedisCache(options =>
         EndPoints = { "localhost:6379" }
     };
 });
-
 
 builder.Services.AddSwagger();
 builder.Services.AddAuth(builder.Configuration);
@@ -93,7 +99,6 @@ if (builder.Environment.IsProduction() || !string.IsNullOrWhiteSpace(builder.Con
         options.InstanceName = "clean-architecture";
     });
 }
-
 else
 {
     builder.Services.AddDistributedMemoryCache();
@@ -119,8 +124,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapGrpcReflectionService();
 }
-
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
+
+// Usar el middleware de CORS antes de la autenticación y autorización
+
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -136,7 +144,6 @@ app.MapGrpcService<TenantsApiImplementation>();
 app.Run();
 
 // Needed for integration tests web application factory
-
 public partial class Program
 {
 }

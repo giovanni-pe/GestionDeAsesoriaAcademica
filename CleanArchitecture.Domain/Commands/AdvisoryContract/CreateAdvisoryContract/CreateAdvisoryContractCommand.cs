@@ -1,7 +1,9 @@
 using System;
 
 namespace CleanArchitecture.Domain.Commands.AdvisoryContracts.CreateAdvisoryContract;
-
+/// <summary>
+/// By Perez
+/// </summary>
 public sealed class CreateAdvisoryContractCommand : CommandBase
 {
     private static readonly CreateAdvisoryContractCommandValidation s_validation = new();

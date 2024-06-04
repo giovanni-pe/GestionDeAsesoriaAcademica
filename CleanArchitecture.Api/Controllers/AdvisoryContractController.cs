@@ -13,12 +13,14 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Cors;
 
 namespace CleanArchitecture.Api.Controllers;
-
+[EnableCors("AllowAll")]
 [ApiController]
 //[Authorize]
 [Route("/api/v1/[controller]")]
+
 public sealed class AdvisoryContractController : ApiController
 {
     private readonly IAdvisoryContractService _AdvisoryContractService;
@@ -31,6 +33,7 @@ public sealed class AdvisoryContractController : ApiController
     }
 
     [HttpGet]
+    [EnableCors("AllowAll")]
     [SwaggerOperation("Get a list of all AdvisoryContracts")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<PagedResult<AdvisoryContractViewModel>>))]
     public async Task<IActionResult> GetAllAdvisoryContractsAsync(

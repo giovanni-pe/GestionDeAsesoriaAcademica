@@ -18,7 +18,9 @@ using CleanArchitecture.Domain.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace CleanArchitecture.Application.Services;
-
+/// <summary>
+/// By Perez
+/// </summary>
 public sealed class AdvisoryContractService : IAdvisoryContractService
 {
     private readonly IMediatorHandler _bus;
