@@ -106,7 +106,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointment");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Professor", b =>
@@ -133,7 +133,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Professors");
+                    b.ToTable("Professor");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ResearchGroup", b =>
@@ -156,7 +156,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResearchGroups");
+                    b.ToTable("ResearchGroup");
 
                     b.HasData(
                         new
@@ -193,7 +193,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("ResearchGroupId");
 
-                    b.ToTable("ResearchLines");
+                    b.ToTable("ResearchLine");
 
                     b.HasData(
                         new
@@ -225,7 +225,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Tenant", b =>
@@ -244,7 +244,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tenants");
+                    b.ToTable("Tenant");
 
                     b.HasData(
                         new
@@ -300,7 +300,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User                                                                                                                                                                                                                                     ");
 
                     b.HasData(
                         new

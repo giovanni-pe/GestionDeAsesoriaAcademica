@@ -24,6 +24,9 @@ using CleanArchitecture.Application.ViewModels.Users;
 using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Application.Queries.Appointments.GetAll;
+using CleanArchitecture.Application.Queries.Appointments.GetAppointmentById;
+using CleanArchitecture.Application.ViewModels.Appointments;
 
 namespace CleanArchitecture.Application.Extensions;
 
@@ -67,6 +70,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetProfessorByIdQuery, ProfessorViewModel?>, GetProfessorByIdQueryHandler>();
         services
             .AddScoped<IRequestHandler<ProfessorsQuery, PagedResult<ProfessorViewModel>>, GetAllProfessorsQueryHandler>();
+        //Appointment
+        services.AddScoped<IRequestHandler<GetAppointmentByIdQuery, AppointmentViewModel?>, GetAppointmentByIdQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<AppointmentsQuery, PagedResult<AppointmentViewModel>>, GetAllAppointmentsQueryHandler>();
         return services;
     }
 
@@ -77,6 +84,7 @@ public static class ServiceCollectionExtensions
          services.AddScoped<ISortingExpressionProvider<ResearchLineViewModel, ResearchLine>, ResearchLineViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<StudentViewModel, Student>, StudentViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<ProfessorViewModel, Professor>, ProfessorViewModelSortProvider>();
+        services.AddScoped<ISortingExpressionProvider<AppointmentViewModel, Appointment>, AppointmentViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<UserViewModel, User>, UserViewModelSortProvider>();
 
         return services;

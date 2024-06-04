@@ -10,8 +10,8 @@ public partial class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Tenant> Tenants { get; set; } = null!;
-    public DbSet<Student> Students { get; set; } = null!;
-    public DbSet<Professor> Professors { get; set; } = null!;
+    public DbSet<Student> Student { get; set; } = null!;
+    public DbSet<Professor> Professor { get; set; } = null!;
     public DbSet<ResearchGroup> ResearchGroups { get; set; } = null!;
     public DbSet<ResearchLine> ResearchLines { get; set; } = null!;
     public DbSet<Appointment> Appointments { get; set; } = null!;

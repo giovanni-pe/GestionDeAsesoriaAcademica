@@ -60,7 +60,7 @@ public static class ServiceCollectionExtension
         //Appointment
 
         services.AddScoped<IRequestHandler<CreateAppointmentCommand>, CreateAppointmentCommandHandler>();
-     
+       
         services.AddScoped<IRequestHandler<DeleteAppointmentCommand>, DeleteAppointmentCommandHandler>();
 
         //  ResearchLine  

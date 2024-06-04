@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Appointments;
+using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.IntegrationTests.Extensions;
 using CleanArchitecture.IntegrationTests.Fixtures;
 using FluentAssertions;
@@ -60,7 +61,7 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
     [Priority(10)]
     public async Task Should_Create_Appointment()
     {
-        var request = new CreateAppointmentViewModel(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Nuevo Estado", "Nuevo Asunto");
+        var request = new CreateAppointmentViewModel(Guid.NewGuid(), Ids.Seed.ProfessorId, Ids.Seed.StudentId, DateTime.UtcNow, "Nuevo Estado", "Nuevo Asunto");
 
         var response = await _fixture.ServerClient.PostAsJsonAsync("/api/v1/Appointment", request);
 
@@ -85,6 +86,7 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
         appointmentMessage.Data.DateTime.Should().Be(request.dateTime);
         appointmentMessage.Data.ProfessorProgress.Should().Be(request.professorProgress);
         appointmentMessage.Data.StudentProgress.Should().Be(request.studentProgress);
+
     }
 
     [Fact]

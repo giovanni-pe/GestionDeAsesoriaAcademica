@@ -30,30 +30,32 @@ public sealed class GetAllAppointmentsQueryHandler :
         AppointmentsQuery request,
         CancellationToken cancellationToken)
     {
-        var AppointmentsQuery = _AppointmentRepository
-    .GetAllNoTracking()
-    .IgnoreQueryFilters()
-    .Include(x => x.Id) // Include the related entity without the Where clause
-    .Where(x => request.IncludeDeleted || !x.Deleted);
-
+        var appointmentsQuery = _AppointmentRepository
+            .GetAllNoTracking()
+            .IgnoreQueryFilters()
+            .Include(x => x.ProfessorId) // Incluye la entidad relacionada Professor
+            .Include(x => x.StudentId) // Incluye la entidad relacionada Student
+            
+            .Where(x => request.IncludeDeleted || !x.Deleted);
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            //  AppointmentsQuery = AppointmentsQuery.Where(Appointment =>
-            //    Appointment.ResearchGroup.Contains(request.SearchTerm));
+            //appointmentsQuery = appointmentsQuery.Where(appointment =>
+            //    appointment.Subject.Contains(request.SearchTerm)); // Suponiendo que Subject es un campo en Appointment
         }
 
-        var totalCount = await AppointmentsQuery.CountAsync(cancellationToken);
+        var totalCount = await appointmentsQuery.CountAsync(cancellationToken);
 
-        AppointmentsQuery = AppointmentsQuery.GetOrderedQueryable(request.SortQuery, _sortingExpressionProvider);
+        appointmentsQuery = appointmentsQuery.GetOrderedQueryable(request.SortQuery, _sortingExpressionProvider);
 
-        var Appointments = await AppointmentsQuery
+        var appointments = await appointmentsQuery
             .Skip((request.Query.Page - 1) * request.Query.PageSize)
             .Take(request.Query.PageSize)
-            .Select(Appointment => AppointmentViewModel.FromAppointment(Appointment))
+            .Select(appointment => AppointmentViewModel.FromAppointment(appointment))
             .ToListAsync(cancellationToken);
 
         return new PagedResult<AppointmentViewModel>(
-            totalCount, Appointments, request.Query.Page, request.Query.PageSize);
+            totalCount, appointments, request.Query.Page, request.Query.PageSize);
     }
+
 }
