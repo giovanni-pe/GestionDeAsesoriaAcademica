@@ -20,7 +20,9 @@ namespace CleanArchitecture.Api.Controllers;
 [ApiController]
 //[Authorize]
 [Route("/api/v1/[controller]")]
-
+/// <summary>
+/// By Perez
+/// </summary>
 public sealed class AdvisoryContractController : ApiController
 {
     private readonly IAdvisoryContractService _AdvisoryContractService;
