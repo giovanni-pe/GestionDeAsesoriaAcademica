@@ -1,7 +1,7 @@
 using System;
 
 namespace CleanArchitecture.Domain.Commands.Professors.CreateProfessor;
-
+//feature Proffesor and asesor
 public sealed class CreateProfessorCommand : CommandBase
 {
     private static readonly CreateProfessorCommandValidation s_validation = new();
