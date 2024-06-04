@@ -1,5 +1,5 @@
 ﻿using System;
-
+//Modelo advisory contract
 namespace CleanArchitecture.Domain.Entities
 {
     public class AdvisoryContract : Entity
