@@ -15,21 +15,21 @@ namespace CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
 public sealed class CreateAppointmentCommandHandler : CommandHandlerBase,
     IRequestHandler<CreateAppointmentCommand>
 {
-    private readonly IAppointmentRepository _AppointmentRepository;
-    private readonly IUserRepository _UserRepository;
+    private readonly IAppointmentRepository _appointmentRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IUser _user;
 
     public CreateAppointmentCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,
-        IAppointmentRepository AppointmentRepository,
-        IUserRepository UserRepository,
+        IAppointmentRepository appointmentRepository,
+        IUserRepository userRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
-        _AppointmentRepository = AppointmentRepository;
+        _appointmentRepository = appointmentRepository;
         _user = user;
-        _UserRepository = UserRepository;
+        _userRepository = userRepository;
     }
 
     public async Task Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
@@ -39,36 +39,49 @@ public sealed class CreateAppointmentCommandHandler : CommandHandlerBase,
             return;
         }
 
-         if (_user.GetUserRole() != UserRole.Admin)
-         {
-             await NotifyAsync(
-                 new DomainNotification(
-                     request.MessageType,
-                     $"No permission to create Appointment {request.AggregateId}",
-                     ErrorCodes.InsufficientPermissions));
+        try
+        {
+            //var userRole = _user.GetUserRole();
+            //if (userRole != UserRole.Admin)
+            //{
+            //    await NotifyAsync(
+            //        new DomainNotification(
+            //            request.MessageType,
+            //            $"No permission to create Appointment {request.AggregateId}",
+            //            ErrorCodes.InsufficientPermissions));
 
-             return;
-         }
-
-        if (await _AppointmentRepository.ExistsAsync(request.AggregateId))
+            //    return;
+            //}
+        }
+        catch (ArgumentException ex)
         {
             await NotifyAsync(
                 new DomainNotification(
                     request.MessageType,
-                    $"There is already a Appointment with Id {request.AggregateId}",
+                    $"Failed to parse user role: {ex.Message}",
+                    ErrorCodes.InvalidUserRole));
+            return;
+        }
+
+        if (await _appointmentRepository.ExistsAsync(request.AggregateId))
+        {
+            await NotifyAsync(
+                new DomainNotification(
+                    request.MessageType,
+                    $"There is already an Appointment with Id {request.AggregateId}",
                     DomainErrorCodes.Appointment.AlreadyExists));
 
             return;
         }
 
-        var Appointment = new Appointment(
-            request.AggregateId ,request.ProfessorId,  request.StudentId, request.CalendarId, request.DateTime , request.ProfessorProgress ,  request.StudentProgress);
-        _AppointmentRepository.Add(Appointment);
+        var appointment = new Appointment(
+            request.AggregateId, request.ProfessorId, request.StudentId, request.CalendarId, request.DateTime, request.ProfessorProgress, request.StudentProgress);
+        _appointmentRepository.Add(appointment);
 
         if (await CommitAsync())
         {
             await Bus.RaiseEventAsync(new AppointmentCreatedEvent(
-               Appointment.Id ,Appointment.ProfessorId, Appointment.StudentId, Appointment.CalendarId, Appointment.DateTime , Appointment.ProfessorProgress , Appointment.StudentProgress));
+               appointment.Id, appointment.ProfessorId, appointment.StudentId, appointment.CalendarId, appointment.DateTime, appointment.ProfessorProgress, appointment.StudentProgress));
         }
     }
 }

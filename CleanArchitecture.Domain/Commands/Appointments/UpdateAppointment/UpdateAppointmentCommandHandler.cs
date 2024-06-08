@@ -11,28 +11,27 @@ using MediatR;
 namespace CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment;
 
 public sealed class UpdateAppointmentCommandHandler : CommandHandlerBase,
-    IRequestHandler<UpdateAppointmentCommand, Unit>
+    IRequestHandler<UpdateAppointmentCommand>
 {
-    private readonly IAppointmentRepository _appointmentRepository;
+    private readonly IAppointmentRepository _AppointmentRepository;
     private readonly IUser _user;
 
     public UpdateAppointmentCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,
-        IAppointmentRepository appointmentRepository,
-        IUserRepository userRepository,
+        IAppointmentRepository AppointmentRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
-        _appointmentRepository = appointmentRepository;
+        _AppointmentRepository = AppointmentRepository;
         _user = user;
     }
-   
-    public async Task<Unit> Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
+
+    public async Task Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
     {
         if (!await TestValidityAsync(request))
         {
-            return Unit.Value;
+            return;
         }
 
         if (_user.GetUserRole() != UserRole.Admin)
@@ -41,42 +40,33 @@ public sealed class UpdateAppointmentCommandHandler : CommandHandlerBase,
                 new DomainNotification(
                     request.MessageType,
                     $"No permission to update Appointment {request.AggregateId}",
-                    DomainErrorCodes.Appointment.InsufficientPermissions));
+                    ErrorCodes.InsufficientPermissions));
 
-            return Unit.Value;
+            return;
         }
 
-        var appointment = await _appointmentRepository.GetByIdAsync(request.AggregateId);
+        var Appointment = await _AppointmentRepository.GetByIdAsync(request.AggregateId);
 
-        if (appointment is null)
+        if (Appointment is null)
         {
             await NotifyAsync(
                 new DomainNotification(
                     request.MessageType,
                     $"There is no Appointment with Id {request.AggregateId}",
-                    DomainErrorCodes.Appointment.NotFound));
+                    ErrorCodes.ObjectNotFound));
 
-            return Unit.Value;
+            return;
         }
 
-        appointment.SetDateTime(request.DateTime);
-        appointment.SetProfessorProgress(request.ProfessorProgress);
-        appointment.SetStudentProgress(request.StudentProgress);
 
-        _appointmentRepository.Update(appointment);
+        Appointment.SetDateTime(request.DateTime);
+        Appointment.SetProfessorProgress(request.ProfessorProgress);
+        Appointment.SetStudentProgress(request.StudentProgress);
 
         if (await CommitAsync())
         {
             await Bus.RaiseEventAsync(new AppointmentUpdatedEvent(
-                appointment.Id,
-                appointment.ProfessorId,
-                appointment.StudentId,
-                appointment.CalendarId,
-                appointment.DateTime,
-                appointment.ProfessorProgress,
-                appointment.StudentProgress));
+                Appointment.Id, Appointment.ProfessorId, Appointment.StudentId  , Appointment.CalendarId , Appointment.DateTime,Appointment.ProfessorProgress , Appointment.StudentProgress));
         }
-
-        return Unit.Value;
     }
 }

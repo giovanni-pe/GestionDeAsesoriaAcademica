@@ -7,7 +7,7 @@ namespace CleanArchitecture.Domain.Commands.Appointments.CreateAppointment
         private static readonly CreateAppointmentCommandValidation s_validation = new();
 
         public Guid ProfessorId { get; set; }
-     
+        public Guid AppointmentId { get; set; }
         public Guid StudentId { get; set; }
         public Guid CalendarId { get; set; }
         public DateTime DateTime { get; set; }
@@ -16,8 +16,8 @@ namespace CleanArchitecture.Domain.Commands.Appointments.CreateAppointment
 
         public CreateAppointmentCommand(Guid appointmentId, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress) : base(appointmentId)
         {
+            AppointmentId = appointmentId;
             ProfessorId = professorId;
-         
             StudentId = studentId;
             CalendarId = calendarId;
             DateTime = dateTime;

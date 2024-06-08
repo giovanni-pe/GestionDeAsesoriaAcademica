@@ -66,14 +66,31 @@ public sealed class AppointmentController : ApiController
         return Response(AppointmentId);
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     [SwaggerOperation("Update an existing Appointment")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<UpdateAppointmentViewModel>))]
-    public async Task<IActionResult> UpdateAppointmentAsync([FromBody] UpdateAppointmentViewModel Appointment)
+    public async Task<IActionResult> UpdateAppointmentAsync([FromRoute] Guid id, [FromBody] UpdateAppointmentViewModel appointment)
     {
-        await _AppointmentService.UpdateAppointmentAsync(Appointment);
-        return Response(Appointment);
+        if (id != appointment.appointmentId)
+        {
+            return BadRequest(new { Message = "The ID in the route does not match the ID in the body." });
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        //var result = await _AppointmentService.UpdateAppointmentAsync1(appointment);
+        //if (!result)
+        //{
+        //    return NotFound(new { Message = "Appointment not found." });
+        //}
+
+        return Response(appointment);
     }
+
+
 
     [HttpDelete("{id}")]
     [SwaggerOperation("Delete an existing Appointment")]

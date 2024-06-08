@@ -33,8 +33,8 @@ public sealed class GetAllAppointmentsQueryHandler :
         var appointmentsQuery = _AppointmentRepository
             .GetAllNoTracking()
             .IgnoreQueryFilters()
-            .Include(x => x.ProfessorId) // Incluye la entidad relacionada Professor
-            .Include(x => x.StudentId) // Incluye la entidad relacionada Student
+            .Include(x => x.Professor) // Incluye la entidad relacionada Professor
+            .Include(x => x.Student) // Incluye la entidad relacionada Student
             
             .Where(x => request.IncludeDeleted || !x.Deleted);
 

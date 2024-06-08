@@ -2,6 +2,7 @@
 using CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment;
 using CleanArchitecture.Domain.Enums;
 using CleanArchitecture.Domain.Interfaces.Repositories;
+using MediatR;
 using NSubstitute;
 
 namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.UpdateAppointment
@@ -19,11 +20,12 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.UpdateAppoin
             UserRepository = Substitute.For<IUserRepository>();
 
             CommandHandler = new UpdateAppointmentCommandHandler(
+                
                 Bus,
                 UnitOfWork,
                 NotificationHandler,
                 AppointmentRepository,
-                UserRepository,
+                
                 User);
         }
 

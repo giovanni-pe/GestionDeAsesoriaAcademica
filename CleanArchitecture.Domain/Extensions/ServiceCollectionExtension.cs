@@ -36,6 +36,7 @@ using CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment;
 using CleanArchitecture.Domain.Commands.Appointments.DeleteAppointment;
 using CleanArchitecture.Shared.Events.Appointment;
 
+
 namespace CleanArchitecture.Domain.Extensions;
 
 public static class ServiceCollectionExtension
@@ -60,7 +61,9 @@ public static class ServiceCollectionExtension
         //Appointment
 
         services.AddScoped<IRequestHandler<CreateAppointmentCommand>, CreateAppointmentCommandHandler>();
-       
+        // Appointment
+        services.AddScoped<IRequestHandler<UpdateAppointmentCommand>, UpdateAppointmentCommandHandler>();
+
         services.AddScoped<IRequestHandler<DeleteAppointmentCommand>, DeleteAppointmentCommandHandler>();
 
         //  ResearchLine  
