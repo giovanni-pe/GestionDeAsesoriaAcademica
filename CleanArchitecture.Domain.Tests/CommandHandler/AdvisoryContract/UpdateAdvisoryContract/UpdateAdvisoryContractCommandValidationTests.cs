@@ -32,22 +32,27 @@ public sealed class UpdateAdvisoryContractCommandValidationTests :
     }
 
     [Fact]
-    public void Should_Be_Invalid_For_Empty_AdvisoryContract_Name()
+    public void Should_Be_Invalid_For_Empty_AdvisoryContract_Message()
     {
-        var command = CreateTestCommand(name: "");
+        var command = CreateTestCommand(message: "");
 
         ShouldHaveSingleError(
             command,
-            DomainErrorCodes.AdvisoryContract.EmptyName,
-            "Name may not be empty");
+            DomainErrorCodes.AdvisoryContract.EmptyMessage,
+            "Message may not be empty");
     }
 
     private static UpdateAdvisoryContractCommand CreateTestCommand(
         Guid? id = null,
-        string? name = null)
+        Guid? professorId = null,
+        Guid? studentId = null,
+        Guid? researchLineId = null,
+        string? tesisTopic = null,
+        string? message = null,
+        string? status=null)
     {
         return new UpdateAdvisoryContractCommand(
-            id ?? Guid.NewGuid(), id ?? Guid.NewGuid(),
-            name ?? "Test AdvisoryContract");
+            id ?? Guid.NewGuid(), professorId ?? Guid.NewGuid(),studentId ?? Guid.NewGuid(),researchLineId?? Guid.NewGuid(),tesisTopic??"testopic",message??"testmessage",
+            status?? "Teststauts");
     }
 }

@@ -19,7 +19,10 @@ namespace CleanArchitecture.Infrastructure.Configurations
 
             builder
                 .Property(contract => contract.Message)
+                .IsRequired()
                 .HasMaxLength(1000);
+          
+            
 
             builder
                 .Property(contract => contract.Status)

@@ -9,7 +9,7 @@ public sealed class UpdateAdvisoryContractCommandValidation : AbstractValidator<
     public UpdateAdvisoryContractCommandValidation()
     {
         AddRuleForId();
-        AddRuleForName();
+        AddRuleForMessage();
     }
 
     private void AddRuleForId()
@@ -20,14 +20,14 @@ public sealed class UpdateAdvisoryContractCommandValidation : AbstractValidator<
             .WithMessage("AdvisoryContract id may not be empty");
     }
 
-    private void AddRuleForName()
+    private void AddRuleForMessage()
     {
-        RuleFor(cmd => cmd.Status)
+        RuleFor(cmd => cmd.Message)
             .NotEmpty()
-            .WithErrorCode(DomainErrorCodes.AdvisoryContract.EmptyCode)
-            .WithMessage("Name may not be empty")
+            .WithErrorCode(DomainErrorCodes.AdvisoryContract.EmptyMessage)
+            .WithMessage("Message may not be empty")
             .MaximumLength(MaxLengths.AdvisoryContract.Status)
-            .WithErrorCode(DomainErrorCodes.AdvisoryContract.CodeExceedsMaxLength)
-            .WithMessage($"Name may not be longer than {MaxLengths.AdvisoryContract.Status} characters");
+            .WithErrorCode(DomainErrorCodes.AdvisoryContract.ThesisTopicExceedsMaxLength)
+            .WithMessage($"Message may not be longer than {MaxLengths.AdvisoryContract.Status} characters");
     }
 }

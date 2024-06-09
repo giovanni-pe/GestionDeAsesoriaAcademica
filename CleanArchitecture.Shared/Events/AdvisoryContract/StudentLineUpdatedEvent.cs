@@ -4,8 +4,6 @@ namespace CleanArchitecture.Shared.Events.AdvisoryContract;
 
 public sealed class AdvisoryContractUpdatedEvent : DomainEvent
 {
-    public Guid UserId { get; set; }
-
 
     public Guid ProfessorId { get; private set; }
 

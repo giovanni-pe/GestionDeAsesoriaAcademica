@@ -33,7 +33,7 @@ public sealed class GetAllAdvisoryContractsQueryHandler :
         var AdvisoryContractsQuery = _AdvisoryContractRepository
     .GetAllNoTracking()
     .IgnoreQueryFilters()
-    .Include(x => x.Student) // Include the related entity without the Where clause
+    .Include(x => x.Student)
     .Where(x => request.IncludeDeleted || !x.Deleted);
 
 

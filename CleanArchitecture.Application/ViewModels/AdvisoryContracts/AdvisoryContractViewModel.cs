@@ -11,17 +11,17 @@ namespace CleanArchitecture.Application.ViewModels.AdvisoryContracts;
 public sealed class AdvisoryContractViewModel
 {
     public Guid AdvisoryContractId { get; set; }
-    public Guid ProfessorId { get; private set; }
+    public Guid ProfessorId { get;  set; }
 
-    public Guid StudentId { get; private set; }
+    public Guid StudentId { get; set; }
 
-    public Guid ResearchLineId { get; private set; }
-    public string ThesisTopic { get; private set; }
-    public string Message { get; private set; }
-    public string Status { get; private set; }
+    public Guid ResearchLineId { get;  set; }
+    public string ThesisTopic { get; set; }
+    public string Message { get;  set; }
+    public string Status { get;  set; }
     public StudentViewModel Student { get; set; }
-    public ProfessorViewModel Professor { get; private set; }
-    public ResearchLineViewModel ResearchLine { get; private set; }
+    public ProfessorViewModel Professor { get;  set; }
+    public ResearchLineViewModel ResearchLine { get; set; }
 
 
     public static AdvisoryContractViewModel FromAdvisoryContract(AdvisoryContract AdvisoryContract)

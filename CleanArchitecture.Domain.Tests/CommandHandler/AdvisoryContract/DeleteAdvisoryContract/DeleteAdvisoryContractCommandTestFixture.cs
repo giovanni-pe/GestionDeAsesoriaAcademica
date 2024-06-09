@@ -29,7 +29,7 @@ public sealed class DeleteAdvisoryContractCommandTestFixture : CommandHandlerFix
 
     public Entities.AdvisoryContract SetupAdvisoryContract()
     {
-        var AdvisoryContract = new Entities.AdvisoryContract(Guid.NewGuid(),"Test AdvisoryContract",Guid.NewGuid(),"testcode");
+        var AdvisoryContract = new Entities.AdvisoryContract(Guid.NewGuid(),Guid.NewGuid(), Guid.NewGuid(),Guid.NewGuid(), "Test AdvisoryContract","testcode","piendiente");
 
         AdvisoryContractRepository
             .GetByIdAsync(Arg.Is<Guid>(y => y == AdvisoryContract.Id))

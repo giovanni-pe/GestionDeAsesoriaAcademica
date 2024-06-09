@@ -10,12 +10,18 @@ public sealed class StudentViewModel
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    public UserViewModel User { get; set; }
+    public UserViewModel User { get; set; } = new UserViewModel();
     public string Code { get; set; } = string.Empty;
     
 
     public static StudentViewModel FromStudent(Student student)
+
     {
+        if (student == null)
+        {
+            throw new ArgumentNullException(nameof(student), "El parámetro student no puede ser nulo.");
+        }
+
         return new StudentViewModel
         {
             Id = student.Id,

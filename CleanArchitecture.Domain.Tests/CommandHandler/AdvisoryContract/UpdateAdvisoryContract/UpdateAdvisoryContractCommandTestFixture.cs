@@ -33,6 +33,6 @@ public sealed class UpdateAdvisoryContractCommandTestFixture : CommandHandlerFix
     {
         AdvisoryContractRepository
             .GetByIdAsync(Arg.Is<Guid>(x => x == id))
-            .Returns(new Entities.AdvisoryContract(id, "Test AdvisoryContract",Guid.NewGuid(),"testcode"));
+            .Returns(new Entities.AdvisoryContract(id ,Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),"test","testcode","test"));
     }
 }

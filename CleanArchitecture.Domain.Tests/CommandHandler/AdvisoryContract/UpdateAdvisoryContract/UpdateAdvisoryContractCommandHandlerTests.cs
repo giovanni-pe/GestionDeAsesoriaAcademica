@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using CleanArchitecture.Domain.Commands.AdvisoryContracts.UpdateAdvisoryContract;
+using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Errors;
 using CleanArchitecture.Shared.Events.AdvisoryContract;
 using Xunit;
@@ -11,13 +12,12 @@ public sealed class UpdateAdvisoryContractCommandHandlerTests
 {
     private readonly UpdateAdvisoryContractCommandTestFixture _fixture = new();
 
-   /** [Fact]
+   [Fact]
     public async Task Should_Update_AdvisoryContract()
     {
         var command = new UpdateAdvisoryContractCommand(
-            Guid.NewGuid(),Guid.NewGuid(),
-            "AdvisoryContract Name");
-
+            Ids.Seed.AdvisoryContractId, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
+            "testTesisTopic", "testMessage", "testStatus");
         _fixture.SetupExistingAdvisoryContract(command.AggregateId);
 
         await _fixture.CommandHandler.Handle(command, default);
@@ -26,16 +26,15 @@ public sealed class UpdateAdvisoryContractCommandHandlerTests
             .VerifyCommit()
             .VerifyNoDomainNotification()
             .VerifyRaisedEvent<AdvisoryContractUpdatedEvent>(x =>
-                x.AggregateId == command.AggregateId &&
-                x.ResearchGroupId == command.ResearchGroupId);
-    }**/
+                x.AggregateId == command.AggregateId);
+    }
 
     [Fact]
     public async Task Should_Not_Update_AdvisoryContract_Insufficient_Permissions()
     {
         var command = new UpdateAdvisoryContractCommand(
-            Guid.NewGuid(),Guid.NewGuid(),
-            "AdvisoryContract Name");
+            Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),"testTesisTopic","testMessage",
+            "testStatus");
 
         _fixture.SetupUser();
 
@@ -54,8 +53,8 @@ public sealed class UpdateAdvisoryContractCommandHandlerTests
     public async Task Should_Not_Update_AdvisoryContract_Not_Existing()
     {
         var command = new UpdateAdvisoryContractCommand(
-            Guid.NewGuid(),Guid.NewGuid(),
-            "AdvisoryContract Name");
+            Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),"topictest","test",
+            "testStatus");
 
         await _fixture.CommandHandler.Handle(command, default);
 

@@ -16,20 +16,27 @@ public sealed class CreateAdvisoryContractCommandHandler : CommandHandlerBase,
     IRequestHandler<CreateAdvisoryContractCommand>
 {
     private readonly IAdvisoryContractRepository _AdvisoryContractRepository;
-    private readonly IUserRepository _UserRepository;
+   // private readonly IUserRepository _UserRepository;
+
     private readonly IUser _user;
+    private readonly IProfessorRepository _professorRepository;
+    private readonly IStudentRepository _studentRepository;
+    private readonly IResearchLineRepository _researchLineRepository;
 
     public CreateAdvisoryContractCommandHandler(
         IMediatorHandler bus,
         IUnitOfWork unitOfWork,
         INotificationHandler<DomainNotification> notifications,
-        IAdvisoryContractRepository AdvisoryContractRepository,
-        IUserRepository UserRepository,
+        IAdvisoryContractRepository AdvisoryContractRepository,IProfessorRepository ProfessorRepository,IStudentRepository studentRepository,
+        IResearchLineRepository researchLineRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
         _AdvisoryContractRepository = AdvisoryContractRepository;
+        _professorRepository = ProfessorRepository;
+        _studentRepository = studentRepository;
+        _researchLineRepository = researchLineRepository;
         _user = user;
-        _UserRepository = UserRepository;
+        
     }
 
     public async Task Handle(CreateAdvisoryContractCommand request, CancellationToken cancellationToken)
@@ -39,7 +46,7 @@ public sealed class CreateAdvisoryContractCommandHandler : CommandHandlerBase,
             return;
         }
 
-       /* if (_user.GetUserRole() != UserRole.Admin)
+       if (_user.GetUserRole() != UserRole.Admin)
         {
             await NotifyAsync(
                 new DomainNotification(
@@ -48,7 +55,7 @@ public sealed class CreateAdvisoryContractCommandHandler : CommandHandlerBase,
                     ErrorCodes.InsufficientPermissions));
 
             return;
-        }*/
+        }
 
         if (await _AdvisoryContractRepository.ExistsAsync(request.AggregateId))
         {

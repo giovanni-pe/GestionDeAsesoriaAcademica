@@ -11,17 +11,21 @@ public sealed class CreateAdvisoryContractCommandTestFixture : CommandHandlerFix
     public CreateAdvisoryContractCommandHandler CommandHandler { get; }
 
     private IAdvisoryContractRepository AdvisoryContractRepository { get; }
-    private IResearchGroupRepository ResearchGroupRepository { get; }
+    private IResearchLineRepository ResearchLineRepository { get; }
+    private IProfessorRepository ProfessorRepository { get; }
+
+    private IStudentRepository StudentRepository { get; }
     public CreateAdvisoryContractCommandTestFixture()
     {
         AdvisoryContractRepository = Substitute.For<IAdvisoryContractRepository>();
-        ResearchGroupRepository = Substitute.For<IResearchGroupRepository>();
-
+        ProfessorRepository=Substitute.For<IProfessorRepository>();
+        StudentRepository = Substitute.For<IStudentRepository>();
+        ResearchLineRepository=Substitute.For<IResearchLineRepository>();
         CommandHandler = new CreateAdvisoryContractCommandHandler(
             Bus,
             UnitOfWork,
             NotificationHandler,
-            AdvisoryContractRepository,,
+            AdvisoryContractRepository,ProfessorRepository,StudentRepository,ResearchLineRepository,
             User);
     }
 

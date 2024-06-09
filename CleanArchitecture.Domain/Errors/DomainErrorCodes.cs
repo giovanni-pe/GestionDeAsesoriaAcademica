@@ -93,8 +93,9 @@ public static class DomainErrorCodes
     {
         // Professor Validation
         public const string EmptyId = "ADVISORYCONTRACT_EMPTY_ID";
-        public const string EmptyCode = "ADVISORYCONTRACT_EMPTY_CODE";
-        public const string CodeExceedsMaxLength = "ADVISORYCONTRACT_CODE_EXCEEDS_MAX_LENGTH";
+        public const string EmptyMessage = "ADVISORYCONTRACT_EMPTY_MESSAGE";
+        public static string EmptyThesisTopic = "ADVISORYCONTRAC_EMPTY_THESISTOPIC";
+        public const string ThesisTopicExceedsMaxLength = "ADVISORYCONTRACT_CODE_EXCEEDS_MAX_LENGTH";
 
         // General
         public const string AlreadyExists = "ADVISORYCONTRACT_ALREADY_EXISTS";

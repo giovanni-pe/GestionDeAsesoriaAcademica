@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Linq;
 using CleanArchitecture.Domain.Commands.AdvisoryContracts.CreateAdvisoryContract;
 using CleanArchitecture.Domain.Errors;
 using Xunit;
@@ -32,22 +33,35 @@ public sealed class CreateAdvisoryContractCommandValidationTests :
     }
 
     [Fact]
-    public void Should_Be_Invalid_For_Empty_AdvisoryContract_Name()
+    public void Should_Be_Invalid_For_Empty_AdvisoryContract_message()
     {
-        var command = CreateTestCommand(name: "");
+        var command = CreateTestCommand(message: "");
 
         ShouldHaveSingleError(
             command,
-            DomainErrorCodes.AdvisoryContract.EmptyCode,
-            "Name may not be empty");
+            DomainErrorCodes.AdvisoryContract.EmptyMessage,
+            "Message may not be empty");
     }
+
 
     private static CreateAdvisoryContractCommand CreateTestCommand(
         Guid? id = null,
-        string? name = null)
+         Guid? professorId = null,
+         Guid? studentId = null,
+         Guid? researchLineId = null,
+        string?message = null,
+        string?tesisTopic=null,
+        string?status=null)
     {
         return new CreateAdvisoryContractCommand(
-            id ?? Guid.NewGuid(), id ?? Guid.NewGuid(), id ?? Guid.NewGuid(), id ?? Guid.NewGuid(),
-            name ?? "Test AdvisoryContract","testcode");
+            id ?? Guid.NewGuid(),
+            professorId??Guid.NewGuid(),
+            studentId ?? Guid.NewGuid(),
+            researchLineId ?? Guid.NewGuid(),
+            tesisTopic ?? "tesisTopic",
+            message ?? "message",   
+            status??"sta");
     }
 }
+
+      
