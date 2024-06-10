@@ -1,5 +1,26 @@
 ﻿using System;
 
-namespace CleanArchitecture.Application.ViewModels.Appointments;
+public class UpdateAppointmentViewModel
+{
+    public Guid appointmentId { get; set; }
+    public Guid professorId { get; set; }
+    public Guid studentId { get; set; }
+    public Guid calendarId { get; set; }
+    public DateTime dateTime { get; set; }
+    public string professorProgress { get; set; }
+    public string studentProgress { get; set; }
 
-public sealed record UpdateAppointmentViewModel(Guid appointmentId, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress);
+    public UpdateAppointmentViewModel(Guid appointmentId, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress)
+    {
+        this.appointmentId = appointmentId;
+        this.professorId = professorId;
+        this.studentId = studentId;
+        this.calendarId = calendarId;
+        this.dateTime = dateTime;
+        this.professorProgress = professorProgress;
+        this.studentProgress = studentProgress;
+    }
+
+    // Constructor sin parámetros para la serialización
+    public UpdateAppointmentViewModel() { }
+}
