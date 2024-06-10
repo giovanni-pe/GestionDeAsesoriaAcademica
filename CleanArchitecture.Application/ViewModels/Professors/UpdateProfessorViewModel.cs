@@ -4,4 +4,4 @@ namespace CleanArchitecture.Application.ViewModels.Professors;
 
 public sealed record UpdateProfessorViewModel(
     Guid Id,
-    Guid UserId, Guid ResearchGroupId, bool IsCoordinator);
+    Guid userId, Guid researchGroupId, bool isCoordinator);

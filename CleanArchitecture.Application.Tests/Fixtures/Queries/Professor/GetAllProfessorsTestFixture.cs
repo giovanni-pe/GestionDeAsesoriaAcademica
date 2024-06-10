@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CleanArchitecture.Application.Queries.Professors.GetAll;
 using CleanArchitecture.Application.SortProviders;
+using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using MockQueryable.NSubstitute;
@@ -24,7 +25,7 @@ public sealed class GetAllProfessorsTestFixture : QueryHandlerBaseFixture
 
     public Professor SetupProfessor(bool deleted = false)
     {
-        var Professor = new Professor(Guid.NewGuid(), "Professor 1", Guid.NewGuid(), "sw123");
+        var Professor = new Professor(Ids.Seed.ProfessorId, Ids.Seed.UserId, Ids.Seed.ResearchGroupId, false);
 
         if (deleted)
         {

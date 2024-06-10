@@ -9,6 +9,7 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using CleanArchitecture.Application.Queries.ResearchLines.GetAll;
 
 namespace CleanArchitecture.Application.Queries.Professors.GetAll;
 
@@ -38,12 +39,11 @@ public sealed class GetAllProfessorsQueryHandler :
     .Where(x => request.IncludeDeleted || !x.Deleted);
 
 
-        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
-        {
-          //  ProfessorsQuery = ProfessorsQuery.Where(Professor =>
-            //    Professor.ResearchGroup.Contains(request.SearchTerm));
-        }
-
+        //if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+        //{
+        //    ProfessorsQuery = ProfessorsQuery.Where(Professor =>
+        //        Professor.ResearchGroup.Contains(request.SearchTerm));
+        //}
         var totalCount = await ProfessorsQuery.CountAsync(cancellationToken);
 
         ProfessorsQuery = ProfessorsQuery.GetOrderedQueryable(request.SortQuery, _sortingExpressionProvider);

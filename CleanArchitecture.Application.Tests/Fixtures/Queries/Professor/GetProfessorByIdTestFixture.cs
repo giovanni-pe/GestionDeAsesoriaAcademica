@@ -1,5 +1,6 @@
 using System;
 using CleanArchitecture.Application.Queries.Professors.GetProfessorById;
+using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using NSubstitute;
@@ -22,7 +23,7 @@ public sealed class GetProfessorByIdTestFixture : QueryHandlerBaseFixture
 
     public Professor SetupProfessor(bool deleted = false)
     {
-        var Professor = new Professor(Guid.NewGuid(), "Professor 1", Guid.NewGuid(),"sw123");
+        var Professor = new Professor(Ids.Seed.ProfessorId, Ids.Seed.UserId, Ids.Seed.ResearchGroupId, false);
 
         if (deleted)
         {

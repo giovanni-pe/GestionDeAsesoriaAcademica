@@ -32,7 +32,7 @@ public sealed class ProfessorService : IProfessorService
     {
         var ProfessorId = Guid.NewGuid();
         await _bus.SendCommandAsync(new CreateProfessorCommand(
-            ProfessorId,Professor.UserId,Professor.ResearchGroupId,Professor.IsCoordinator));
+            ProfessorId,Professor.userId,Professor.researchGroupId,Professor.isCoordinator));
 
         return ProfessorId;
     }
@@ -40,7 +40,7 @@ public sealed class ProfessorService : IProfessorService
     public async Task UpdateProfessorAsync(UpdateProfessorViewModel Professor)
     {
         await _bus.SendCommandAsync(new UpdateProfessorCommand(
-            Professor.Id,Professor.UserId,Professor.ResearchGroupId,Professor.IsCoordinator));
+            Professor.Id,Professor.userId,Professor.researchGroupId,Professor.isCoordinator));
     }
 
     public async Task DeleteProfessorAsync(Guid ProfessorId)
