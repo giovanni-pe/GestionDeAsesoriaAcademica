@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
+using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Errors;
 using CleanArchitecture.Shared.Events.Appointment;
 using Xunit;
@@ -63,7 +64,7 @@ public sealed class CreateAppointmentCommandHandlerTests
     public async Task Should_Not_Create_Appointment_Already_Exists()
     {
         var command = new CreateAppointmentCommand(
-            Guid.NewGuid(),
+           Ids.Seed.AppointmentId,
             professorId: Guid.NewGuid(),
             studentId: Guid.NewGuid(),
             calendarId: Guid.NewGuid(),
