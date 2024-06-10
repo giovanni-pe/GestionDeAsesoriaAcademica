@@ -18,6 +18,7 @@ public sealed class CreateProfessorCommandHandler : CommandHandlerBase,
     private readonly IProfessorRepository _ProfessorRepository;
     private readonly IUserRepository _UserRepository;
     private readonly IUser _user;
+    private readonly IResearchGroupRepository _researchGroupRepository;
 
     public CreateProfessorCommandHandler(
         IMediatorHandler bus,
@@ -25,11 +26,13 @@ public sealed class CreateProfessorCommandHandler : CommandHandlerBase,
         INotificationHandler<DomainNotification> notifications,
         IProfessorRepository ProfessorRepository,
         IUserRepository UserRepository,
+        IResearchGroupRepository researchGroupRepository,
         IUser user) : base(bus, unitOfWork, notifications)
     {
         _ProfessorRepository = ProfessorRepository;
         _user = user;
         _UserRepository = UserRepository;
+        _researchGroupRepository = researchGroupRepository;
     }
 
     public async Task Handle(CreateProfessorCommand request, CancellationToken cancellationToken)
@@ -39,7 +42,7 @@ public sealed class CreateProfessorCommandHandler : CommandHandlerBase,
             return;
         }
 
-       /* if (_user.GetUserRole() != UserRole.Admin)
+        if (_user.GetUserRole() != UserRole.Admin)
         {
             await NotifyAsync(
                 new DomainNotification(
@@ -48,7 +51,7 @@ public sealed class CreateProfessorCommandHandler : CommandHandlerBase,
                     ErrorCodes.InsufficientPermissions));
 
             return;
-        }*/
+        }
 
         if (await _ProfessorRepository.ExistsAsync(request.AggregateId))
         {
