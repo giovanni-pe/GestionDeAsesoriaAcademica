@@ -21,13 +21,13 @@ namespace CleanArchitecture.Api.Controllers;
 [Route("/api/v1/[controller]")]
 public sealed class AppointmentController : ApiController
 {
-    private readonly IAppointmentService _AppointmentService;
+    private readonly IAppointmentService _appointmentService;
 
     public AppointmentController(
         INotificationHandler<DomainNotification> notifications,
-        IAppointmentService AppointmentService) : base(notifications)
+        IAppointmentService appointmentService) : base(notifications)
     {
-        _AppointmentService = AppointmentService;
+        _appointmentService = appointmentService;
     }
 
     [HttpGet]
@@ -40,12 +40,12 @@ public sealed class AppointmentController : ApiController
         [FromQuery] [SortableFieldsAttribute<AppointmentViewModelSortProvider, AppointmentViewModel, Appointment>]
         SortQuery? sortQuery = null)
     {
-        var Appointments = await _AppointmentService.GetAllAppointmentsAsync(
+        var appointments = await _appointmentService.GetAllAppointmentsAsync(
             query,
             includeDeleted,
             searchTerm,
             sortQuery);
-        return Response(Appointments);
+        return Response(appointments);
     }
 
     [HttpGet("{id}")]
@@ -53,17 +53,17 @@ public sealed class AppointmentController : ApiController
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<AppointmentViewModel>))]
     public async Task<IActionResult> GetAppointmentByIdAsync([FromRoute] Guid id)
     {
-        var Appointment = await _AppointmentService.GetAppointmentByIdAsync(id);
-        return Response(Appointment);
+        var appointment = await _appointmentService.GetAppointmentByIdAsync(id);
+        return Response(appointment);
     }
 
     [HttpPost]
     [SwaggerOperation("Create a new Appointment")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
-    public async Task<IActionResult> CreateAppointmentAsync([FromBody] CreateAppointmentViewModel Appointment)
+    public async Task<IActionResult> CreateAppointmentAsync([FromBody] CreateAppointmentViewModel appointment)
     {
-        var AppointmentId = await _AppointmentService.CreateAppointmentAsync(Appointment);
-        return Response(AppointmentId);
+        var appointmentId = await _appointmentService.CreateAppointmentAsync(appointment);
+        return Response(appointmentId);
     }
 
     [HttpPut("{id}")]
@@ -81,23 +81,19 @@ public sealed class AppointmentController : ApiController
             return BadRequest(ModelState);
         }
 
-        //var result = await _AppointmentService.UpdateAppointmentAsync1(appointment);
-        //if (!result)
-        //{
-        //    return NotFound(new { Message = "Appointment not found." });
-        //}
+        await _appointmentService.UpdateAppointmentAsync(appointment);
 
         return Response(appointment);
     }
-
-
 
     [HttpDelete("{id}")]
     [SwaggerOperation("Delete an existing Appointment")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
     public async Task<IActionResult> DeleteAppointmentAsync([FromRoute] Guid id)
     {
-        await _AppointmentService.DeleteAppointmentAsync(id);
+        await _appointmentService.DeleteAppointmentAsync(id);
         return Response(id);
     }
+
+    // Resto del código...
 }

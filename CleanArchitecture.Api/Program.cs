@@ -2,6 +2,7 @@ using CleanArchitecture.Api.BackgroundServices;
 using CleanArchitecture.Api.Extensions;
 using CleanArchitecture.Application.Extensions;
 using CleanArchitecture.Application.gRPC;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Domain.Extensions;
 using CleanArchitecture.Domain.Rabbitmq.Extensions;
 using CleanArchitecture.Infrastructure.Database;
@@ -104,6 +105,9 @@ else
 {
     builder.Services.AddDistributedMemoryCache();
 }
+
+// Registro del servicio de notificaciones
+builder.Services.AddSingleton<INotificationService, NotificationService>();
 
 // Registro antes de Build
 Console.WriteLine("Antes de llamar a Build");
