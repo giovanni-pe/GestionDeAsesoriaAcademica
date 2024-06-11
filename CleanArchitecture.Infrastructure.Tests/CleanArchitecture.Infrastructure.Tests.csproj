@@ -24,6 +24,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\CleanArchitecture.Infrastructure\CleanArchitecture.Infrastructure.csproj" />
+        <ProjectReference Include="..\CleanArchitecture.IntegrationTests\CleanArchitecture.IntegrationTests.csproj" />
     </ItemGroup>
 
 </Project>
