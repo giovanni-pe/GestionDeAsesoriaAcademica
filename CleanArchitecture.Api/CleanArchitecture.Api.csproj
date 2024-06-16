@@ -8,6 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="token.json\**" />
+      <Content Remove="token.json\**" />
+      <EmbeddedResource Remove="token.json\**" />
+      <None Remove="token.json\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.ApplicationStatus" Version="8.0.1" />
         <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="8.0.1" />
         <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
@@ -52,10 +59,6 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="token.json\" />
     </ItemGroup>
 
 </Project>

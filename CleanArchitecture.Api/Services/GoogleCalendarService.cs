@@ -88,5 +88,81 @@ namespace CleanArchitecture.Api.Services
             Event createdEvent = await request.ExecuteAsync();
             return createdEvent.HtmlLink;
         }
+          public static async Task<bool> CancelEventAsync(string eventId)
+    {
+        var service = await GetCalendarServiceAsync();
+        try
+        {
+            var request = service.Events.Delete("primary", eventId);
+            await request.ExecuteAsync();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
+
+    public static async Task<Events> GetAdvisorCalendarAsync(string advisorEmail)
+    {
+        var service = await GetCalendarServiceAsync();
+
+        EventsResource.ListRequest request = service.Events.List(advisorEmail);
+        request.TimeMin = DateTime.Now;
+        request.ShowDeleted = false;
+        request.SingleEvents = true;
+        request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+        return await request.ExecuteAsync();
+    }
+
+    public static async Task<string> SetNotificationPreferencesAsync(string eventId, EventReminder[] reminders)
+    {
+        var service = await GetCalendarServiceAsync();
+
+        Event eventToUpdate = await service.Events.Get("primary", eventId).ExecuteAsync();
+        eventToUpdate.Reminders = new Event.RemindersData()
+        {
+            UseDefault = false,
+            Overrides = reminders,
+        };
+
+        EventsResource.UpdateRequest updateRequest = service.Events.Update(eventToUpdate, "primary", eventId);
+        Event updatedEvent = await updateRequest.ExecuteAsync();
+        return updatedEvent.HtmlLink;
+    }
+        public static async Task<string> UpdateEventAsync(string eventId, string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
+        {
+            var service = await GetCalendarServiceAsync();
+
+            // Retrieve the event
+            Event eventToUpdate = await service.Events.Get("primary", eventId).ExecuteAsync();
+
+            // Update the event details
+            eventToUpdate.Summary = summary;
+            eventToUpdate.Location = location;
+            eventToUpdate.Description = description;
+            eventToUpdate.Start = new EventDateTime()
+            {
+                DateTime = startDateTime,
+                TimeZone = "America/Los_Angeles",
+            };
+            eventToUpdate.End = new EventDateTime()
+            {
+                DateTime = endDateTime,
+                TimeZone = "America/Los_Angeles",
+            };
+            eventToUpdate.Reminders = new Event.RemindersData()
+            {
+                UseDefault = false,
+            };
+
+            // Update the event
+            EventsResource.UpdateRequest updateRequest = service.Events.Update(eventToUpdate, "primary", eventId);
+            Event updatedEvent = await updateRequest.ExecuteAsync();
+            return updatedEvent.HtmlLink;
+        }
+
+    }
+
 }
