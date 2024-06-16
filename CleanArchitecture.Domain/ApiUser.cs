@@ -13,6 +13,7 @@ public sealed class ApiUser : IUser
 
     private string? _name;
     private Guid _userId = Guid.Empty;
+    private string? _role;
 
     public ApiUser(IHttpContextAccessor httpContextAccessor)
     {
@@ -40,12 +41,21 @@ public sealed class ApiUser : IUser
 
     public UserRole GetUserRole()
     {
+        if (_role is not null)
+        {
+            if (Enum.TryParse(_role, true, out UserRole userRole))
+            {
+                return userRole;
+            }
+        }
+
         var claim = _httpContextAccessor.HttpContext?.User.Claims
             .FirstOrDefault(x => string.Equals(x.Type, ClaimTypes.Role));
 
-        if (Enum.TryParse(claim?.Value, out UserRole userRole))
+        if (Enum.TryParse(claim?.Value, true, out UserRole parsedRole))
         {
-            return userRole;
+            _role = claim?.Value;
+            return parsedRole;
         }
 
         throw new ArgumentException("Could not parse user role");

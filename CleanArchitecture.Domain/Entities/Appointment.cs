@@ -4,6 +4,7 @@ namespace CleanArchitecture.Domain.Entities
 {
     public class Appointment : Entity
     {
+
         public Guid ProfessorId { get; private set; }
         public virtual Professor Professor { get; private set; } = null!;
         public Guid StudentId { get; private set; }
@@ -22,6 +23,8 @@ namespace CleanArchitecture.Domain.Entities
             ProfessorProgress = professorProgress;
             StudentProgress = studentProgress;
         }
+
+   
 
         public void SetDateTime(DateTime dateTime)
         {

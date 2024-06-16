@@ -9,7 +9,9 @@
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.12.0" />
+        <PackageReference Include="IKVM" Version="8.8.1" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.4" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
         <PackageReference Include="Respawn" Version="6.2.1" />

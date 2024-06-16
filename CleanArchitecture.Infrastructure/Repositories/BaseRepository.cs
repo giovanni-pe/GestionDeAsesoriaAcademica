@@ -99,4 +99,12 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Enti
             _dbContext.Dispose();
         }
     }
+    public interface IAppointmentRepository
+    {
+        Task AddAsync(Appointment appointment);
+        Task<Appointment> GetByIdAsync(Guid id);
+        Task UpdateAsync(Appointment appointment);
+        Task<List<Appointment>> ListAllAsync();
+        Task<List<Appointment>> SearchAsync(Guid? professorId, Guid? studentId, DateTime? date);
+    }
 }

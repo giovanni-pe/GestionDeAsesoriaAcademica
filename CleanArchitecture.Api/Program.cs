@@ -15,7 +15,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,6 +80,14 @@ builder.Services.AddSortProviders();
 builder.Services.AddCommandHandlers();
 builder.Services.AddNotificationHandlers();
 builder.Services.AddApiUser();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.ConfigurationOptions = new ConfigurationOptions
+    {
+        AbortOnConnectFail = false,
+        EndPoints = { "localhost:6379" }
+    };
+});
 
 builder.Services.AddRabbitMqHandler(builder.Configuration, "RabbitMQ");
 
@@ -104,7 +114,13 @@ else
     builder.Services.AddDistributedMemoryCache();
 }
 
+// Registro antes de Build
+Console.WriteLine("Antes de llamar a Build");
+
 var app = builder.Build();
+
+// Registro después de Build
+Console.WriteLine("Después de llamar a Build");
 
 using (var scope = app.Services.CreateScope())
 {
