@@ -98,19 +98,27 @@ namespace CleanArchitecture.Domain.Errors
             public const string AlreadyExists = "APPOINTMENT_ALREADYEXISTS";
             
         }
-        public static class AdvisoryContract
-        {
-            // Professor Validation
-            public const string EmptyId = "ADVISORYCONTRACT_EMPTY_ID";
-            public const string EmptyMessage = "ADVISORYCONTRACT_EMPTY_MESSAGE";
-            public static string EmptyThesisTopic = "ADVISORYCONTRAC_EMPTY_THESISTOPIC";
-            public const string ThesisTopicExceedsMaxLength = "ADVISORYCONTRACT_CODE_EXCEEDS_MAX_LENGTH";
-
-            // General
-            public const string AlreadyExists = "ADVISORYCONTRACT_ALREADY_EXISTS";
-        }
     }
-    
-    
+    public static class Appointment 
+    {
+        // Professor Validation
+        public const string EmptyId = "APPOINTMENT_EMPTY_ID";
+        public const string EmptyCode = "APPOINTMENT_EMPTY_CODE";
+        public const string CodeExceedsMaxLength = "APPOINTMENT_CODE_EXCEEDS_MAX_LENGTH";
+
+        // General
+        public const string AlreadyExists = "APPOINTMENT_ALREADY_EXISTS";
+    }
+    public static class AdvisoryContract
+    {
+        // Professor Validation
+        public const string EmptyId = "ADVISORYCONTRACT_EMPTY_ID";
+        public const string EmptyMessage = "ADVISORYCONTRACT_EMPTY_MESSAGE";
+        public static string EmptyThesisTopic = "ADVISORYCONTRAC_EMPTY_THESISTOPIC";
+        public const string ThesisTopicExceedsMaxLength = "ADVISORYCONTRACT_CODE_EXCEEDS_MAX_LENGTH";
+
+        // General
+        public const string AlreadyExists = "ADVISORYCONTRACT_ALREADY_EXISTS";
+    }
 
 }

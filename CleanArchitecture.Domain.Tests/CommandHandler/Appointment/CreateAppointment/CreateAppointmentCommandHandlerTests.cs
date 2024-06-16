@@ -22,7 +22,7 @@ public sealed class CreateAppointmentCommandHandlerTests
             Guid.NewGuid(),
             DateTime.UtcNow, // Fecha de la cita (puedes usar DateTime.Now si lo prefieres)
             "Estado de la Appointment", // Estado de la cita
-            "Asunto de la Appointment","new","EventId"); // Asunto de la cita
+            "Asunto de la Appointment"); // Asunto de la cita
 
         await _fixture.CommandHandler.Handle(command, default);
 
@@ -47,7 +47,7 @@ public sealed class CreateAppointmentCommandHandlerTests
             studentId: Guid.NewGuid(),
             calendarId: Guid.NewGuid(),
             DateTime.UtcNow,
-            "Test Appointment", "testcode","test","testeventId");
+            "Test Appointment", "testcode");
 
         await _fixture.CommandHandler.Handle(command, default);
 
@@ -69,7 +69,7 @@ public sealed class CreateAppointmentCommandHandlerTests
             studentId: Guid.NewGuid(),
             calendarId: Guid.NewGuid(),
             DateTime.UtcNow,
-            "Test Appointment", "testcode","test","test");
+            "Test Appointment", "testcode");
 
         _fixture.SetupExistingAppointment(command.AggregateId);
 

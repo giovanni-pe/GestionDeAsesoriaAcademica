@@ -29,6 +29,8 @@ using CleanArchitecture.Shared.Events.Professor;
 using CleanArchitecture.Shared.Events.User;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Shared.Events.ResearchGroup;
+using CleanArchitecture.Domain.Commands.ResearchGroups.UpdateResearchGroup;
 using CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
 using CleanArchitecture.Domain.Commands.Appointments.UpdateAppointment;
 using CleanArchitecture.Domain.Commands.Appointments.DeleteAppointment;
@@ -60,9 +62,10 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<CreateResearchGroupCommand>, CreateResearchGroupCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateResearchGroupCommand>, UpdateResearchGroupCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteResearchGroupCommand>, DeleteResearchGroupCommandHandler>();
-        // Appointment
+        //Appointment
+
         services.AddScoped<IRequestHandler<CreateAppointmentCommand>, CreateAppointmentCommandHandler>();
-      
+        // Appointment
         services.AddScoped<IRequestHandler<UpdateAppointmentCommand>, UpdateAppointmentCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteAppointmentCommand>, DeleteAppointmentCommandHandler>();

@@ -75,7 +75,7 @@ public sealed class CreateAppointmentCommandHandler : CommandHandlerBase,
         }
 
         var appointment = new Appointment(
-            request.AggregateId, request.ProfessorId, request.StudentId, request.CalendarId, request.DateTime, request.ProfessorProgress, request.StudentProgress,request.Status,request.GoogleEventId);
+            request.AggregateId, request.ProfessorId, request.StudentId, request.CalendarId, request.DateTime, request.ProfessorProgress, request.StudentProgress);
         _appointmentRepository.Add(appointment);
 
         if (await CommitAsync())

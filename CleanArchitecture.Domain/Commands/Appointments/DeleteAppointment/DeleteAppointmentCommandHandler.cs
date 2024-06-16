@@ -15,7 +15,7 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
     IRequestHandler<DeleteAppointmentCommand>
 {
     private readonly IAppointmentRepository _AppointmentRepository;
-     private readonly IUser _user;
+   // private readonly IReserchLine _user;
     private readonly IUserRepository _userRepository;
 
     public DeleteAppointmentCommandHandler(
@@ -27,8 +27,8 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
         IUser user) : base(bus, unitOfWork, notifications)
     {
         _AppointmentRepository = AppointmentRepository;
-        _userRepository = userRepository;
-        _user = user;
+      //  _userRepository = userRepository;
+       // _user = user;
     }
 
     public async Task Handle(DeleteAppointmentCommand request, CancellationToken cancellationToken)
@@ -37,7 +37,7 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
         {
             return;
         }
-
+/*
         if (_user.GetUserRole() != UserRole.Admin)
         {
             await NotifyAsync(
@@ -47,7 +47,7 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
                     ErrorCodes.InsufficientPermissions));
 
             return;
-        }
+        }*/
 
         var Appointment = await _AppointmentRepository.GetByIdAsync(request.AggregateId);
 

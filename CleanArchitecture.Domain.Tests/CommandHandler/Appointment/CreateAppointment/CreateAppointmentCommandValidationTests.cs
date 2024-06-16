@@ -1,7 +1,6 @@
 ﻿using System;
 using CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
 using CleanArchitecture.Domain.Errors;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
 using Xunit;
 
 namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.CreateAppointment
@@ -39,9 +38,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.CreateAppoin
             Guid? calendarId = null,
             DateTime? startDate = null,
             string professorProgress = "Test Professor Progress",
-            string studentProgress = "Test Student Progress",
-            string status="new",
-            string googleEventId="eventid")
+            string studentProgress = "Test Student Progress")
         {
             return new CreateAppointmentCommand(
                 id ?? Guid.NewGuid(),
@@ -50,7 +47,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.CreateAppoin
                 calendarId ?? Guid.NewGuid(),
                 startDate ?? DateTime.UtcNow,
                 professorProgress,
-                studentProgress,status,googleEventId);
+                studentProgress);
         }
     }
 }

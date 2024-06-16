@@ -25,7 +25,7 @@ public sealed class AppointmentTestFixture : TestFixtureBase
         context.Appointments.Add(new Appointment(
             Id, ProfessorId, StudentId, CalendarId, DateTime.UtcNow,
             "Estado de la Appointment", 
-            "Asunto de la Appointment","nuevo","eventId")); 
+            "Asunto de la Appointment")); 
 
 
         context.SaveChanges();

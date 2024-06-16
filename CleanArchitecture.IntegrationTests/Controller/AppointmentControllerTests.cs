@@ -60,7 +60,7 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
     [Priority(10)]
     public async Task Should_Create_Appointment()
     {
-        var request = new CreateAppointmentViewModel(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Nuevo Estado", "Nuevo Asunto","nuevo","evento1");
+        var request = new CreateAppointmentViewModel(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Nuevo Estado", "Nuevo Asunto");
 
         var response = await _fixture.ServerClient.PostAsJsonAsync("/api/v1/Appointment", request);
 

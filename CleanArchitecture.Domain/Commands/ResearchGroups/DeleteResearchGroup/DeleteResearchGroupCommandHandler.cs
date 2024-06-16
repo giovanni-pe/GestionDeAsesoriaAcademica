@@ -15,7 +15,7 @@ public sealed class DeleteResearchGroupCommandHandler : CommandHandlerBase,
     IRequestHandler<DeleteResearchGroupCommand>
 {
     private readonly IResearchGroupRepository _ResearchGroupRepository;
-    private readonly IUser _user;
+   // private readonly IReserchLine _user;
     private readonly IUserRepository _userRepository;
 
     public DeleteResearchGroupCommandHandler(
@@ -27,8 +27,8 @@ public sealed class DeleteResearchGroupCommandHandler : CommandHandlerBase,
         IUser user) : base(bus, unitOfWork, notifications)
     {
         _ResearchGroupRepository = ResearchGroupRepository;
-        _userRepository = userRepository;
-        _user = user;
+      //  _userRepository = userRepository;
+       // _user = user;
     }
 
     public async Task Handle(DeleteResearchGroupCommand request, CancellationToken cancellationToken)
@@ -37,7 +37,7 @@ public sealed class DeleteResearchGroupCommandHandler : CommandHandlerBase,
         {
             return;
         }
-
+/*
         if (_user.GetUserRole() != UserRole.Admin)
         {
             await NotifyAsync(
@@ -47,7 +47,7 @@ public sealed class DeleteResearchGroupCommandHandler : CommandHandlerBase,
                     ErrorCodes.InsufficientPermissions));
 
             return;
-        }
+        }*/
 
         var ResearchGroup = await _ResearchGroupRepository.GetByIdAsync(request.AggregateId);
 

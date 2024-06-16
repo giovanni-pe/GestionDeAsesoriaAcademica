@@ -34,7 +34,7 @@ public sealed class AppointmentService : IAppointmentService
     {
         var AppointmentId = Guid.NewGuid();
         await _bus.SendCommandAsync(new CreateAppointmentCommand(
-            AppointmentId, Appointment.professorId, Appointment.studentId, Appointment.calendarId,Appointment.dateTime ,  Appointment.professorProgress , Appointment.studentProgress,Appointment.status,Appointment.googleEventId));
+            AppointmentId, Appointment.professorId, Appointment.studentId, Appointment.calendarId,Appointment.dateTime ,  Appointment.professorProgress , Appointment.studentProgress));
 
         return AppointmentId;
     }

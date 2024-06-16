@@ -33,7 +33,7 @@ public sealed class GetAppointmentByIdTestFixture : QueryHandlerBaseFixture
             Guid.NewGuid(),
             DateTime.UtcNow, // Fecha de la Appointment (puedes usar DateTime.Now si lo prefieres)
             "Estado de la Appointment", // Estado de la Appointment
-            "Asunto de la Appointment","test","test"); // Asunto de la Appointment
+            "Asunto de la Appointment"); // Asunto de la Appointment
 
         if (deleted)
         {

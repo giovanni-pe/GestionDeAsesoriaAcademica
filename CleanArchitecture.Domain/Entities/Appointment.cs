@@ -13,10 +13,8 @@ namespace CleanArchitecture.Domain.Entities
         public DateTime DateTime { get; private set; }
         public string ProfessorProgress { get; private set; }
         public string StudentProgress { get; private set; }
-        public string Status { get; private set; }
-        public string GoogleEventId { get; private set; }
 
-        public Appointment(Guid id, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress,String status,string googleEventId) : base(id)
+        public Appointment(Guid id, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress) : base(id)
         {
             ProfessorId = professorId;
             StudentId = studentId;
@@ -24,8 +22,6 @@ namespace CleanArchitecture.Domain.Entities
             DateTime = dateTime;
             ProfessorProgress = professorProgress;
             StudentProgress = studentProgress;
-            Status = status;
-            GoogleEventId = googleEventId;
         }
 
    
@@ -43,11 +39,6 @@ namespace CleanArchitecture.Domain.Entities
         public void SetStudentProgress(string studentProgress)
         {
             StudentProgress = studentProgress;
-        }
-        public void SetStatus(string status) {  Status = status; }
-        public void SetGoogleEventId(string googleEventId)
-        {
-            GoogleEventId = googleEventId;
         }
     }
 }
