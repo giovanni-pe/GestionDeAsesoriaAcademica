@@ -43,6 +43,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IResearchLineService, ResearchLineService>();
         services.AddScoped<IStudentService, StudentService>();
         services.AddScoped<IProfessorService, ProfessorService>();
+        services.AddScoped<IAdvisoryContractService,AdvisoryContractService>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
         return services;
     }
 
@@ -72,6 +74,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetProfessorByIdQuery, ProfessorViewModel?>, GetProfessorByIdQueryHandler>();
         services
             .AddScoped<IRequestHandler<ProfessorsQuery, PagedResult<ProfessorViewModel>>, GetAllProfessorsQueryHandler>();
+        // AdvisoryContract
+        services.AddScoped<IRequestHandler<GetAdvisoryContractByIdQuery, AdvisoryContractViewModel?>, GetAdvisoryContractByIdQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<AdvisoryContractsQuery, PagedResult<AdvisoryContractViewModel>>, GetAllAdvisoryContractsQueryHandler>();
+        // Appointment
+        services.AddScoped<IRequestHandler<GetAppointmentByIdQuery, AppointmentViewModel?>, GetAppointmentByIdQueryHandler>();
+        services
+            .AddScoped<IRequestHandler<AppointmentsQuery, PagedResult<AppointmentViewModel>>, GetAllAppointmentsQueryHandler>();
         return services;
     }
 
@@ -83,6 +93,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISortingExpressionProvider<StudentViewModel, Student>, StudentViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<ProfessorViewModel, Professor>, ProfessorViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<UserViewModel, User>, UserViewModelSortProvider>();
+        services.AddScoped<ISortingExpressionProvider<AdvisoryContractViewModel,AdvisoryContract>, AdvisoryContractViewModelSortProvider>();
+        services.AddScoped<ISortingExpressionProvider<AppointmentViewModel, Appointment>, AppointmentViewModelSortProvider>();
 
         return services;
     }

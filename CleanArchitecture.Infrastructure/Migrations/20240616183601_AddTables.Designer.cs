@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240525214737_AddMasters")]
-    partial class AddMasters
+    [Migration("20240616183601_AddTables")]
+    partial class AddTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -39,8 +39,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ProfessorId")
                         .HasColumnType("uniqueidentifier");
@@ -50,16 +49,14 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ThesisTopic")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -87,21 +84,27 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("GoogleEventId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ProfessorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ProfessorProgress")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("StudentProgress")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -215,8 +218,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
@@ -229,6 +233,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c62"),
+                            Code = "0020210008",
+                            Deleted = false,
+                            UserId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ae")
+                        });
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Tenant", b =>
@@ -369,7 +382,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Professor", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Entities.ResearchGroup", "ResearchGroup")
-                        .WithMany()
+                        .WithMany("Professors")
                         .HasForeignKey("ResearchGroupId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -399,7 +412,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Student", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -420,10 +433,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ResearchGroup", b =>
                 {
+                    b.Navigation("Professors");
+
                     b.Navigation("ResearchLines");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Tenant", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.User", b =>
                 {
                     b.Navigation("Users");
                 });
