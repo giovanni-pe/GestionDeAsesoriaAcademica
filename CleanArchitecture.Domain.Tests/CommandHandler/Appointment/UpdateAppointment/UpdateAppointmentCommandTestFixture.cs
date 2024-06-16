@@ -38,7 +38,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.UpdateAppoin
                 Guid.NewGuid(),
                 DateTime.UtcNow,
                 "Existing Professor Progress",
-                "Existing Student Progress");
+                "Existing Student Progress","test","test");
 
             AppointmentRepository
                 .GetByIdAsync(Arg.Is<Guid>(x => x == id))

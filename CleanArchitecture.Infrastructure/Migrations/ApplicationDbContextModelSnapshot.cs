@@ -17,7 +17,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -84,6 +84,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("GoogleEventId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ProfessorId")
                         .HasColumnType("uniqueidentifier");
 
@@ -91,6 +95,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
@@ -213,7 +221,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(12)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
@@ -226,6 +235,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c62"),
+                            Code = "0020210008",
+                            Deleted = false,
+                            UserId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ae")
+                        });
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Tenant", b =>
@@ -366,7 +384,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Professor", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Entities.ResearchGroup", "ResearchGroup")
-                        .WithMany()
+                        .WithMany("Professors")
                         .HasForeignKey("ResearchGroupId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -396,7 +414,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Student", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -417,10 +435,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ResearchGroup", b =>
                 {
+                    b.Navigation("Professors");
+
                     b.Navigation("ResearchLines");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Tenant", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.User", b =>
                 {
                     b.Navigation("Users");
                 });

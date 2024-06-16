@@ -14,5 +14,9 @@
         <ProjectReference Include="..\CleanArchitecture.Proto\CleanArchitecture.Proto.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ViewModels\GoogleCalendar\" />
+    </ItemGroup>
+
 
 </Project>

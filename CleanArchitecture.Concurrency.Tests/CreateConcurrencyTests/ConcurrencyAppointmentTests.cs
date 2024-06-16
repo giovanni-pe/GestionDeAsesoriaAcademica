@@ -58,7 +58,7 @@ namespace CleanArchitecture.Tests
                     Guid.NewGuid(),
                     DateTime.UtcNow,
                     $"Professor Progress {i}",
-                    $"Student Progress {i}");
+                    $"Student Progress {i}","new","eventId");
 
                 tasks.Add(Task.Run(() => _handler.Handle(command, CancellationToken.None)));
             }

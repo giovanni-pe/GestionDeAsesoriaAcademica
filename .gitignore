@@ -7,3 +7,5 @@ riderModule.iml
 .vs
 CleanArchitecture.sln.DotSettings.user
 .DS_Store
+CleanArchitecture.Api/token.json
+CleanArchitecture.Api/credentials.json

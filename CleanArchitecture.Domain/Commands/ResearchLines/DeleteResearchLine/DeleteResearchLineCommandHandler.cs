@@ -15,7 +15,7 @@ public sealed class DeleteResearchLineCommandHandler : CommandHandlerBase,
     IRequestHandler<DeleteResearchLineCommand>
 {
     private readonly IResearchLineRepository _ResearchLineRepository;
-   // private readonly IReserchLine _user;
+    private readonly IUser _user;
     private readonly IUserRepository _userRepository;
 
     public DeleteResearchLineCommandHandler(
@@ -37,7 +37,7 @@ public sealed class DeleteResearchLineCommandHandler : CommandHandlerBase,
         {
             return;
         }
-/*
+
         if (_user.GetUserRole() != UserRole.Admin)
         {
             await NotifyAsync(
@@ -47,7 +47,7 @@ public sealed class DeleteResearchLineCommandHandler : CommandHandlerBase,
                     ErrorCodes.InsufficientPermissions));
 
             return;
-        }*/
+        }
 
         var ResearchLine = await _ResearchLineRepository.GetByIdAsync(request.AggregateId);
 
