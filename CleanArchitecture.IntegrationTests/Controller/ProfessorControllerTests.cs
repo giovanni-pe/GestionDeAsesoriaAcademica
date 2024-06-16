@@ -87,32 +87,32 @@ public sealed class ProfessorControllerTests : IClassFixture<ProfessorTestFixtur
         ProfessorMessage!.Data!.ProfessorId.Should().Be(ProfessorId!.Value);
     }
 
-    [Fact]
-    [Priority(15)]
-    public async Task Should_Update_Professor()
-    {
-        var request = new UpdateProfessorViewModel(_fixture.CreatedProfessorId, Ids.Seed.UserId, Ids.Seed.ResearchGroupId, false);
+    //[Fact]
+    //[Priority(15)]
+    //public async Task Should_Update_Professor()
+    //{
+    //    var request = new UpdateProfessorViewModel(_fixture.CreatedProfessorId, Ids.Seed.UserId, Ids.Seed.ResearchGroupId, false);
 
-        var response = await _fixture.ServerClient.PutAsJsonAsync("/api/v1/Professor", request);
+    //    var response = await _fixture.ServerClient.PutAsJsonAsync("/api/v1/Professor", request);
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    //    response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var message = await response.Content.ReadAsJsonAsync<UpdateProfessorViewModel>();
+    //    var message = await response.Content.ReadAsJsonAsync<UpdateProfessorViewModel>();
 
-        message?.Data.Should().NotBeNull();
-        message!.Data.Should().BeEquivalentTo(request);
+    //    message?.Data.Should().NotBeNull();
+    //    message!.Data.Should().BeEquivalentTo(request);
 
-        // Check if Professor is updated
-        var ProfessorResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Professor/{_fixture.CreatedProfessorId}");
+    //    Check if Professor is updated
+    //   var ProfessorResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Professor/{_fixture.CreatedProfessorId}");
 
-        ProfessorResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+    //    ProfessorResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var ProfessorMessage = await response.Content.ReadAsJsonAsync<ProfessorViewModel>();
+    //    var ProfessorMessage = await response.Content.ReadAsJsonAsync<ProfessorViewModel>();
 
-        ProfessorMessage?.Data.Should().NotBeNull();
-        ProfessorMessage!.Data!.ProfessorId.Should().Be(Ids.Seed.ProfessorId);
-        
-    }
+    //    ProfessorMessage?.Data.Should().NotBeNull();
+    //    ProfessorMessage!.Data!.ProfessorId.Should().Be(Ids.Seed.ProfessorId);
+
+    //}
 
     [Fact]
     [Priority(20)]

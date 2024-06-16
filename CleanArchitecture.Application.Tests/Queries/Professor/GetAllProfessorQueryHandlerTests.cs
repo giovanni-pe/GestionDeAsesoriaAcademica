@@ -12,29 +12,29 @@ public sealed class GetAllProfessorsQueryHandlerTests
 {
     private readonly GetAllProfessorsTestFixture _fixture = new();
 
-    //[Fact]
-    //public async Task Should_Get_Existing_Professor()
-    //{
-    //    var Professor = _fixture.SetupProfessor();
+    [Fact]
+    public async Task Should_Get_Existing_Professor()
+    {
+        var Professor = _fixture.SetupProfessor();
 
-    //    var query = new PageQuery
-    //    {
-    //        PageSize = 10,
-    //        Page = 1
-    //    };
+        var query = new PageQuery
+        {
+            PageSize = 10,
+            Page = 1
+        };
 
-    //    var result = await _fixture.QueryHandler.Handle(
-    //        new ProfessorsQuery(query, false),
-    //        default);
+        var result = await _fixture.QueryHandler.Handle(
+            new ProfessorsQuery(query, false),
+            default);
 
-    //    _fixture.VerifyNoDomainNotification();
+        _fixture.VerifyNoDomainNotification();
 
-    //    result.PageSize.Should().Be(query.PageSize);
-    //    result.Page.Should().Be(query.Page);
-    //    result.Count.Should().Be(1);
+        result.PageSize.Should().Be(query.PageSize);
+        result.Page.Should().Be(query.Page);
+        result.Count.Should().Be(1);
 
-    //    Professor.Should().BeEquivalentTo(result.Items.First());
-    //}
+        Professor.Should().BeEquivalentTo(result.Items.First());
+    }
 
     [Fact]
     public async Task Should_Not_Get_Deleted_Professor()

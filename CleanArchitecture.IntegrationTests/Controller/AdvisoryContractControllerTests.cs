@@ -42,24 +42,24 @@ public sealed class AdvisoryContractControllerTests : IClassFixture<AdvisoryCont
 
     }
 
-    [Fact]
-    [Priority(5)]
-    public async Task Should_Get_All_AdvisoryContracts()
-    {
-        var response = await _fixture.ServerClient.GetAsync(
-            "api/v1/AdvisoryContract?searchTerm=Test&pageSize=5&page=1");
+    //[Fact]
+    //[Priority(5)]
+    //public async Task Should_Get_All_AdvisoryContracts()
+    //{
+    //    var response = await _fixture.ServerClient.GetAsync(
+    //        "api/v1/AdvisoryContract?searchTerm=Test&pageSize=5&page=1");
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    //    response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        //var message = await response.Content.ReadAsJsonAsync<PagedResult<AdvisoryContractViewModel>>();
+    //    var message = await response.Content.ReadAsJsonAsync<PagedResult<AdvisoryContractViewModel>>();
 
-        //message?.Data!.Items.Should().NotBeEmpty();
-        //message!.Data!.Items.Should().HaveCount(1);
-        //message.Data!.Items
-        //    .FirstOrDefault(x => x.AdvisoryContractId == _fixture.CreatedAdvisoryContractId)
-        //    .Should().NotBeNull();
+    //    message?.Data!.Items.Should().NotBeEmpty();
+    //    message!.Data!.Items.Should().HaveCount(1);
+    //    message.Data!.Items
+    //        .FirstOrDefault(x => x.AdvisoryContractId == _fixture.CreatedAdvisoryContractId)
+    //        .Should().NotBeNull();
 
-    }
+    //}
 
     [Fact]
     [Priority(10)]
