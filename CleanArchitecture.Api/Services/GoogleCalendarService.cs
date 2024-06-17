@@ -52,43 +52,43 @@ namespace CleanArchitecture.Api.Services
             return await request.ExecuteAsync();
         }
 
-        //public static async Task<string> CreateEventAsync(string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
-        //{
-        //    var service = await GetCalendarServiceAsync();
+        public static async Task<string> CreateEventAsync(string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
+        {
+            var service = await GetCalendarServiceAsync();
 
-        //    Event newEvent = new Event()
-        //    {
-        //        Summary = summary,
-        //        Location = location,
-        //        Description = description,
-        //        Start = new EventDateTime()
-        //        {
-        //            DateTime = startDateTime,
-        //            TimeZone = "America/Los_Angeles",
-        //        },
-        //        End = new EventDateTime()
-        //        {
-        //            DateTime = endDateTime,
-        //            TimeZone = "America/Los_Angeles",
-        //        },
-        //        Recurrence = new String[] { "RRULE:FREQ=DAILY;COUNT=1" },
-        //        Attendees = new EventAttendee[] { },
-        //        Reminders = new Event.RemindersData()
-        //        {
-        //            UseDefault = false,
-        //            Overrides = new EventReminder[]
-        //            {
-        //                new EventReminder() { Method = "email", Minutes = 24 * 60 },
-        //                new EventReminder() { Method = "popup", Minutes = 10 },
-        //            }
-        //        }
-        //    };
+            Event newEvent = new Event()
+            {
+                Summary = summary,
+                Location = location,
+                Description = description,
+                Start = new EventDateTime()
+                {
+                    DateTime = startDateTime,
+                    TimeZone = "America/Los_Angeles",
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = endDateTime,
+                    TimeZone = "America/Los_Angeles",
+                },
+                Recurrence = new String[] { "RRULE:FREQ=DAILY;COUNT=1" },
+                Attendees = new EventAttendee[] { },
+                Reminders = new Event.RemindersData()
+                {
+                    UseDefault = false,
+                    Overrides = new EventReminder[]
+                    {
+                        new EventReminder() { Method = "email", Minutes = 24 * 60 },
+                        new EventReminder() { Method = "popup", Minutes = 10 },
+                    }
+                }
+            };
 
-        //    EventsResource.InsertRequest request = service.Events.Insert(newEvent, "primary");
-        //    Event createdEvent = await request.ExecuteAsync();
-        //    return createdEvent.HtmlLink;
-        //}
-          public static async Task<bool> CancelEventAsync(string eventId)
+            EventsResource.InsertRequest request = service.Events.Insert(newEvent, "primary");
+            Event createdEvent = await request.ExecuteAsync();
+            return createdEvent.HtmlLink;
+        }
+        public static async Task<bool> CancelEventAsync(string eventId)
     {
         var service = await GetCalendarServiceAsync();
         try
