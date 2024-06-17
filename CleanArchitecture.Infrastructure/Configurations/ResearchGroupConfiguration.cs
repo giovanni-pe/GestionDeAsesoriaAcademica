@@ -14,8 +14,8 @@ public sealed class ResearchGroupConfiguration : IEntityTypeConfiguration<Resear
             .IsRequired()
             .HasMaxLength(MaxLengths.ResearchGroup.Name);
 
-        builder.HasData(new ResearchGroup(
-            Ids.Seed.ResearchGroupId,
-            "INGENIERIA DE SOFTWARE","SW123"));
+        //builder.HasData(new ResearchGroup(
+        //    Ids.Seed.ResearchGroupId,
+        //    "INGENIERIA DE SOFTWARE","SW123"));
     }
 }

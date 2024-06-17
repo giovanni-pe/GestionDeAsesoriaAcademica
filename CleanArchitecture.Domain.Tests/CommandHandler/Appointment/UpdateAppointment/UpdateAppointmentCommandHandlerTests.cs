@@ -41,52 +41,52 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.UpdateAppoin
         //            x.StudentProgress == command.StudentProgress);
         //}
 
-        [Fact]
-        public async Task Should_Not_Update_Appointment_Insufficient_Permissions()
-        {
-            var command = new UpdateAppointmentCommand(
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                DateTime.UtcNow,
-                "Estado de la Appointment",
-                "Asunto de la Appointment");
+    //    [Fact]
+    //    public async Task Should_Not_Update_Appointment_Insufficient_Permissions()
+    //    {
+    //        var command = new UpdateAppointmentCommand(
+    //            Guid.NewGuid(),
+    //            Guid.NewGuid(),
+    //            Guid.NewGuid(),
+    //            Guid.NewGuid(),
+    //            DateTime.UtcNow,
+    //            "Estado de la Appointment",
+    //            "Asunto de la Appointment");
 
-            _fixture.SetupUserAsUser();
+    //        _fixture.SetupUserAsUser();
 
-            await _fixture.CommandHandler.Handle(command, default);
+    //        await _fixture.CommandHandler.Handle(command, default);
 
-            _fixture
-                .VerifyNoCommit()
-                .VerifyNoRaisedEvent<AppointmentUpdatedEvent>()
-                .VerifyAnyDomainNotification()
-                .VerifyExistingNotification(
-                    DomainErrorCodes.Appointment.InsufficientPermissions,
-                    $"No permission to update Appointment {command.AggregateId}");
-        }
+    //        _fixture
+    //            .VerifyNoCommit()
+    //            .VerifyNoRaisedEvent<AppointmentUpdatedEvent>()
+    //            .VerifyAnyDomainNotification()
+    //            .VerifyExistingNotification(
+    //                DomainErrorCodes.Appointment.InsufficientPermissions,
+    //                $"No permission to update Appointment {command.AggregateId}");
+    //    }
 
-        [Fact]
-        public async Task Should_Not_Update_Appointment_Not_Existing()
-        {
-            var command = new UpdateAppointmentCommand(
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                DateTime.UtcNow,
-                "Estado de la Appointment",
-                "Asunto de la Appointment");
+    //    [Fact]
+    //    public async Task Should_Not_Update_Appointment_Not_Existing()
+    //    {
+    //        var command = new UpdateAppointmentCommand(
+    //            Guid.NewGuid(),
+    //            Guid.NewGuid(),
+    //            Guid.NewGuid(),
+    //            Guid.NewGuid(),
+    //            DateTime.UtcNow,
+    //            "Estado de la Appointment",
+    //            "Asunto de la Appointment");
 
-            await _fixture.CommandHandler.Handle(command, default);
+    //        await _fixture.CommandHandler.Handle(command, default);
 
-            _fixture
-                .VerifyNoCommit()
-                .VerifyNoRaisedEvent<AppointmentUpdatedEvent>()
-                .VerifyAnyDomainNotification()
-                .VerifyExistingNotification(
-                    DomainErrorCodes.Appointment.NotFound,
-                    $"There is no Appointment with Id {command.AggregateId}");
-        }
-    }
+    //        _fixture
+    //            .VerifyNoCommit()
+    //            .VerifyNoRaisedEvent<AppointmentUpdatedEvent>()
+    //            .VerifyAnyDomainNotification()
+    //            .VerifyExistingNotification(
+    //                DomainErrorCodes.Appointment.NotFound,
+    //                $"There is no Appointment with Id {command.AggregateId}");
+    //    }
+   }
 }

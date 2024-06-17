@@ -14,8 +14,8 @@ public sealed class ResearchLineConfiguration : IEntityTypeConfiguration<Researc
             .IsRequired()
             .HasMaxLength(MaxLengths.ResearchLine.Name);
 
-        builder.HasData(new ResearchLine(
-            Ids.Seed.ResearchLineId,
-            "Arquitectura de Software",Ids.Seed.ResearchGroupId,"ASW123"));
+        //builder.HasData(new ResearchLine(
+        //    Ids.Seed.ResearchLineId,
+        //    "Arquitectura de Software",Ids.Seed.ResearchGroupId,"ASW123"));
     }
 }

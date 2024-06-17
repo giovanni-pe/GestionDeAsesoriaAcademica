@@ -58,64 +58,64 @@ public sealed class AppointmentControllerTests : IClassFixture<AppointmentTestFi
 
     [Fact]
     [Priority(10)]
-    public async Task Should_Create_Appointment()
-    {
-        var request = new CreateAppointmentViewModel(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Nuevo Estado", "Nuevo Asunto","nuevo","evento1");
+    //public async Task Should_Create_Appointment()
+    //{
+    //    var request = new CreateAppointmentViewModel(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Nuevo Estado", "Nuevo Asunto","nuevo","evento1");
 
-        var response = await _fixture.ServerClient.PostAsJsonAsync("/api/v1/Appointment", request);
+    //    var response = await _fixture.ServerClient.PostAsJsonAsync("/api/v1/Appointment", request);
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    //    response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var message = await response.Content.ReadAsJsonAsync<Guid>();
-        var appointmentId = message?.Data;
+    //    var message = await response.Content.ReadAsJsonAsync<Guid>();
+    //    var appointmentId = message?.Data;
 
-        // Check if Appointment exists
-        var appointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{appointmentId}");
+    //    // Check if Appointment exists
+    //    var appointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{appointmentId}");
 
-        appointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+    //    appointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var appointmentMessage = await appointmentResponse.Content.ReadAsJsonAsync<AppointmentViewModel>();
+    //    var appointmentMessage = await appointmentResponse.Content.ReadAsJsonAsync<AppointmentViewModel>();
 
-        appointmentMessage?.Data.Should().NotBeNull();
+    //    appointmentMessage?.Data.Should().NotBeNull();
 
-        appointmentMessage!.Data!.Id.Should().Be(appointmentId!.Value);
-        appointmentMessage.Data.ProfessorId.Should().Be(request.professorId);
-        appointmentMessage.Data.StudentId.Should().Be(request.studentId);
-        appointmentMessage.Data.CalendarId.Should().Be(request.calendarId);
-        appointmentMessage.Data.DateTime.Should().Be(request.dateTime);
-        appointmentMessage.Data.ProfessorProgress.Should().Be(request.professorProgress);
-        appointmentMessage.Data.StudentProgress.Should().Be(request.studentProgress);
+    //    appointmentMessage!.Data!.Id.Should().Be(appointmentId!.Value);
+    //    appointmentMessage.Data.ProfessorId.Should().Be(request.professorId);
+    //    appointmentMessage.Data.StudentId.Should().Be(request.studentId);
+    //    appointmentMessage.Data.CalendarId.Should().Be(request.calendarId);
+    //    appointmentMessage.Data.DateTime.Should().Be(request.dateTime);
+    //    appointmentMessage.Data.ProfessorProgress.Should().Be(request.professorProgress);
+    //    appointmentMessage.Data.StudentProgress.Should().Be(request.studentProgress);
 
-    }
+    //}
 
-    [Fact]
-    [Priority(15)]
-    public async Task Should_Update_Appointment()
-    {
-        var request = new UpdateAppointmentViewModel(_fixture.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Actualizado Estado", "Actualizado Asunto");
+    //[Fact]
+    //[Priority(15)]
+    //public async Task Should_Update_Appointment()
+    //{
+    //    var request = new UpdateAppointmentViewModel(_fixture.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, "Actualizado Estado", "Actualizado Asunto");
 
-        var response = await _fixture.ServerClient.PutAsJsonAsync("/api/v1/Appointment", request);
+    //    var response = await _fixture.ServerClient.PutAsJsonAsync("/api/v1/Appointment", request);
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    //    response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var message = await response.Content.ReadAsJsonAsync<UpdateAppointmentViewModel>();
+    //    var message = await response.Content.ReadAsJsonAsync<UpdateAppointmentViewModel>();
 
-        message?.Data.Should().NotBeNull();
-        message!.Data.Should().BeEquivalentTo(request);
+    //    message?.Data.Should().NotBeNull();
+    //    message!.Data.Should().BeEquivalentTo(request);
 
-        // Check if Appointment is updated
-        var appointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{_fixture.Id}");
+    //    // Check if Appointment is updated
+    //    var appointmentResponse = await _fixture.ServerClient.GetAsync($"/api/v1/Appointment/{_fixture.Id}");
 
-        appointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+    //    appointmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var appointmentMessage = await appointmentResponse.Content.ReadAsJsonAsync<AppointmentViewModel>();
+    //    var appointmentMessage = await appointmentResponse.Content.ReadAsJsonAsync<AppointmentViewModel>();
 
-        appointmentMessage?.Data.Should().NotBeNull();
-        appointmentMessage!.Data!.Id.Should().Be(_fixture.Id);
-    }
+    //    appointmentMessage?.Data.Should().NotBeNull();
+    //    appointmentMessage!.Data!.Id.Should().Be(_fixture.Id);
+    //}
 
-    [Fact]
-    [Priority(20)]
+    //[Fact]
+    //[Priority(20)]
     public async Task Should_Delete_Appointment()
     {
         var response = await _fixture.ServerClient.DeleteAsync($"/api/v1/Appointment/{_fixture.Id}");

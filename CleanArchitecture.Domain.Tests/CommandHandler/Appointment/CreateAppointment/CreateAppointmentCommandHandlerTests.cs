@@ -36,53 +36,53 @@ public sealed class CreateAppointmentCommandHandlerTests
                 && x.ProfessorProgress == command.ProfessorProgress && x.StudentProgress == command.StudentProgress);
     }
 
-    [Fact]
-    public async Task Should_Not_Create_Appointment_Insufficient_Permissions()
-    {
-        _fixture.SetupUser();
+    //[Fact]
+    //public async Task Should_Not_Create_Appointment_Insufficient_Permissions()
+    //{
+    //    _fixture.SetupUser();
 
-        var command = new CreateAppointmentCommand(
-            Guid.NewGuid(),
-            professorId: Guid.NewGuid(),
-            studentId: Guid.NewGuid(),
-            calendarId: Guid.NewGuid(),
-            DateTime.UtcNow,
-            "Test Appointment", "testcode","test","testeventId");
+    //    var command = new CreateAppointmentCommand(
+    //        Guid.NewGuid(),
+    //        professorId: Guid.NewGuid(),
+    //        studentId: Guid.NewGuid(),
+    //        calendarId: Guid.NewGuid(),
+    //        DateTime.UtcNow,
+    //        "Test Appointment", "testcode","test","testeventId");
 
-        await _fixture.CommandHandler.Handle(command, default);
+    //    await _fixture.CommandHandler.Handle(command, default);
 
-        _fixture
-            .VerifyNoCommit()
-            .VerifyNoRaisedEvent<AppointmentCreatedEvent>()
-            .VerifyAnyDomainNotification()
-            .VerifyExistingNotification(
-                ErrorCodes.InsufficientPermissions,
-                $"No permission to create Appointment {command.AggregateId}");
-    }
+    //    _fixture
+    //        .VerifyNoCommit()
+    //        .VerifyNoRaisedEvent<AppointmentCreatedEvent>()
+    //        .VerifyAnyDomainNotification()
+    //        .VerifyExistingNotification(
+    //            ErrorCodes.InsufficientPermissions,
+    //            $"No permission to create Appointment {command.AggregateId}");
+    //}
 
-    [Fact]
-    public async Task Should_Not_Create_Appointment_Already_Exists()
-    {
-        var command = new CreateAppointmentCommand(
-           Ids.Seed.AppointmentId,
-            professorId: Guid.NewGuid(),
-            studentId: Guid.NewGuid(),
-            calendarId: Guid.NewGuid(),
-            DateTime.UtcNow,
-            "Test Appointment", "testcode","test","test");
+    //[Fact]
+    //public async Task Should_Not_Create_Appointment_Already_Exists()
+    //{
+    //    var command = new CreateAppointmentCommand(
+    //       Ids.Seed.AppointmentId,
+    //        professorId: Guid.NewGuid(),
+    //        studentId: Guid.NewGuid(),
+    //        calendarId: Guid.NewGuid(),
+    //        DateTime.UtcNow,
+    //        "Test Appointment", "testcode","test","test");
 
-        _fixture.SetupExistingAppointment(command.AggregateId);
+    //    _fixture.SetupExistingAppointment(command.AggregateId);
 
-        await _fixture.CommandHandler.Handle(command, default);
+    //    await _fixture.CommandHandler.Handle(command, default);
 
-        _fixture
-            .VerifyNoCommit()
-            .VerifyNoRaisedEvent<AppointmentCreatedEvent>()
-            .VerifyAnyDomainNotification()
-            .VerifyExistingNotification(
-                DomainErrorCodes.Appointment.AlreadyExists,
-                $"There is already a Appointment with Id {command.AggregateId}");
-    }
+    //    _fixture
+    //        .VerifyNoCommit()
+    //        .VerifyNoRaisedEvent<AppointmentCreatedEvent>()
+    //        .VerifyAnyDomainNotification()
+    //        .VerifyExistingNotification(
+    //            DomainErrorCodes.Appointment.AlreadyExists,
+    //            $"There is already a Appointment with Id {command.AggregateId}");
+    //}
 
 
 

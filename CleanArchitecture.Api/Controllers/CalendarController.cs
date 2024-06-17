@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Google.Apis.Calendar.v3.Data;
 using CleanArchitecture.Api.Services;
-
+using CleanArchitecture.Api.Models;
 namespace CleanArchitecture.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -115,13 +115,6 @@ namespace CleanArchitecture.Api.Controllers
 
     }
 
-    public class EventRequest
-    {
-        public string Summary { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
-        public DateTime StartDateTime { get; set; }
-        public DateTime EndDateTime { get; set; }
-    }
+   
 
 }
