@@ -10,33 +10,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Api.Services
 {
-    public static class GoogleCalendarService
-    {
-        private static readonly string[] Scopes = { CalendarService.Scope.Calendar };
-        private static readonly string ApplicationName = "Google Calendar API .NET Quickstart";
-
-        private static async Task<CalendarService> GetCalendarServiceAsync()
-        {
-            UserCredential credential;
-
-            using (var stream = new FileStream("../Credentials/credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                string credPath = "../Credentials/token.json";
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)
-                );
-            }
-
-            return new CalendarService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-        }
+   
 
         public static async Task<Events> GetUpcomingEventsAsync(int maxResults = 10)
         {
