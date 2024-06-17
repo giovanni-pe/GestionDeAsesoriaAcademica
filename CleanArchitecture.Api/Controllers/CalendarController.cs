@@ -24,6 +24,7 @@ namespace CleanArchitecture.Api.Controllers
             }
         }
 
+        //Se Crea Un método(CreateEvent)en CalendarController:
         [HttpPost("events")]
         public async Task<IActionResult> CreateEvent([FromBody] EventRequest eventRequest)
         {
