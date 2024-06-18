@@ -14,7 +14,8 @@ namespace CleanArchitecture.Domain.Entities
         public string ProfessorProgress { get; private set; }
         public string StudentProgress { get; private set; }
         public string Status { get; private set; }
-        public string GoogleEventId { get; private set; }
+        public string GoogleEventId { get; private set; } 
+
 
         public Appointment(Guid id, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress,String status,string googleEventId) : base(id)
         {
