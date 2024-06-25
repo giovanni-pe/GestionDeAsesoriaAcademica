@@ -12,8 +12,8 @@ using CleanArchitecture.Domain.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using Google.Apis.Calendar.v3.Data;
-using CleanArchitecture.Api.Services;
+//using Google.Apis.Calendar.v3.Data;
+//using CleanArchitecture.Api.Services;
 
 namespace CleanArchitecture.Api.Controllers
 {

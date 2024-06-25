@@ -1,5 +1,6 @@
 {
   "credentialsPath": "../Credentials/credentials.json",
+  "limitOfAbsences": 5,
   "tokenPath": "../Credentials/token.json",
   "user": "user",
   "fileDataStore": true,

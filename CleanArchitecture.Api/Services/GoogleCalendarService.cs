@@ -53,7 +53,7 @@ namespace CleanArchitecture.Api.Services
             var service = await GetCalendarServiceAsync();
 
             EventsResource.ListRequest request = service.Events.List(_config.CalendarId);
-            request.TimeMin = DateTime.Now;
+            request.TimeMin = DateTime.Now; 
             request.ShowDeleted = _config.ShowDeleted;
             request.SingleEvents = _config.SingleEvents;
             request.MaxResults = maxResults;
