@@ -7,7 +7,7 @@
   "applicationName": "Google Calendar API .NET Quickstart",
   "calendarId": "primary",
   "defaultTimeZone": "America/Lima",
-  "recurrence": "RRULE:FREQ=DAILY;COUNT=1",
+  "DefaultRecurrence": "RRULE:FREQ=DAILY;COUNT=1",
   "useDefaultReminders": false,
   "defaultReminders": [
     {

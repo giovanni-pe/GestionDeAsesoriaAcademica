@@ -45,6 +45,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProfessorService, ProfessorService>();
         services.AddScoped<IAdvisoryContractService,AdvisoryContractService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<IMyService, MyService>();
         return services;
     }
 
