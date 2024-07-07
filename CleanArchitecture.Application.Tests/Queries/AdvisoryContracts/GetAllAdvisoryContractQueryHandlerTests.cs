@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
 using CleanArchitecture.Application.Tests.Fixtures.Queries.AdvisoryContracts;
 using CleanArchitecture.Application.ViewModels;
+using CleanArchitecture.Domain.Constants;
 using FluentAssertions;
 using Xunit;
 
@@ -48,7 +49,7 @@ public sealed class GetAllAdvisoryContractsQueryHandlerTests
         };
 
         var result = await _fixture.QueryHandler.Handle(
-            new AdvisoryContractsQuery(query, false),
+            new AdvisoryContractsQuery(Ids.Seed.ResearchLineId,query, false),
             default);
 
         result.PageSize.Should().Be(query.PageSize);
