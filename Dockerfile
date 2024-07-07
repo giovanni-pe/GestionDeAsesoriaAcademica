@@ -1,4 +1,5 @@
-FROM  --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+# Usar una imagen base de .NET 8.0
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
 
@@ -6,6 +7,8 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG TARGETARCH
 WORKDIR /src
+
+# Copiar los archivos de proyecto
 COPY ["CleanArchitecture.Api/CleanArchitecture.Api.csproj", "CleanArchitecture.Api/"]
 COPY ["CleanArchitecture.Application/CleanArchitecture.Application.csproj", "CleanArchitecture.Application/"]
 COPY ["CleanArchitecture.Domain/CleanArchitecture.Domain.csproj", "CleanArchitecture.Domain/"]
@@ -13,7 +16,11 @@ COPY ["CleanArchitecture.Shared/CleanArchitecture.Shared.csproj", "CleanArchitec
 COPY ["CleanArchitecture.Proto/CleanArchitecture.Proto.csproj", "CleanArchitecture.Proto/"]
 COPY ["CleanArchitecture.gRPC/CleanArchitecture.gRPC.csproj", "CleanArchitecture.gRPC/"]
 COPY ["CleanArchitecture.Infrastructure/CleanArchitecture.Infrastructure.csproj", "CleanArchitecture.Infrastructure/"]
+
+# Restaurar dependencias
 RUN dotnet restore "CleanArchitecture.Api/CleanArchitecture.Api.csproj" -a $TARGETARCH
+
+# Copiar el resto del código fuente y construir la aplicación
 COPY . .
 WORKDIR "/src/CleanArchitecture.Api"
 RUN dotnet build "CleanArchitecture.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build -a $TARGETARCH
@@ -29,5 +36,6 @@ COPY --from=publish /app/publish .
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
   CMD curl --fail http://localhost/healthz || exit 1
+
 EXPOSE 80
 ENTRYPOINT ["dotnet", "CleanArchitecture.Api.dll"]

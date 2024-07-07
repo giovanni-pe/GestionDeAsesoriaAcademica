@@ -5,16 +5,16 @@ namespace CleanArchitecture.Domain.Entities
     public class Appointment : Entity
     {
 
-        public Guid ProfessorId { get; private set; }
-        public virtual Professor Professor { get; private set; } = null!;
-        public Guid StudentId { get; private set; }
-        public virtual Student Student { get; private set; } = null!;
-        public Guid CalendarId { get; private set; }
-        public DateTime DateTime { get; private set; }
-        public string ProfessorProgress { get; private set; }
-        public string StudentProgress { get; private set; }
-        public string Status { get; private set; }
-        public string GoogleEventId { get; private set; } 
+        public Guid ProfessorId { get; set; }
+        public virtual Professor Professor { get; set; } = null!;
+        public Guid StudentId { get; set; }
+        public virtual Student Student { get; set; } = null!;
+        public Guid CalendarId { get; set; }
+        public DateTime DateTime { get; set; }
+        public string ProfessorProgress { get; set; }
+        public string StudentProgress { get; set; }
+        public string Status { get; set; }
+        public string GoogleEventId { get; set; }
 
 
         public Appointment(Guid id, Guid professorId, Guid studentId, Guid calendarId, DateTime dateTime, string professorProgress, string studentProgress,String status,string googleEventId) : base(id)

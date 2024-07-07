@@ -33,13 +33,20 @@ services:
       - mynetwork
 
   app:
-    image: clean-architecture
+    build:
+      context: .
+      dockerfile: CleanArchitecture.Api/Dockerfile
+    container_name: clean-architecture
     depends_on:
       - sqlserver
       - redis
       - rabbitmq
     environment:
-      ConnectionStrings__DefaultConnection: "Server=gestiondeasesoriaacademica1-db-1;Database=clean-architecture;User Id=sa;Password=YourStrong!Passw0rd;MultipleActiveResultSets=true;TrustServerCertificate=True"
+      - ConnectionStrings__DefaultConnection=Server=gestiondeasesoriaacademica1-db-1;Database=clean-architecture;User Id=sa;Password=YourStrong!Passw0rd;MultipleActiveResultSets=true;TrustServerCertificate=True
+      - RedisHostName=redis
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Username=admin
+      - RabbitMQ__Password=DOIA9234JF
     ports:
       - "80:80"
     networks:

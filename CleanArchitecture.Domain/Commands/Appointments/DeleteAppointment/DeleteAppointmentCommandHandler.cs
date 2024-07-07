@@ -15,7 +15,7 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
     IRequestHandler<DeleteAppointmentCommand>
 {
     private readonly IAppointmentRepository _AppointmentRepository;
-     private readonly IUser _user;
+    // private readonly IReserchLine _user;
     private readonly IUserRepository _userRepository;
 
     public DeleteAppointmentCommandHandler(
@@ -27,8 +27,8 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
         IUser user) : base(bus, unitOfWork, notifications)
     {
         _AppointmentRepository = AppointmentRepository;
-        _userRepository = userRepository;
-        _user = user;
+        //  _userRepository = userRepository;
+        // _user = user;
     }
 
     public async Task Handle(DeleteAppointmentCommand request, CancellationToken cancellationToken)
@@ -37,17 +37,17 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
         {
             return;
         }
+        /*
+                if (_user.GetUserRole() != UserRole.Admin)
+                {
+                    await NotifyAsync(
+                        new DomainNotification(
+                            request.MessageType,
+                            $"No permission to delete Appointment {request.AggregateId}",
+                            ErrorCodes.InsufficientPermissions));
 
-        if (_user.GetUserRole() != UserRole.Admin)
-        {
-            await NotifyAsync(
-                new DomainNotification(
-                    request.MessageType,
-                    $"No permission to delete Appointment {request.AggregateId}",
-                    ErrorCodes.InsufficientPermissions));
-
-            return;
-        }
+                    return;
+                }*/
 
         var Appointment = await _AppointmentRepository.GetByIdAsync(request.AggregateId);
 
@@ -61,12 +61,12 @@ public sealed class DeleteAppointmentCommandHandler : CommandHandlerBase,
 
             return;
         }
-/*
-        var AppointmentUsers = _userRepository
-            .GetAll()
-            .Where(x => x.AppointmentId == request.AggregateId);
+        /*
+                var AppointmentUsers = _userRepository
+                    .GetAll()
+                    .Where(x => x.AppointmentId == request.AggregateId);
 
-        _userRepository.RemoveRange(AppointmentUsers);*/
+                _userRepository.RemoveRange(AppointmentUsers);*/
 
         _AppointmentRepository.Remove(Appointment);
 

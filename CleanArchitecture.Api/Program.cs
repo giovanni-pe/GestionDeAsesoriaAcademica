@@ -2,6 +2,7 @@ using CleanArchitecture.Api.BackgroundServices;
 using CleanArchitecture.Api.Extensions;
 using CleanArchitecture.Application.Extensions;
 using CleanArchitecture.Application.gRPC;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Domain.Extensions;
 using CleanArchitecture.Domain.Rabbitmq.Extensions;
 using CleanArchitecture.Infrastructure.Database;
@@ -119,6 +120,8 @@ else
 }
 
 
+// Registro del servicio de notificaciones
+builder.Services.AddSingleton<INotificationService, NotificationService>();
 
 var app = builder.Build();
 
