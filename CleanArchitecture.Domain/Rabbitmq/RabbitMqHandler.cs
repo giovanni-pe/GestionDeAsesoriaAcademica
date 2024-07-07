@@ -44,7 +44,7 @@ public sealed class RabbitMqHandler : BackgroundService
             DispatchConsumersAsync = true
         };
 
-        var connection = factory.CreateConnection();
+         var connection = factory.CreateConnection();
         _channel = connection.CreateModel();
     }
 

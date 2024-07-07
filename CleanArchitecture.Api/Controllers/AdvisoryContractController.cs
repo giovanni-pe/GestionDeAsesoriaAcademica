@@ -39,13 +39,14 @@ public sealed class AdvisoryContractController : ApiController
     [SwaggerOperation("Get a list of all AdvisoryContracts")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<PagedResult<AdvisoryContractViewModel>>))]
     public async Task<IActionResult> GetAllAdvisoryContractsAsync(
+        [FromQuery] Guid researchLineId,
         [FromQuery] PageQuery query,
         [FromQuery] string searchTerm = "",
         [FromQuery] bool includeDeleted = false,
         [FromQuery] [SortableFieldsAttribute<AdvisoryContractViewModelSortProvider, AdvisoryContractViewModel, AdvisoryContract>]
         SortQuery? sortQuery = null)
     {
-        var AdvisoryContracts = await _AdvisoryContractService.GetAllAdvisoryContractsAsync(
+        var AdvisoryContracts = await _AdvisoryContractService.GetAllAdvisoryContractsAsync(researchLineId,
             query,
             includeDeleted,
             searchTerm,
@@ -88,4 +89,21 @@ public sealed class AdvisoryContractController : ApiController
         await _AdvisoryContractService.DeleteAdvisoryContractAsync(id);
         return Response(id);
     }
+    [HttpGet("ByResearchLineId/{researchLineId}")]
+    [SwaggerOperation("Get AdvisoryContracts by ResearchLineId")]
+    [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<PagedResult<AdvisoryContractViewModel>>))]
+    public async Task<IActionResult> GetAdvisoryContractsByResearchLineIdAsync(
+    [FromRoute] Guid researchLineId,
+    [FromQuery] int pageNumber = 1,
+    [FromQuery] int pageSize = 10,
+    [FromQuery] [SortableFieldsAttribute<AdvisoryContractViewModelSortProvider, AdvisoryContractViewModel, AdvisoryContract>]
+    SortQuery? sortQuery = null,
+    [FromQuery] bool includeDeleted = false,
+    [FromQuery] string? searchTerm = null)
+    {
+        var advisoryContracts = await _AdvisoryContractService.GetAdvisoryContractsByResearchLineIdAsync(researchLineId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm);
+        return Response(advisoryContracts);
+    }
+
+
 }

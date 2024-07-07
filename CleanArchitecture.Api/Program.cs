@@ -10,6 +10,7 @@ using HealthChecks.ApplicationStatus.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +20,8 @@ using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
@@ -32,6 +33,9 @@ builder.Services.AddCors(options =>
                                       .AllowAnyHeader()
                                       .AllowAnyMethod());
 });
+
+
+
 builder.Services.AddGrpc();
 builder.Services.AddGrpcReflection();
 builder.Services.AddEndpointsApiExplorer();
@@ -114,13 +118,10 @@ else
     builder.Services.AddDistributedMemoryCache();
 }
 
-// Registro antes de Build
-Console.WriteLine("Antes de llamar a Build");
+
 
 var app = builder.Build();
 
-// Registro después de Build
-Console.WriteLine("Después de llamar a Build");
 
 using (var scope = app.Services.CreateScope())
 {
@@ -143,8 +144,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
-// Usar el middleware de CORS antes de la autenticación y autorización
-
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -159,7 +158,6 @@ app.MapGrpcService<TenantsApiImplementation>();
 
 app.Run();
 
-// Needed for integration tests web application factory
 public partial class Program
 {
 }

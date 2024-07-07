@@ -61,4 +61,22 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="calendarSettings.Development.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="calendarSettings.Integration.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="calendarSettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

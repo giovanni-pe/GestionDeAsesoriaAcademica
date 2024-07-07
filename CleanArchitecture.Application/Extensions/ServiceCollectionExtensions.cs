@@ -30,6 +30,7 @@ using CleanArchitecture.Application.ViewModels.Appointments;
 using CleanArchitecture.Application.ViewModels.AdvisoryContracts;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractById;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
+using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractByResearchLineId;
 
 namespace CleanArchitecture.Application.Extensions;
 
@@ -45,6 +46,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProfessorService, ProfessorService>();
         services.AddScoped<IAdvisoryContractService,AdvisoryContractService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<IMyService, MyService>();
         return services;
     }
 
@@ -78,6 +80,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRequestHandler<GetAdvisoryContractByIdQuery, AdvisoryContractViewModel?>, GetAdvisoryContractByIdQueryHandler>();
         services
             .AddScoped<IRequestHandler<AdvisoryContractsQuery, PagedResult<AdvisoryContractViewModel>>, GetAllAdvisoryContractsQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAdvisoryContractByResearchLineIdQuery, PagedResult<AdvisoryContractViewModel>>, GetAdvisoryContractByResearchLineIdQueryHandler>();
+
         // Appointment
         services.AddScoped<IRequestHandler<GetAppointmentByIdQuery, AppointmentViewModel?>, GetAppointmentByIdQueryHandler>();
         services

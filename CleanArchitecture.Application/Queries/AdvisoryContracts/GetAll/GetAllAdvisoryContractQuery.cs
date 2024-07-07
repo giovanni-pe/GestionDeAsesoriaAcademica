@@ -2,10 +2,11 @@ using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Sorting;
 using CleanArchitecture.Application.ViewModels.AdvisoryContracts;
 using MediatR;
+using System;
 
 namespace CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
 
-public sealed record AdvisoryContractsQuery(
+public sealed record AdvisoryContractsQuery(Guid researchLineId,
     PageQuery Query,
     bool IncludeDeleted,
     string SearchTerm = "",

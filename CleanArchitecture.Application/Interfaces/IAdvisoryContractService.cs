@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Sorting;
 using CleanArchitecture.Application.ViewModels.AdvisoryContracts;
+using System.Collections.Generic;
 
 namespace CleanArchitecture.Application.Interfaces;
 
@@ -12,8 +13,8 @@ public interface IAdvisoryContractService
     public Task UpdateAdvisoryContractAsync(UpdateAdvisoryContractViewModel AdvisoryContract);
     public Task DeleteAdvisoryContractAsync(Guid AdvisoryContractId);
     public Task<AdvisoryContractViewModel?> GetAdvisoryContractByIdAsync(Guid AdvisoryContractId);
-
-    public Task<PagedResult<AdvisoryContractViewModel>> GetAllAdvisoryContractsAsync(
+    Task<PagedResult<AdvisoryContractViewModel>> GetAdvisoryContractsByResearchLineIdAsync(Guid researchLineId, int pageNumber, int pageSize, SortQuery? sortQuery = null, bool includeDeleted = false, string? searchTerm = null);
+    public Task<PagedResult<AdvisoryContractViewModel>> GetAllAdvisoryContractsAsync(Guid researchLineId,
         PageQuery query,
         bool includeDeleted,
         string searchTerm = "",

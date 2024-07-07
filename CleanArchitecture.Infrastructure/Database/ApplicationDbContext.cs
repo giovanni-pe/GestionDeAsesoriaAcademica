@@ -16,7 +16,7 @@ public partial class ApplicationDbContext : DbContext
     public DbSet<ResearchLine> ResearchLines { get; set; } = null!;
     public DbSet<Appointment> Appointments { get; set; } = null!;
     public DbSet<AdvisoryContract> AdvisoryContracts { get; set; } = null!;
- 
+    
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

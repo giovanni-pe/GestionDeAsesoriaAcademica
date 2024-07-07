@@ -15,6 +15,6 @@ public sealed class CreateExchange : IRabbitMqAction
 
     public void Perform(IModel channel)
     {
-        channel.ExchangeDeclare(_name, _type);
+       channel.ExchangeDeclare(_name, _type);
     }
 }

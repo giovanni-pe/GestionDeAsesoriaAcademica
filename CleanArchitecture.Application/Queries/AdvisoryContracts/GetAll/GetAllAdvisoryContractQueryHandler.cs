@@ -9,6 +9,7 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
 
@@ -35,6 +36,8 @@ public sealed class GetAllAdvisoryContractsQueryHandler :
     .IgnoreQueryFilters()
     .Include(x => x.Student)
     .Where(x => request.IncludeDeleted || !x.Deleted);
+  //.Where(x => x.ResearchLineId == (request.researchLineId != Guid.Empty ? request.researchLineId : x.ResearchLineId));
+
 
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
@@ -42,7 +45,7 @@ public sealed class GetAllAdvisoryContractsQueryHandler :
             //  AdvisoryContractsQuery = AdvisoryContractsQuery.Where(AdvisoryContract =>
             //    AdvisoryContract.ResearchGroup.Contains(request.SearchTerm));
         }
-
+        AdvisoryContractsQuery = request.researchLineId != Guid.Empty ? AdvisoryContractsQuery.Where(x => x.ResearchLineId == request.researchLineId): AdvisoryContractsQuery;
         var totalCount = await AdvisoryContractsQuery.CountAsync(cancellationToken);
 
         AdvisoryContractsQuery = AdvisoryContractsQuery.GetOrderedQueryable(request.SortQuery, _sortingExpressionProvider);

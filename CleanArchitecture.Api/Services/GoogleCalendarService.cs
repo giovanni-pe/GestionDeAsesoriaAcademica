@@ -3,6 +3,7 @@ using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Threading;
@@ -10,49 +11,57 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Api.Services
 {
-    public static class GoogleCalendarService
+    public class GoogleCalendarService
     {
-        private static readonly string[] Scopes = { CalendarService.Scope.Calendar };
-        private static readonly string ApplicationName = "Google Calendar API .NET Quickstart";
+        private readonly Config _config;
 
-        private static async Task<CalendarService> GetCalendarServiceAsync()
+        public GoogleCalendarService()
+        {
+            _config = LoadConfig();
+        }
+
+        private Config LoadConfig()
+        {
+            string configContent = File.ReadAllText("calendarSettings.json"); ;
+            return JsonConvert.DeserializeObject<Config>(configContent);
+        }
+
+        private async Task<CalendarService> GetCalendarServiceAsync()
         {
             UserCredential credential;
 
-            using (var stream = new FileStream("../Credentials/credentials.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(_config.CredentialsPath, FileMode.Open, FileAccess.Read))
             {
-                string credPath = "../Credentials/token.json";
                 credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
+                    new[] { CalendarService.Scope.Calendar },
+                    _config.User,
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)
+                    new FileDataStore(_config.TokenPath, _config.FileDataStore)
                 );
             }
 
             return new CalendarService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
+                ApplicationName = _config.ApplicationName,
             });
         }
 
-        public static async Task<Events> GetUpcomingEventsAsync(int maxResults = 10)
+        public async Task<Events> GetUpcomingEventsAsync(int maxResults = 10)
         {
             var service = await GetCalendarServiceAsync();
 
-            EventsResource.ListRequest request = service.Events.List("primary");
-            request.TimeMin = DateTime.Now;
-            request.ShowDeleted = false;
-            request.SingleEvents = true;
+            EventsResource.ListRequest request = service.Events.List(_config.CalendarId);
+            request.TimeMin = DateTime.Now; 
+            request.ShowDeleted = _config.ShowDeleted;
+            request.SingleEvents = _config.SingleEvents;
             request.MaxResults = maxResults;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
             return await request.ExecuteAsync();
         }
 
-        public static async Task<string> CreateEventAsync(string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
+        public async Task<string> CreateEventAsync(string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
         {
             var service = await GetCalendarServiceAsync();
 
@@ -64,105 +73,118 @@ namespace CleanArchitecture.Api.Services
                 Start = new EventDateTime()
                 {
                     DateTime = startDateTime,
-                    TimeZone = "America/Los_Angeles",
+                    TimeZone = _config.DefaultTimeZone,
                 },
                 End = new EventDateTime()
                 {
                     DateTime = endDateTime,
-                    TimeZone = "America/Los_Angeles",
+                    TimeZone = _config.DefaultTimeZone,
                 },
-                Recurrence = new String[] { "RRULE:FREQ=DAILY;COUNT=1" },
+                Recurrence = new String[] { _config.Recurrence },
                 Attendees = new EventAttendee[] { },
                 Reminders = new Event.RemindersData()
                 {
-                    UseDefault = false,
-                    Overrides = new EventReminder[]
-                    {
-                        new EventReminder() { Method = "email", Minutes = 24 * 60 },
-                        new EventReminder() { Method = "popup", Minutes = 10 },
-                    }
+                    UseDefault = _config.UseDefaultReminders,
+                    Overrides = _config.DefaultReminders
                 }
             };
 
-            EventsResource.InsertRequest request = service.Events.Insert(newEvent, "primary");
+            EventsResource.InsertRequest request = service.Events.Insert(newEvent, _config.CalendarId);
             Event createdEvent = await request.ExecuteAsync();
             return createdEvent.HtmlLink;
         }
-          public static async Task<bool> CancelEventAsync(string eventId)
-    {
-        var service = await GetCalendarServiceAsync();
-        try
+
+        public async Task<bool> CancelEventAsync(string eventId)
         {
-            var request = service.Events.Delete("primary", eventId);
-            await request.ExecuteAsync();
-            return true;
+            var service = await GetCalendarServiceAsync();
+            try
+            {
+                var request = service.Events.Delete(_config.CalendarId, eventId);
+                await request.ExecuteAsync();
+                return _config.CancelEventSuccess;
+            }
+            catch (Exception)
+            {
+                return _config.CancelEventFailure;
+            }
         }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
 
-    public static async Task<Events> GetAdvisorCalendarAsync(string advisorEmail)
-    {
-        var service = await GetCalendarServiceAsync();
-
-        EventsResource.ListRequest request = service.Events.List(advisorEmail);
-        request.TimeMin = DateTime.Now;
-        request.ShowDeleted = false;
-        request.SingleEvents = true;
-        request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-        return await request.ExecuteAsync();
-    }
-
-    public static async Task<string> SetNotificationPreferencesAsync(string eventId, EventReminder[] reminders)
-    {
-        var service = await GetCalendarServiceAsync();
-
-        Event eventToUpdate = await service.Events.Get("primary", eventId).ExecuteAsync();
-        eventToUpdate.Reminders = new Event.RemindersData()
-        {
-            UseDefault = false,
-            Overrides = reminders,
-        };
-
-        EventsResource.UpdateRequest updateRequest = service.Events.Update(eventToUpdate, "primary", eventId);
-        Event updatedEvent = await updateRequest.ExecuteAsync();
-        return updatedEvent.HtmlLink;
-    }
-        public static async Task<string> UpdateEventAsync(string eventId, string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
+        public async Task<Events> GetAdvisorCalendarAsync(string advisorEmail)
         {
             var service = await GetCalendarServiceAsync();
 
-            // Retrieve the event
-            Event eventToUpdate = await service.Events.Get("primary", eventId).ExecuteAsync();
+            EventsResource.ListRequest request = service.Events.List(advisorEmail);
+            request.TimeMin = DateTime.Now;
+            request.ShowDeleted = _config.ShowDeleted;
+            request.SingleEvents = _config.SingleEvents;
+            request.OrderBy = (EventsResource.ListRequest.OrderByEnum)Enum.Parse(typeof(EventsResource.ListRequest.OrderByEnum), _config.OrderBy);
 
-            // Update the event details
+            return await request.ExecuteAsync();
+        }
+
+        public async Task<string> SetNotificationPreferencesAsync(string eventId, EventReminder[] reminders)
+        {
+            var service = await GetCalendarServiceAsync();
+
+            Event eventToUpdate = await service.Events.Get(_config.CalendarId, eventId).ExecuteAsync();
+            eventToUpdate.Reminders = new Event.RemindersData()
+            {
+                UseDefault = false,
+                Overrides = reminders,
+            };
+
+            EventsResource.UpdateRequest updateRequest = service.Events.Update(eventToUpdate, _config.CalendarId, eventId);
+            Event updatedEvent = await updateRequest.ExecuteAsync();
+            return updatedEvent.HtmlLink;
+        }
+
+        public async Task<string> UpdateEventAsync(string eventId, string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
+        {
+            var service = await GetCalendarServiceAsync();
+
+            Event eventToUpdate = await service.Events.Get(_config.CalendarId, eventId).ExecuteAsync();
+
             eventToUpdate.Summary = summary;
             eventToUpdate.Location = location;
             eventToUpdate.Description = description;
             eventToUpdate.Start = new EventDateTime()
             {
                 DateTime = startDateTime,
-                TimeZone = "America/Los_Angeles",
+                TimeZone = _config.DefaultTimeZone,
             };
             eventToUpdate.End = new EventDateTime()
             {
                 DateTime = endDateTime,
-                TimeZone = "America/Los_Angeles",
+                TimeZone = _config.DefaultTimeZone,
             };
             eventToUpdate.Reminders = new Event.RemindersData()
             {
-                UseDefault = false,
+                UseDefault = _config.UseDefaultReminders,
             };
 
-            // Update the event
-            EventsResource.UpdateRequest updateRequest = service.Events.Update(eventToUpdate, "primary", eventId);
+            EventsResource.UpdateRequest updateRequest = service.Events.Update(eventToUpdate, _config.CalendarId, eventId);
             Event updatedEvent = await updateRequest.ExecuteAsync();
             return updatedEvent.HtmlLink;
         }
 
+        private class Config
+        {
+            public string CredentialsPath { get; set; }
+            public string TokenPath { get; set; }
+            public string User { get; set; }
+            public bool FileDataStore { get; set; }
+            public string ApplicationName { get; set; }
+            public string CalendarId { get; set; }
+            public string DefaultTimeZone { get; set; }
+            public string Recurrence { get; set; }
+            public bool UseDefaultReminders { get; set; }
+            public EventReminder[] DefaultReminders { get; set; }
+            public bool ShowDeleted { get; set; }
+            public bool SingleEvents { get; set; }
+            public int MaxResults { get; set; }
+            public string OrderBy { get; set; }
+            public bool CancelEventSuccess { get; set; }
+            public bool CancelEventFailure { get; set; }
+        }
     }
-
 }
