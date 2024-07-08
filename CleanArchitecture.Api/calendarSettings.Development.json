@@ -6,7 +6,7 @@
     }
   },
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=clean-architecture;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+    "DefaultConnection": "Data Source=SQL8005.site4now.net;Initial Catalog=db_aaac24_cleanarchitecture;User Id=db_aaac24_cleanarchitecture_admin;Password=bd123456"
   },
   "Auth": {
     "Issuer": "CleanArchitectureServer",
