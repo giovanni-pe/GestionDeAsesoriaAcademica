@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Cors;
+using CleanArchitecture.Application.Services;
 
 namespace CleanArchitecture.Api.Controllers;
 [EnableCors("AllowAll")]
@@ -40,13 +41,15 @@ public sealed class AdvisoryContractController : ApiController
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<PagedResult<AdvisoryContractViewModel>>))]
     public async Task<IActionResult> GetAllAdvisoryContractsAsync(
         [FromQuery] Guid researchLineId,
+        [FromQuery] DateTime startDate,
+        [FromQuery] DateTime endDate,
         [FromQuery] PageQuery query,
         [FromQuery] string searchTerm = "",
         [FromQuery] bool includeDeleted = false,
         [FromQuery] [SortableFieldsAttribute<AdvisoryContractViewModelSortProvider, AdvisoryContractViewModel, AdvisoryContract>]
         SortQuery? sortQuery = null)
     {
-        var AdvisoryContracts = await _AdvisoryContractService.GetAllAdvisoryContractsAsync(researchLineId,
+        var AdvisoryContracts = await _AdvisoryContractService.GetAllAdvisoryContractsAsync(researchLineId,startDate,endDate,
             query,
             includeDeleted,
             searchTerm,
@@ -104,6 +107,13 @@ public sealed class AdvisoryContractController : ApiController
         var advisoryContracts = await _AdvisoryContractService.GetAdvisoryContractsByResearchLineIdAsync(researchLineId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm);
         return Response(advisoryContracts);
     }
-
+    [HttpPut("{id}/accept")]
+    [SwaggerOperation("Accept an existing AdvisoryContract")]
+    [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
+    public async Task<IActionResult> AcceptAdvisoryContractAsync([FromRoute] Guid id, [FromBody] string acceptanceMessage)
+    {
+        await _AdvisoryContractService.AcceptAdvisoryContractAsync(id, acceptanceMessage);
+        return Response();
+    }
 
 }

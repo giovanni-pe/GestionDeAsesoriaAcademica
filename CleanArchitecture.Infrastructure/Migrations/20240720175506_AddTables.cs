@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -142,7 +144,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     ResearchLineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ThesisTopic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfessorMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -203,7 +207,11 @@ namespace CleanArchitecture.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "ResearchGroups",
                 columns: new[] { "Id", "Code", "Deleted", "Name" },
-                values: new object[] { new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41"), "SW123", false, "INGENIERIA DE SOFTWARE" });
+                values: new object[,]
+                {
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a5"), "SW123", false, "INGENIERIA DE SOFTWARE" },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a7"), "RESEGTI", false, "RESEGTI" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Tenants",
@@ -213,17 +221,50 @@ namespace CleanArchitecture.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "ResearchLines",
                 columns: new[] { "Id", "Code", "Deleted", "Name", "ResearchGroupId" },
-                values: new object[] { new Guid("b542bf25-134c-47a2-a0df-84ed14d03c42"), "ASW123", false, "Arquitectura de Software", new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41") });
+                values: new object[,]
+                {
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a4010"), "IoT", false, "Internet de las Cosas", new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a7") },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a8"), "ASW123", false, "Arquitectura de Software", new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a5") }
+                });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Deleted", "Email", "FirstName", "LastLoggedinDate", "LastName", "Password", "Role", "Status", "TenantId" },
-                values: new object[] { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ae"), false, "admin@email.com", "Admin", null, "User", "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2", 0, 0, new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a") });
+                values: new object[,]
+                {
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1"), false, "ronald.ibarra@unas.edu.pe", "Ronald", null, "Ibarra Zapata", "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2", 1, 0, new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a") },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a2"), false, "gardin.olivera@unas.edu.pe", "Gardin", null, "Olivera Ruiz", "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2", 1, 0, new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a") },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a3"), false, "giovanni.perez@unas.edu.pe", "Giovanni", null, "Perez Espinoza", "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2", 1, 0, new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a") },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a4"), false, "luz.cabia@unas.edu.pe", "Luz Lisbeth", null, "Cabia Adriano", "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2", 1, 0, new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a") },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ae"), false, "admin@email.com", "Admin", null, "User", "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2", 0, 0, new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Professors",
+                columns: new[] { "Id", "Deleted", "IsCoordinator", "ResearchGroupId", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"), false, false, new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a7"), new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a2") },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40b1"), false, false, new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a5"), new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1") }
+                });
 
             migrationBuilder.InsertData(
                 table: "Students",
                 columns: new[] { "Id", "Code", "Deleted", "UserId" },
-                values: new object[] { new Guid("b542bf25-134c-47a2-a0df-84ed14d03c62"), "0020210008", false, new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ae") });
+                values: new object[,]
+                {
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1"), "0020210008", false, new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a4") },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ad"), "0020210008", false, new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a3") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AdvisoryContracts",
+                columns: new[] { "Id", "DateCreated", "Deleted", "Message", "ProfessorId", "ProfessorMessage", "ResearchLineId", "Status", "StudentId", "ThesisTopic" },
+                values: new object[,]
+                {
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a4033"), new DateTime(2024, 7, 20, 12, 55, 6, 746, DateTimeKind.Local).AddTicks(7673), false, "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado", new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"), "i", new Guid("7e3892c0-9374-49fa-a3fd-53db637a4010"), 1, new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1"), "Wifi 802.22, de alrgo alcance en zonas rurales" },
+                    { new Guid("7e3892c0-9374-49fa-a3fd-53db637a4034"), new DateTime(2024, 7, 20, 12, 55, 6, 746, DateTimeKind.Local).AddTicks(7687), false, "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado", new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"), "i", new Guid("7e3892c0-9374-49fa-a3fd-53db637a4010"), 0, new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ad"), "Sensores Iot y sus aplicaciones en la agricultura" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AdvisoryContracts_ProfessorId",

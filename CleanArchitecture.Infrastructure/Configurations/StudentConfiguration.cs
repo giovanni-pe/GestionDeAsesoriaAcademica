@@ -13,10 +13,12 @@ namespace CleanArchitecture.Infrastructure.Configurations
                 .Property(student => student.Code)
                 .IsRequired();
 
-       //     builder.HasData(new Student(
-       //Ids.Seed.StudentId, Ids.Seed.UserId,"0020210008"));
+       builder.HasData(new Student(
+       Ids.Seed.StudentId, Ids.Seed.UserGiovanniId,"0020210008"),
+           new Student(
+       Ids.Seed.Student1Id, Ids.Seed.UserLuzId, "0020210008"));
 
-            // Seed data or other configurations can be added here
+            
         }
     }
 }

@@ -13,6 +13,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using CleanArchitecture.Application.Services;
+using CleanArchitecture.Application.ViewModels.AdvisoryContracts;
 
 namespace CleanArchitecture.Api.Controllers;
 
@@ -71,25 +73,10 @@ public sealed class AppointmentController : ApiController
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<UpdateAppointmentViewModel>))]
     public async Task<IActionResult> UpdateAppointmentAsync([FromRoute] Guid id, [FromBody] UpdateAppointmentViewModel appointment)
     {
-        if (id != appointment.appointmentId)
-        {
-            return BadRequest(new { Message = "The ID in the route does not match the ID in the body." });
-        }
-
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        //var result = await _AppointmentService.UpdateAppointmentAsync1(appointment);
-        //if (!result)
-        //{
-        //    return NotFound(new { Message = "Appointment not found." });
-        //}
+        await _AppointmentService.UpdateAppointmentAsync(appointment);
 
         return Response(appointment);
     }
-
 
 
     [HttpDelete("{id}")]

@@ -20,7 +20,7 @@ public sealed class AdvisoryContractTestFixture : TestFixtureBase
         context.Students.Add(new Student(Ids.Seed.StudentId, Ids.Seed.UserId, "test"));
        
         context.AdvisoryContracts.Add(new AdvisoryContract(
-            CreatedAdvisoryContractId, Ids.Seed.ProfessorId, Ids.Seed.StudentId, Ids.Seed.ResearchLineId, "test","test","test"));
+            CreatedAdvisoryContractId, Ids.Seed.ProfessorId, Ids.Seed.StudentId, Ids.Seed.ResearchLineId, "test","test",0, DateTime.Now));
        // context.Tenants.Add(new Tenant(
        //    Ids.Seed.TenantId,
        //    "Test Tenant"));

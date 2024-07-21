@@ -27,7 +27,7 @@ public sealed class GetAllAdvisoryContractsTestFixture : QueryHandlerBaseFixture
     {
         var AdvisoryContract = new AdvisoryContract(
             Ids.Seed.AdvisoryContractId, Ids.Seed.ProfessorId, Guid.NewGuid(), Guid.NewGuid(),
-            "testTesisTopic", "testMessage", "testStatus");
+            "testTesisTopic", "testMessage", 0, DateTime.Now);
 
         if (deleted)
         {

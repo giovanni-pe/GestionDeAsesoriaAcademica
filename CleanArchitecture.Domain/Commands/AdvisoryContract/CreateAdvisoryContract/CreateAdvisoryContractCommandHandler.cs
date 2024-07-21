@@ -69,7 +69,7 @@ public sealed class CreateAdvisoryContractCommandHandler : CommandHandlerBase,
         }
 
         var AdvisoryContract = new AdvisoryContract(
-            request.AdvisoryContractId,request.ProfessorId,request.StudentId,request.ResearchLineId,request.ThesisTopic,request.Message,request.Status);
+            request.AdvisoryContractId,request.ProfessorId,request.StudentId,request.ResearchLineId,request.ThesisTopic,request.Message,request.Status,DateTime.Now);
         _AdvisoryContractRepository.Add(AdvisoryContract);
 
         if (await CommitAsync())

@@ -37,6 +37,8 @@ using CleanArchitecture.Domain.Commands.AdvisoryContracts.CreateAdvisoryContract
 using CleanArchitecture.Domain.Commands.AdvisoryContracts.UpdateAdvisoryContract;
 using CleanArchitecture.Domain.Commands.AdvisoryContracts.DeleteAdvisoryContract;
 using CleanArchitecture.Shared.Events.AdvisoryContract;
+using CleanArchitecture.Domain.Commands.AdvisoryContracts.AcceptAdvisoryContract;
+using CleanArchitecture.Domain.Commands.AdvisoryContracts;
 
 
 namespace CleanArchitecture.Domain.Extensions;
@@ -83,6 +85,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<CreateAdvisoryContractCommand>, CreateAdvisoryContractCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateAdvisoryContractCommand>, UpdateAdvisoryContractCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteAdvisoryContractCommand>, DeleteAdvisoryContractCommandHandler>();
+        services.AddScoped<IRequestHandler<AcceptAdvisoryContractCommand>, AcceptAdvisoryContractCommandHandler>();
         return services;
     }
 
@@ -127,6 +130,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<INotificationHandler<AdvisoryContractCreatedEvent>, AdvisoryContractEventHandler>();
         services.AddScoped<INotificationHandler<AdvisoryContractUpdatedEvent>,AdvisoryContractEventHandler>();
         services.AddScoped<INotificationHandler<AdvisoryContractDeletedEvent>,AdvisoryContractEventHandler>();
+        services.AddScoped<INotificationHandler<AdvisoryContractAcceptedEvent>, AdvisoryContractEventHandler>();
         return services;
     }
 

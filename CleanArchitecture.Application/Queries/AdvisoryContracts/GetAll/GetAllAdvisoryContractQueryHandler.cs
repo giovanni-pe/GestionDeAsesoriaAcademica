@@ -46,6 +46,15 @@ public sealed class GetAllAdvisoryContractsQueryHandler :
             //    AdvisoryContract.ResearchGroup.Contains(request.SearchTerm));
         }
         AdvisoryContractsQuery = request.researchLineId != Guid.Empty ? AdvisoryContractsQuery.Where(x => x.ResearchLineId == request.researchLineId): AdvisoryContractsQuery;
+        if (request.startDate != DateTime.MinValue)
+        {
+            AdvisoryContractsQuery = AdvisoryContractsQuery.Where(x => x.DateCreated >= request.startDate);
+        }
+
+        if (request.endDate != DateTime.MinValue)
+        {
+           AdvisoryContractsQuery =AdvisoryContractsQuery.Where(x => x.DateCreated <= request.endDate);
+        }
         var totalCount = await AdvisoryContractsQuery.CountAsync(cancellationToken);
 
         AdvisoryContractsQuery = AdvisoryContractsQuery.GetOrderedQueryable(request.SortQuery, _sortingExpressionProvider);

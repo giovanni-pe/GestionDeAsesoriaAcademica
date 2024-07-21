@@ -10,7 +10,8 @@ namespace CleanArchitecture.Domain.EventHandler;
 public sealed class AdvisoryContractEventHandler :
     INotificationHandler<AdvisoryContractCreatedEvent>,
     INotificationHandler<AdvisoryContractDeletedEvent>,
-    INotificationHandler<AdvisoryContractUpdatedEvent>
+    INotificationHandler<AdvisoryContractUpdatedEvent>,
+    INotificationHandler<AdvisoryContractAcceptedEvent>
 {
     private readonly IDistributedCache _distributedCache;
 
@@ -32,6 +33,12 @@ public sealed class AdvisoryContractEventHandler :
     }
 
     public async Task Handle(AdvisoryContractUpdatedEvent notification, CancellationToken cancellationToken)
+    {
+        await _distributedCache.RemoveAsync(
+            CacheKeyGenerator.GetEntityCacheKey<AdvisoryContract>(notification.AggregateId),
+            cancellationToken);
+    }
+    public async Task Handle(AdvisoryContractAcceptedEvent notification, CancellationToken cancellationToken)
     {
         await _distributedCache.RemoveAsync(
             CacheKeyGenerator.GetEntityCacheKey<AdvisoryContract>(notification.AggregateId),

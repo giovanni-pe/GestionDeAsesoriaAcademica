@@ -6,7 +6,7 @@ using System;
 
 namespace CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
 
-public sealed record AdvisoryContractsQuery(Guid researchLineId,
+public sealed record AdvisoryContractsQuery(Guid researchLineId,DateTime startDate,DateTime endDate,
     PageQuery Query,
     bool IncludeDeleted,
     string SearchTerm = "",

@@ -12,9 +12,11 @@ namespace CleanArchitecture.Domain.Entities
         public virtual ResearchLine ResearchLine { get; private set; } = null!;
         public string ThesisTopic { get; private set; }
         public string Message { get; private set; }
-        public string Status { get; private set; }
+        public string ProfessorMessage { get; private set; }
+        public int Status { get; private set; }
 
-        public AdvisoryContract(Guid id, Guid professorId, Guid studentId, Guid researchLineId, string thesisTopic, string message, string status) : base(id)
+        public DateTime DateCreated { get; private set; }
+        public AdvisoryContract(Guid id, Guid professorId, Guid studentId, Guid researchLineId, string thesisTopic, string message, int status,DateTime dateCreated) : base(id)
         {
             ProfessorId = professorId;
             StudentId = studentId;
@@ -22,6 +24,8 @@ namespace CleanArchitecture.Domain.Entities
             ThesisTopic = thesisTopic;
             Message = message;
             Status = status;
+            DateCreated = dateCreated;
+            ProfessorMessage="i";
         }
 
         public void SetThesisTopic(string thesisTopic)
@@ -33,8 +37,12 @@ namespace CleanArchitecture.Domain.Entities
         {
             Message = message;
         }
+        public void SetProfessorMessage(string professorMessage)
+        {
+            ProfessorMessage = professorMessage;
+        }
 
-        public void SetStatus(string status)
+        public void SetStatus(int status)
         {
             Status = status;
         }

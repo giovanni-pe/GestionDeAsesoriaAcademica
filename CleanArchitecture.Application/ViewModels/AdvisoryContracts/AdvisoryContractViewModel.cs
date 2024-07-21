@@ -18,7 +18,9 @@ public sealed class AdvisoryContractViewModel
     public Guid ResearchLineId { get;  set; }
     public string ThesisTopic { get; set; }
     public string Message { get;  set; }
-    public string Status { get;  set; }
+    public int Status { get;  set; }
+    public DateTime startDate { get; set; }
+    public DateTime endDate { get; set; }
     public StudentViewModel Student { get; set; }
     public ProfessorViewModel Professor { get;  set; }
     public ResearchLineViewModel ResearchLine { get; set; }
@@ -33,6 +35,7 @@ public sealed class AdvisoryContractViewModel
            StudentId = AdvisoryContract.StudentId,
            ResearchLineId = AdvisoryContract.ResearchLineId,
            ThesisTopic = AdvisoryContract.ThesisTopic,
+             Status = AdvisoryContract.Status,
            Message = AdvisoryContract.Message,
             Student = StudentViewModel.FromStudent(AdvisoryContract.Student),
             Professor=ProfessorViewModel.FromProfessor(AdvisoryContract.Professor),

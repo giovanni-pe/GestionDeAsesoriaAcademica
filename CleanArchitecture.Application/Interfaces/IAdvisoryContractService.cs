@@ -14,9 +14,11 @@ public interface IAdvisoryContractService
     public Task DeleteAdvisoryContractAsync(Guid AdvisoryContractId);
     public Task<AdvisoryContractViewModel?> GetAdvisoryContractByIdAsync(Guid AdvisoryContractId);
     Task<PagedResult<AdvisoryContractViewModel>> GetAdvisoryContractsByResearchLineIdAsync(Guid researchLineId, int pageNumber, int pageSize, SortQuery? sortQuery = null, bool includeDeleted = false, string? searchTerm = null);
-    public Task<PagedResult<AdvisoryContractViewModel>> GetAllAdvisoryContractsAsync(Guid researchLineId,
+    public Task<PagedResult<AdvisoryContractViewModel>> GetAllAdvisoryContractsAsync(Guid researchLineId,DateTime startDate,DateTime endDate,
         PageQuery query,
         bool includeDeleted,
         string searchTerm = "",
         SortQuery? sortQuery = null);
+
+    public Task AcceptAdvisoryContractAsync(Guid advisoryContractId, string acceptanceMessage);
 }

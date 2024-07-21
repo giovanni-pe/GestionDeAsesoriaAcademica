@@ -31,13 +31,50 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(MaxLengths.User.Password);
 
         builder.HasData(new User(
-            Ids.Seed.UserId,
-            Ids.Seed.TenantId,
-            "admin@email.com",
-            "Admin",
-            "User",
-            // !Password123#
-            "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
-            UserRole.Admin));
+                Ids.Seed.UserId,
+                Ids.Seed.TenantId,
+                "admin@email.com",
+                "Admin",
+                "User",
+                // !Password123#
+                "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                UserRole.Admin),
+            new User(
+                Ids.Seed.UserIbarraId,
+                Ids.Seed.TenantId,
+                "ronald.ibarra@unas.edu.pe",
+                "Ronald",
+                "Ibarra Zapata",
+                // !Password123#
+                "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                UserRole.User),
+            new User(
+                Ids.Seed.UserGardynId,
+                Ids.Seed.TenantId,
+                "gardin.olivera@unas.edu.pe",
+                "Gardin",
+                "Olivera Ruiz",
+                // !Password123#
+                "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                UserRole.User),
+             new User(
+                Ids.Seed.UserGiovanniId,
+                Ids.Seed.TenantId,
+                "giovanni.perez@unas.edu.pe",
+                "Giovanni",
+                "Perez Espinoza",
+                // !Password123#
+                "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                UserRole.User),
+             new User(
+                Ids.Seed.UserLuzId,
+                Ids.Seed.TenantId,
+                "luz.cabia@unas.edu.pe",
+                "Luz Lisbeth",
+                "Cabia Adriano",
+                // !Password123#
+                "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                UserRole.User)
+            );
     }
 }

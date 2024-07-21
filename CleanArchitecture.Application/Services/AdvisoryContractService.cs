@@ -18,6 +18,7 @@ using CleanArchitecture.Domain.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractByResearchLineId;
 using System.Collections.Generic;
+using CleanArchitecture.Domain.Commands.AdvisoryContracts.AcceptAdvisoryContract;
 
 namespace CleanArchitecture.Application.Services;
 /// <summary>
@@ -67,24 +68,23 @@ public sealed class AdvisoryContractService : IAdvisoryContractService
         return cachedAdvisoryContract;
     }
 
-    public async Task<PagedResult<AdvisoryContractViewModel>> GetAllAdvisoryContractsAsync(Guid researchLineId,
+    public async Task<PagedResult<AdvisoryContractViewModel>> GetAllAdvisoryContractsAsync(Guid researchLineId,DateTime startDate,DateTime endDate,
         PageQuery query,
         bool includeDeleted,
         string searchTerm = "",
         SortQuery? sortQuery = null)
     {
-        return await _bus.QueryAsync(new AdvisoryContractsQuery(researchLineId,query, includeDeleted, searchTerm, sortQuery));
+        return await _bus.QueryAsync(new AdvisoryContractsQuery(researchLineId,startDate,endDate,query, includeDeleted, searchTerm, sortQuery));
     }
     public async Task<PagedResult<AdvisoryContractViewModel>> GetAdvisoryContractsByResearchLineIdAsync(Guid researchLineId, int pageNumber, int pageSize, SortQuery? sortQuery = null, bool includeDeleted = false, string? searchTerm = null)
     {
         var advisoryContracts = await _bus.QueryAsync(new GetAdvisoryContractByResearchLineIdQuery(researchLineId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm));
         return advisoryContracts;
     }
-
-
-
-
-
+    public async Task AcceptAdvisoryContractAsync(Guid advisoryContractId, string acceptanceMessage)
+    {
+        await _bus.SendCommandAsync(new AcceptAdvisoryContractCommand(advisoryContractId, acceptanceMessage));
+    }
 
 }
 

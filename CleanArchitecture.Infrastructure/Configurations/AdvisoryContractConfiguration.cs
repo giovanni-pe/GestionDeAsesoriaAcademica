@@ -3,6 +3,7 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 //Add advisory contract repository 
 
@@ -44,7 +45,8 @@ namespace CleanArchitecture.Infrastructure.Configurations
             //    .WithMany()
             //    .HasForeignKey(contract => contract.ResearchLineId);
 
-            // Seed data or other configurations can be added here
+            builder.HasData( new AdvisoryContract(Ids.Seed.AdvisoryContractId,Ids.Seed.Professor1Id,Ids.Seed.Student1Id,Ids.Seed.ResearchLine1Id,"Wifi 802.22, de alrgo alcance en zonas rurales", "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado",1,DateTime.Now),
+                new AdvisoryContract(Ids.Seed.AdvisoryContract1Id, Ids.Seed.Professor1Id, Ids.Seed.StudentId, Ids.Seed.ResearchLine1Id, "Sensores Iot y sus aplicaciones en la agricultura", "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado", 0, DateTime.Now));
         }
     }
 }

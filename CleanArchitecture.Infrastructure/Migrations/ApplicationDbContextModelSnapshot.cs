@@ -31,6 +31,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
@@ -41,12 +44,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<Guid>("ProfessorId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ProfessorMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ResearchLineId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
@@ -64,6 +70,34 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("AdvisoryContracts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4033"),
+                            DateCreated = new DateTime(2024, 7, 20, 12, 55, 6, 746, DateTimeKind.Local).AddTicks(7673),
+                            Deleted = false,
+                            Message = "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado",
+                            ProfessorId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"),
+                            ProfessorMessage = "i",
+                            ResearchLineId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4010"),
+                            Status = 1,
+                            StudentId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1"),
+                            ThesisTopic = "Wifi 802.22, de alrgo alcance en zonas rurales"
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4034"),
+                            DateCreated = new DateTime(2024, 7, 20, 12, 55, 6, 746, DateTimeKind.Local).AddTicks(7687),
+                            Deleted = false,
+                            Message = "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado",
+                            ProfessorId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"),
+                            ProfessorMessage = "i",
+                            ResearchLineId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4010"),
+                            Status = 0,
+                            StudentId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ad"),
+                            ThesisTopic = "Sensores Iot y sus aplicaciones en la agricultura"
+                        });
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Appointment", b =>
@@ -137,6 +171,24 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Professors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40b1"),
+                            Deleted = false,
+                            IsCoordinator = false,
+                            ResearchGroupId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a5"),
+                            UserId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"),
+                            Deleted = false,
+                            IsCoordinator = false,
+                            ResearchGroupId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a7"),
+                            UserId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a2")
+                        });
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ResearchGroup", b =>
@@ -164,10 +216,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41"),
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a5"),
                             Code = "SW123",
                             Deleted = false,
                             Name = "INGENIERIA DE SOFTWARE"
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a7"),
+                            Code = "RESEGTI",
+                            Deleted = false,
+                            Name = "RESEGTI"
                         });
                 });
 
@@ -201,11 +260,19 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c42"),
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a8"),
                             Code = "ASW123",
                             Deleted = false,
                             Name = "Arquitectura de Software",
-                            ResearchGroupId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c41")
+                            ResearchGroupId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a5")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4010"),
+                            Code = "IoT",
+                            Deleted = false,
+                            Name = "Internet de las Cosas",
+                            ResearchGroupId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a7")
                         });
                 });
 
@@ -234,10 +301,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c62"),
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ad"),
                             Code = "0020210008",
                             Deleted = false,
-                            UserId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40ae")
+                            UserId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a3")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1"),
+                            Code = "0020210008",
+                            Deleted = false,
+                            UserId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a4")
                         });
                 });
 
@@ -325,6 +399,54 @@ namespace CleanArchitecture.Infrastructure.Migrations
                             LastName = "User",
                             Password = "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
                             Role = 0,
+                            Status = 0,
+                            TenantId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a1"),
+                            Deleted = false,
+                            Email = "ronald.ibarra@unas.edu.pe",
+                            FirstName = "Ronald",
+                            LastName = "Ibarra Zapata",
+                            Password = "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                            Role = 1,
+                            Status = 0,
+                            TenantId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a2"),
+                            Deleted = false,
+                            Email = "gardin.olivera@unas.edu.pe",
+                            FirstName = "Gardin",
+                            LastName = "Olivera Ruiz",
+                            Password = "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                            Role = 1,
+                            Status = 0,
+                            TenantId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a3"),
+                            Deleted = false,
+                            Email = "giovanni.perez@unas.edu.pe",
+                            FirstName = "Giovanni",
+                            LastName = "Perez Espinoza",
+                            Password = "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                            Role = 1,
+                            Status = 0,
+                            TenantId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a4"),
+                            Deleted = false,
+                            Email = "luz.cabia@unas.edu.pe",
+                            FirstName = "Luz Lisbeth",
+                            LastName = "Cabia Adriano",
+                            Password = "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
+                            Role = 1,
                             Status = 0,
                             TenantId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a")
                         });

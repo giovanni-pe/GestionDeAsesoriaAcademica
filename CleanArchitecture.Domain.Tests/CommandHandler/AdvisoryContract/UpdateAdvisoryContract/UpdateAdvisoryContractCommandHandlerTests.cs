@@ -17,7 +17,7 @@ public sealed class UpdateAdvisoryContractCommandHandlerTests
     {
         var command = new UpdateAdvisoryContractCommand(
             Ids.Seed.AdvisoryContractId, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
-            "testTesisTopic", "testMessage", "testStatus");
+            "testTesisTopic", "testMessage", 0);
         _fixture.SetupExistingAdvisoryContract(command.AggregateId);
 
         await _fixture.CommandHandler.Handle(command, default);
@@ -34,7 +34,7 @@ public sealed class UpdateAdvisoryContractCommandHandlerTests
     {
         var command = new UpdateAdvisoryContractCommand(
             Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),"testTesisTopic","testMessage",
-            "testStatus");
+            0);
 
         _fixture.SetupUser();
 
@@ -54,7 +54,7 @@ public sealed class UpdateAdvisoryContractCommandHandlerTests
     {
         var command = new UpdateAdvisoryContractCommand(
             Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),"topictest","test",
-            "testStatus");
+            0);
 
         await _fixture.CommandHandler.Handle(command, default);
 

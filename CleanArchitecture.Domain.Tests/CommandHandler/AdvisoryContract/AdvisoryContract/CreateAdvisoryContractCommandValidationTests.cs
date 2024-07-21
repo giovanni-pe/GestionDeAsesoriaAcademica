@@ -51,7 +51,7 @@ public sealed class CreateAdvisoryContractCommandValidationTests :
          Guid? researchLineId = null,
         string?message = null,
         string?tesisTopic=null,
-        string?status=null)
+        int?status=null)
     {
         return new CreateAdvisoryContractCommand(
             id ?? Guid.NewGuid(),
@@ -60,7 +60,7 @@ public sealed class CreateAdvisoryContractCommandValidationTests :
             researchLineId ?? Guid.NewGuid(),
             tesisTopic ?? "tesisTopic",
             message ?? "message",   
-            status??"sta");
+            status??0);
     }
 }
 

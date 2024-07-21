@@ -49,10 +49,10 @@ public sealed class UpdateAdvisoryContractCommandValidationTests :
         Guid? researchLineId = null,
         string? tesisTopic = null,
         string? message = null,
-        string? status=null)
+        int? status=null)
     {
         return new UpdateAdvisoryContractCommand(
             id ?? Guid.NewGuid(), professorId ?? Guid.NewGuid(),studentId ?? Guid.NewGuid(),researchLineId?? Guid.NewGuid(),tesisTopic??"testopic",message??"testmessage",
-            status?? "Teststauts");
+            status??0);
     }
 }

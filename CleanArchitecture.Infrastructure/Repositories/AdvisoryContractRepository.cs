@@ -24,5 +24,16 @@ public sealed class AdvisoryContractRepository : BaseRepository<AdvisoryContract
                              .Where(ac => ac.ResearchLineId == researchLineId)
                              .ToListAsync();
     }
+    public async Task AcceptAdvisoryAsync(Guid id, string acceptanceMessage)
+    {
+        var advisoryContract = await _context.AdvisoryContracts.FindAsync(id);
+        if (advisoryContract == null)
+            throw new KeyNotFoundException("Advisory Contract not found");
+
+        advisoryContract.SetMessage(acceptanceMessage);
+        advisoryContract.SetStatus(1); // Assuming 1 means accepted
+        _context.AdvisoryContracts.Update(advisoryContract);
+       await _context.SaveChangesAsync();
+    }
 }
 

@@ -65,7 +65,7 @@ public sealed class AdvisoryContractControllerTests : IClassFixture<AdvisoryCont
     [Priority(10)]
     public async Task Should_Create_AdvisoryContract()
     {
-        var request = new CreateAdvisoryContractViewModel(Ids.Seed.ProfessorId,Ids.Seed.StudentId,Ids.Seed.ResearchLineId,"test","test","test");
+        var request = new CreateAdvisoryContractViewModel(Ids.Seed.ProfessorId,Ids.Seed.StudentId,Ids.Seed.ResearchLineId,"test","test",0);
 
         var response = await _fixture.ServerClient.PostAsJsonAsync("/api/v1/AdvisoryContract", request);
 
@@ -91,7 +91,7 @@ public sealed class AdvisoryContractControllerTests : IClassFixture<AdvisoryCont
     [Priority(15)]
     public async Task Should_Update_AdvisoryContract()
     {
-        var request = new UpdateAdvisoryContractViewModel(_fixture.CreatedAdvisoryContractId, Ids.Seed.ProfessorId, Ids.Seed.StudentId, Ids.Seed.ResearchLineId,"test","test","test");
+        var request = new UpdateAdvisoryContractViewModel(_fixture.CreatedAdvisoryContractId, Ids.Seed.ProfessorId, Ids.Seed.StudentId, Ids.Seed.ResearchLineId,"test","test",0);
 
         var response = await _fixture.ServerClient.PutAsJsonAsync("/api/v1/AdvisoryContract", request);
 

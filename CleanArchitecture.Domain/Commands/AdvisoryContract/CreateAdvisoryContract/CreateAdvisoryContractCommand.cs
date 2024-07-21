@@ -15,9 +15,9 @@ public sealed class CreateAdvisoryContractCommand : CommandBase
     public Guid ResearchLineId { get; private set; }
     public string ThesisTopic { get; private set; }
     public string Message { get; private set; }
-    public string Status { get; private set; }
+    public int Status { get; private set; }
 
-    public CreateAdvisoryContractCommand(Guid id, Guid professorId, Guid studentId, Guid researchLineId, string thesisTopic, string message, string status) : base(id)
+    public CreateAdvisoryContractCommand(Guid id, Guid professorId, Guid studentId, Guid researchLineId, string thesisTopic, string message, int status) : base(id)
     {
         AdvisoryContractId = id;
         ProfessorId = professorId;

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
@@ -49,7 +50,7 @@ public sealed class GetAllAdvisoryContractsQueryHandlerTests
         };
 
         var result = await _fixture.QueryHandler.Handle(
-            new AdvisoryContractsQuery(Ids.Seed.ResearchLineId,query, false),
+            new AdvisoryContractsQuery(Ids.Seed.ResearchLineId,DateTime.Now,DateTime.Now,query, false),
             default);
 
         result.PageSize.Should().Be(query.PageSize);

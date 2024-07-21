@@ -16,7 +16,7 @@ public sealed class CreateAdvisoryContractCommandHandlerTests
     {
         var command = new CreateAdvisoryContractCommand(
             Guid.NewGuid(),Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),"test",
-            "Test AdvisoryContract","testcode");
+            "Test AdvisoryContract",0);
 
         await _fixture.CommandHandler.Handle(command, default);
 
@@ -35,7 +35,7 @@ public sealed class CreateAdvisoryContractCommandHandlerTests
 
         var command = new CreateAdvisoryContractCommand(
             Guid.NewGuid(), Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid(),"test",
-            "Test AdvisoryContract","testcode");
+            "Test AdvisoryContract",0);
 
         await _fixture.CommandHandler.Handle(command, default);
 
@@ -53,7 +53,7 @@ public sealed class CreateAdvisoryContractCommandHandlerTests
     {
         var command = new CreateAdvisoryContractCommand(
             Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),"test",
-            "Test AdvisoryContract","testcode");
+            "Test AdvisoryContract",0);
 
         _fixture.SetupExistingAdvisoryContract(command.AggregateId);
 
