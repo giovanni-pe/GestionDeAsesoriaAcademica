@@ -107,6 +107,21 @@ public sealed class AdvisoryContractController : ApiController
         var advisoryContracts = await _AdvisoryContractService.GetAdvisoryContractsByResearchLineIdAsync(researchLineId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm);
         return Response(advisoryContracts);
     }
+    [HttpGet("ByProffesorId/{professorId}")]
+    [SwaggerOperation("Get AdvisoryContracts by professorId")]
+    [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<PagedResult<AdvisoryContractViewModel>>))]
+    public async Task<IActionResult> GetAdvisoryContractsByProfessorIdAsync(
+    [FromRoute] Guid professorId,
+    [FromQuery] int pageNumber = 1,
+    [FromQuery] int pageSize = 10,
+    [FromQuery] [SortableFieldsAttribute<AdvisoryContractViewModelSortProvider, AdvisoryContractViewModel, AdvisoryContract>]
+    SortQuery? sortQuery = null,
+    [FromQuery] bool includeDeleted = false,
+    [FromQuery] string? searchTerm = null)
+    {
+        var advisoryContracts = await _AdvisoryContractService.GetAdvisoryContractsByProfessorIdAsync(professorId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm);
+        return Response(advisoryContracts);
+    }
     [HttpPut("{id}/accept")]
     [SwaggerOperation("Accept an existing AdvisoryContract")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]

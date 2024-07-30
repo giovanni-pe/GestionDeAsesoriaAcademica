@@ -1,8 +1,10 @@
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CleanArchitecture.Api.Models;
 using CleanArchitecture.Api.Swagger;
 using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Application.Queries.Students.GetStudentByUserId;
 using CleanArchitecture.Application.SortProviders;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Sorting;
@@ -10,6 +12,7 @@ using CleanArchitecture.Application.ViewModels.Students;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 //using Google.Apis.Calendar.v3.Data;
@@ -18,7 +21,9 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CleanArchitecture.Api.Controllers
 {
     [ApiController]
+   // [Authorize]
     [Route("/api/v1/[controller]")]
+    
     public sealed class StudentController : ApiController
     {
         private readonly IStudentService _studentService;
@@ -79,7 +84,32 @@ namespace CleanArchitecture.Api.Controllers
             await _studentService.DeleteStudentAsync(id);
             return Response(id);
         }
-
+       
+        [HttpGet("current")]
+        
+        //public async Task<IActionResult> GetCurrentStudent()
+        //{
+        //    var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    Console.WriteLine(userId);
+        //    if (Guid.TryParse(userId, out var userGuid))
+        //    {
+        //        var student = await _studentService.GetCurrentStudentAsync(userGuid);
+        //        if (student == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return Ok(student);
+        //    }
+        //    return BadRequest("Invalid user ID");
+        //}
+        [HttpGet("current/{id}")]
+        [SwaggerOperation("Get a Student by id")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<StudentViewModel>))]
+        public async Task<IActionResult> GetCurrentStudent([FromRoute] Guid id)
+        {
+            var student = await _studentService.GetCurrentStudentAsync(id);
+            return Response(student);
+        }
 
     }
 

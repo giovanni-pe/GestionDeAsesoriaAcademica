@@ -81,6 +81,11 @@ public sealed class AdvisoryContractService : IAdvisoryContractService
         var advisoryContracts = await _bus.QueryAsync(new GetAdvisoryContractByResearchLineIdQuery(researchLineId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm));
         return advisoryContracts;
     }
+    public async Task<PagedResult<AdvisoryContractViewModel>> GetAdvisoryContractsByProfessorIdAsync(Guid ProfessorId, int pageNumber, int pageSize, SortQuery? sortQuery = null, bool includeDeleted = false, string? searchTerm = null)
+    {
+        var advisoryContracts = await _bus.QueryAsync(new GetAdvisoryContractsByProfessorIdQuery(ProfessorId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm));
+        return advisoryContracts;
+    }
     public async Task AcceptAdvisoryContractAsync(Guid advisoryContractId, string acceptanceMessage)
     {
         await _bus.SendCommandAsync(new AcceptAdvisoryContractCommand(advisoryContractId, acceptanceMessage));

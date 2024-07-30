@@ -39,17 +39,17 @@ public sealed class CreateUserCommandHandler : CommandHandlerBase,
             return;
         }
 
-        var currentUser = await _userRepository.GetByIdAsync(_user.GetUserId());
+        //var currentUser = await _userRepository.GetByIdAsync(_user.GetUserId());
 
-        if (currentUser is null || currentUser.Role != UserRole.Admin)
-        {
-            await NotifyAsync(
-                new DomainNotification(
-                    request.MessageType,
-                    "You are not allowed to create users",
-                    ErrorCodes.InsufficientPermissions));
-            return;
-        }
+        //if (currentUser is null || currentUser.Role != UserRole.Admin)
+        //{
+        //    await NotifyAsync(
+        //        new DomainNotification(
+        //            request.MessageType,
+        //            "You are not allowed to create users",
+        //            ErrorCodes.InsufficientPermissions));
+        //    return;
+        //}
 
         var existingUser = await _userRepository.GetByIdAsync(request.UserId);
 
@@ -100,7 +100,7 @@ public sealed class CreateUserCommandHandler : CommandHandlerBase,
 
         if (await CommitAsync())
         {
-            await Bus.RaiseEventAsync(new UserCreatedEvent(user.Id, user.TenantId));
+            //await Bus.RaiseEventAsync(new UserCreatedEvent(user.Id, user.TenantId));
         }
     }
 }

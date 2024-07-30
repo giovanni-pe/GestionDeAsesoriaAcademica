@@ -46,16 +46,16 @@ public sealed class CreateAdvisoryContractCommandHandler : CommandHandlerBase,
             return;
         }
 
-       if (_user.GetUserRole() != UserRole.Admin)
-        {
-            await NotifyAsync(
-                new DomainNotification(
-                    request.MessageType,
-                    $"No permission to create AdvisoryContract {request.AggregateId}",
-                    ErrorCodes.InsufficientPermissions));
+       //if (_user.GetUserRole() != UserRole.Student)
+       // {
+       //     await NotifyAsync(
+       //         new DomainNotification(
+       //             request.MessageType,
+       //             $"No permission to create AdvisoryContract {request.AggregateId}",
+       //             ErrorCodes.InsufficientPermissions));
 
-            return;
-        }
+       //     return;
+       // }
 
         if (await _AdvisoryContractRepository.ExistsAsync(request.AggregateId))
         {

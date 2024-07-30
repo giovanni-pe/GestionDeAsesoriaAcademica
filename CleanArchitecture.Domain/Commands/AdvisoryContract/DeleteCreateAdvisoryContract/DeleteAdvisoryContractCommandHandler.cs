@@ -72,7 +72,7 @@ public sealed class DeleteAdvisoryContractCommandHandler : CommandHandlerBase,
 
         if (await CommitAsync())
         {
-            await Bus.RaiseEventAsync(new AdvisoryContractDeletedEvent(AdvisoryContract.Id,AdvisoryContract.ProfessorId,AdvisoryContract.StudentId,AdvisoryContract.ResearchLineId));
+           // await Bus.RaiseEventAsync(new AdvisoryContractDeletedEvent(AdvisoryContract.Id,AdvisoryContract.ProfessorId,AdvisoryContract.StudentId,AdvisoryContract.ResearchLineId));
         }
     }
 }

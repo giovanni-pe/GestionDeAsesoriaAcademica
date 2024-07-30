@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using CleanArchitecture.Application.Queries.Students.GetStudentByUserId;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Sorting;
 using CleanArchitecture.Application.ViewModels.Students;
@@ -18,4 +19,7 @@ public interface IStudentService
         bool includeDeleted,
         string searchTerm = "",
         SortQuery? sortQuery = null);
+    public Task<StudentViewModel?> GetCurrentStudentAsync(Guid userId);
+
+
 }

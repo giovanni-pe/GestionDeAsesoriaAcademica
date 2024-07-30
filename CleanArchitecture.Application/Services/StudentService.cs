@@ -4,6 +4,7 @@ using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Queries.Professors.GetAll;
 using CleanArchitecture.Application.Queries.Students.GetAll;
 using CleanArchitecture.Application.Queries.Students.GetStudentById;
+using CleanArchitecture.Application.Queries.Students.GetStudentByUserId;
 using CleanArchitecture.Application.ViewModels;
 using CleanArchitecture.Application.ViewModels.Professors;
 using CleanArchitecture.Application.ViewModels.Sorting;
@@ -64,6 +65,12 @@ public sealed class StudentService : IStudentService
 
         return cachedStudent;
     }
+    public async Task<StudentViewModel?> GetCurrentStudentAsync(Guid userId)
+    {
+        var query = new GetStudentByUserIdQuery(userId);
+        return await _bus.QueryAsync(query);
+    }
+
 
     public async Task<PagedResult<StudentViewModel>> GetAllStudentsAsync(
         PageQuery query,

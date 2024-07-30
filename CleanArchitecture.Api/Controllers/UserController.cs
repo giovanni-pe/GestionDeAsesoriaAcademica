@@ -17,7 +17,6 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CleanArchitecture.Api.Controllers;
 
 [ApiController]
-[Authorize]
 [Route("/api/v1/[controller]")]
 public sealed class UserController : ApiController
 {
@@ -29,7 +28,7 @@ public sealed class UserController : ApiController
     {
         _userService = userService;
     }
-
+    [Authorize]
     [HttpGet]
     [SwaggerOperation("Get a list of all users")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<PagedResult<UserViewModel>>))]
@@ -47,7 +46,7 @@ public sealed class UserController : ApiController
             sortQuery);
         return Response(users);
     }
-
+    [Authorize]
     [HttpGet("{id}")]
     [SwaggerOperation("Get a user by id")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<UserViewModel>))]
@@ -56,7 +55,7 @@ public sealed class UserController : ApiController
         var user = await _userService.GetUserByUserIdAsync(id);
         return Response(user);
     }
-
+    [Authorize]
     [HttpGet("me")]
     [SwaggerOperation("Get the current active user")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<UserViewModel>))]
@@ -65,7 +64,7 @@ public sealed class UserController : ApiController
         var user = await _userService.GetCurrentUserAsync();
         return Response(user);
     }
-
+   
     [HttpPost]
     [SwaggerOperation("Create a new user")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
@@ -74,7 +73,7 @@ public sealed class UserController : ApiController
         var userId = await _userService.CreateUserAsync(viewModel);
         return Response(userId);
     }
-
+    [Authorize]
     [HttpDelete("{id}")]
     [SwaggerOperation("Delete a user")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
@@ -85,6 +84,7 @@ public sealed class UserController : ApiController
     }
 
     [HttpPut]
+    [Authorize]
     [SwaggerOperation("Update a user")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<UpdateUserViewModel>))]
     public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserViewModel viewModel)
@@ -103,6 +103,7 @@ public sealed class UserController : ApiController
     }
 
     [HttpPost("login")]
+    [Authorize]
     [AllowAnonymous]
     [SwaggerOperation("Get a signed token for a user")]
     [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<string>))]
