@@ -5,4 +5,5 @@ public enum UserRole
     Admin,
     User,
     Student,
+    Professor,
 }
