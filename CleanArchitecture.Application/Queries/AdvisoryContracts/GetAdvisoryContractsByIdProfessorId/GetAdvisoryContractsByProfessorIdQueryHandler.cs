@@ -35,7 +35,7 @@ public sealed class GetAdvisoryContractsByProfessorIdQueryHandler :
             .GetAllNoTracking()
             .IgnoreQueryFilters()
             .Include(x => x.Student)
-            .Where(x => x.ProfessorId == request.ProfessorId&& (request.IncludeDeleted || !x.Deleted) && (x.Status==(int)AdvisoryContractStatus.Pending));
+            .Where(x => x.ProfessorId == request.ProfessorId&& (request.IncludeDeleted || !x.Deleted) && (x.Status==request.status));
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {

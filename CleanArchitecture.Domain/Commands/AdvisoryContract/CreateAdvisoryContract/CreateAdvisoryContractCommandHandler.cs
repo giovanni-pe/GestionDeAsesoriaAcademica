@@ -46,16 +46,30 @@ public sealed class CreateAdvisoryContractCommandHandler : CommandHandlerBase,
             return;
         }
 
-       //if (_user.GetUserRole() != UserRole.Student)
-       // {
-       //     await NotifyAsync(
-       //         new DomainNotification(
-       //             request.MessageType,
-       //             $"No permission to create AdvisoryContract {request.AggregateId}",
-       //             ErrorCodes.InsufficientPermissions));
+        if (_user.GetUserRole() != UserRole.Student)
+        {
+            await NotifyAsync(
+                new DomainNotification(
+                    request.MessageType,
+                    $"No permission to create AdvisoryContract {request.AggregateId}",
+                    ErrorCodes.InsufficientPermissions));
 
-       //     return;
-       // }
+            return;
+        }
+        var currentStudent = await _studentRepository.GetByUserIdAsync(_user.GetUserId());
+
+        if (currentStudent == null)
+        {
+           
+            await NotifyAsync(
+                new DomainNotification(
+                    request.MessageType,
+                    "Student not found",
+                    ErrorCodes.StudentNotFound));
+
+            return;
+        }
+
 
         if (await _AdvisoryContractRepository.ExistsAsync(request.AggregateId))
         {
@@ -69,7 +83,7 @@ public sealed class CreateAdvisoryContractCommandHandler : CommandHandlerBase,
         }
 
         var AdvisoryContract = new AdvisoryContract(
-            request.AdvisoryContractId,request.ProfessorId,request.StudentId,request.ResearchLineId,request.ThesisTopic,request.Message,request.Status,DateTime.Now);
+            request.AdvisoryContractId,request.ProfessorId,currentStudent.Id,request.ResearchLineId,request.ThesisTopic,request.Message,request.Status,DateTime.Now);
         _AdvisoryContractRepository.Add(AdvisoryContract);
 
         if (await CommitAsync())

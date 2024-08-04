@@ -4,6 +4,7 @@ using CleanArchitecture.Domain.Interfaces.Repositories;
 using CleanArchitecture.Domain.Notifications;
 using CleanArchitecture.Infrastructure.Database;
 using CleanArchitecture.Infrastructure.EventSourcing;
+using CleanArchitecture.Infrastructure.Integration;
 using CleanArchitecture.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProfessorRepository, ProfessorRepository>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<IAdvisoryContractRepository, AdvisoryContractRepository>();
+        services.AddScoped<ICalendarTokenRepository, CalendarTokenRepository>();
+        services.AddScoped<IUserCalendarRepository, UserCalendarRepository>();
+        //Integration calendar
+        services.AddScoped<IGoogleCalendarIntegration,GoogleCalendarIntegration>();
         return services;
     }
 }

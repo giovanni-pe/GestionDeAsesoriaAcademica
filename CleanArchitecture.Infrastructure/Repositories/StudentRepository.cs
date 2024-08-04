@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace CleanArchitecture.Infrastructure.Repositories;
 
@@ -19,4 +20,6 @@ public sealed class StudentRepository : BaseRepository<Student>, IStudentReposit
     {
         return await _context.Students.SingleOrDefaultAsync(s => s.UserId == userId);
     }
+   
+
 }

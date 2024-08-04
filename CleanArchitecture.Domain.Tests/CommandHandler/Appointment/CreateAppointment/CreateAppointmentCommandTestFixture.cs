@@ -1,6 +1,7 @@
 ﻿using System;
 using CleanArchitecture.Domain.Commands.Appointments.CreateAppointment;
 using CleanArchitecture.Domain.Enums;
+using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.Interfaces.Repositories;
 using NSubstitute;
 
@@ -11,6 +12,8 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.CreateAppoin
         public CreateAppointmentCommandHandler CommandHandler { get; }
 
         private IAppointmentRepository AppointmentRepository { get; }
+        private ICalendarTokenRepository CalendarTokenRepository { get; }
+        private IGoogleCalendarIntegration CalendarIntegration { get; }
         private IUserRepository UserRepository { get; }
         
 
@@ -18,15 +21,16 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.CreateAppoin
         {
             AppointmentRepository = Substitute.For<IAppointmentRepository>();
             UserRepository = Substitute.For<IUserRepository>();
-            
+            CalendarTokenRepository= Substitute.For<ICalendarTokenRepository>();
+            CalendarIntegration= Substitute.For<IGoogleCalendarIntegration>();
 
             CommandHandler = new CreateAppointmentCommandHandler(
                 Bus,
                 UnitOfWork,
                 NotificationHandler,
                 AppointmentRepository,
-                UserRepository,
-                User);
+                UserRepository,CalendarTokenRepository,
+                User,CalendarIntegration);
         }
 
         public void SetupUser()

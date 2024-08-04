@@ -25,16 +25,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
-// Agregar configuración de CORS
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAll",
+//       policyBuilder => policyBuilder.AllowAnyOrigin()
+//                                      .AllowAnyHeader()
+//                                      .AllowAnyMethod());
+
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        policyBuilder => policyBuilder.AllowAnyOrigin()
-                                      .AllowAnyHeader()
-                                      .AllowAnyMethod());
-
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials(); // Permite el envío de credenciales (cookies, encabezados de autorización)
+    });
 });
-
 
 
 builder.Services.AddGrpc();
@@ -143,7 +152,7 @@ if (app.Environment.IsDevelopment())
     app.MapGrpcReflectionService();
 }
 app.UseCors("AllowAll");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 
 app.UseAuthentication();

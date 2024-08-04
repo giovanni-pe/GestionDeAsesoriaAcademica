@@ -36,7 +36,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.DeleteAppoin
                 Guid.NewGuid(),
                 DateTime.UtcNow,
                 "Test Professor Progress",
-                "Test Student Progress","test","test");
+                "Test Student Progress",1,"test",DateTime.Now,DateTime.Now,"description");
 
             AppointmentRepository
                 .GetByIdAsync(Arg.Is<Guid>(y => y == appointment.Id))

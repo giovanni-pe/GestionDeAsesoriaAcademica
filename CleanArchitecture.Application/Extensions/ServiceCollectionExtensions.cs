@@ -21,6 +21,7 @@ using CleanArchitecture.Application.ViewModels.ResearchLines;
 using CleanArchitecture.Application.ViewModels.Students;
 using CleanArchitecture.Application.ViewModels.Professors;
 using CleanArchitecture.Application.ViewModels.Users;
+using CleanArchitecture.Application.ViewModels.UserCalendars;
 using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,8 @@ using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAll;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractByResearchLineId;
 using CleanArchitecture.Application.Queries.Students.GetStudentByUserId;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractsByProfessorId;
+using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractsByStudentId;
+using CleanArchitecture.Application.Queries.UserCalendars.GetUserCalendarsByUserId;
 namespace CleanArchitecture.Application.Extensions;
 
 public static class ServiceCollectionExtensions
@@ -47,6 +50,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProfessorService, ProfessorService>();
         services.AddScoped<IAdvisoryContractService,AdvisoryContractService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<IUserCalendarService, UserCalendarService>();
         services.AddScoped<IMyService, MyService>();
         return services;
     }
@@ -83,12 +87,17 @@ public static class ServiceCollectionExtensions
             .AddScoped<IRequestHandler<AdvisoryContractsQuery, PagedResult<AdvisoryContractViewModel>>, GetAllAdvisoryContractsQueryHandler>();
         services.AddScoped<IRequestHandler<GetAdvisoryContractByResearchLineIdQuery, PagedResult<AdvisoryContractViewModel>>, GetAdvisoryContractByResearchLineIdQueryHandler>();
         services.AddScoped<IRequestHandler<GetAdvisoryContractsByProfessorIdQuery, PagedResult<AdvisoryContractViewModel>>, GetAdvisoryContractsByProfessorIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAdvisoryContractsByStudentIdQuery, PagedResult<AdvisoryContractViewModel>>, GetAdvisoryContractsByStudentIdQueryHandler>();
 
         // Appointment
         services.AddScoped<IRequestHandler<GetAppointmentByIdQuery, AppointmentViewModel?>, GetAppointmentByIdQueryHandler>();
         services
             .AddScoped<IRequestHandler<AppointmentsQuery, PagedResult<AppointmentViewModel>>, GetAllAppointmentsQueryHandler>();
         services.AddScoped<IRequestHandler<GetStudentByUserIdQuery,StudentViewModel?>, GetStudentByUserIdQueryHandler>();
+        // UserCalendar
+        services.AddScoped<IRequestHandler<GetUserCalendarsByUserIdQuery,PagedResult<UserCalendarViewModel>>, GetUserCalendarsByUserIdQueryHandler>();
+
+
         return services;
     }
 
@@ -102,7 +111,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISortingExpressionProvider<UserViewModel, User>, UserViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<AdvisoryContractViewModel,AdvisoryContract>, AdvisoryContractViewModelSortProvider>();
         services.AddScoped<ISortingExpressionProvider<AppointmentViewModel, Appointment>, AppointmentViewModelSortProvider>();
-
+        services.AddScoped<ISortingExpressionProvider<UserCalendarViewModel,UserCalendar>, UserCalendarViewModelSortProvider>();
         return services;
     }
 }

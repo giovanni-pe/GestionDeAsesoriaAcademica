@@ -51,8 +51,8 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             new User(
                 Ids.Seed.UserGardynId,
                 Ids.Seed.TenantId,
-                "gardin.olivera@unas.edu.pe",
-                "Gardin",
+                "gardyn.olivera@unas.edu.pe",
+                "Gardyn",
                 "Olivera Ruiz",
                 // !Password123#
                 "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",

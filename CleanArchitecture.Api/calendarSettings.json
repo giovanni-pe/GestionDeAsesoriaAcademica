@@ -22,7 +22,7 @@
   "showDeleted": false,
   "singleEvents": true,
   "maxResults": 10,
-  "orderBy": "startTime",
+  "orderBy": "StartTime",
   "cancelEventSuccess": true,
   "cancelEventFailure": false
 }

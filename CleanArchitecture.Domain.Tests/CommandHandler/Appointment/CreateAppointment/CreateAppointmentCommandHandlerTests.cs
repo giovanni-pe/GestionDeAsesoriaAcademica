@@ -20,9 +20,8 @@ public sealed class CreateAppointmentCommandHandlerTests
             Guid.NewGuid(), 
             Guid.NewGuid(), 
             Guid.NewGuid(),
-            DateTime.UtcNow, // Fecha de la cita (puedes usar DateTime.Now si lo prefieres)
-            "Estado de la Appointment", // Estado de la cita
-            "Asunto de la Appointment","new","EventId"); // Asunto de la cita
+            DateTime.UtcNow, 
+          "Asunto de la Appointment","student progres",1, "EventId", "profesoremail","studentemail",DateTime.Now, DateTime.Now,"description"); // Asunto de la cita
 
         await _fixture.CommandHandler.Handle(command, default);
 

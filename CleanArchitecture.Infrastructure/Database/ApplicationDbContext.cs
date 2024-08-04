@@ -17,6 +17,8 @@ public partial class ApplicationDbContext : DbContext
     public DbSet<Appointment> Appointments { get; set; } = null!;
     public DbSet<AdvisoryContract> AdvisoryContracts { get; set; } = null!;
     
+    public DbSet<CalendarToken> CalendarTokens { get; set; }=null!;
+    public DbSet<UserCalendar> UserCalendars { get; set; }= null!;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -55,6 +57,9 @@ public partial class ApplicationDbContext : DbContext
         builder.ApplyConfiguration(new ResearchLineConfiguration());
         builder.ApplyConfiguration(new AppointmentConfiguration());
         builder.ApplyConfiguration(new AdvisoryContractConfiguration());
+        builder.ApplyConfiguration(new CalendarTokenConfiguration());
+        builder.ApplyConfiguration(new UserCalendarConfiguration());
+       
 
     }
 }

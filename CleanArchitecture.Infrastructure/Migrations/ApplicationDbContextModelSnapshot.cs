@@ -75,7 +75,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4033"),
-                            DateCreated = new DateTime(2024, 7, 20, 12, 55, 6, 746, DateTimeKind.Local).AddTicks(7673),
+                            DateCreated = new DateTime(2024, 8, 3, 4, 35, 29, 371, DateTimeKind.Local).AddTicks(5831),
                             Deleted = false,
                             Message = "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado",
                             ProfessorId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"),
@@ -88,7 +88,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4034"),
-                            DateCreated = new DateTime(2024, 7, 20, 12, 55, 6, 746, DateTimeKind.Local).AddTicks(7687),
+                            DateCreated = new DateTime(2024, 8, 3, 4, 35, 29, 371, DateTimeKind.Local).AddTicks(5845),
                             Deleted = false,
                             Message = "Me dirijo a usted con el propósito de solicitar sasesoría para mi tesis de grado",
                             ProfessorId = new Guid("7e3892c0-9374-49fa-a3fd-53db637a4011"),
@@ -115,6 +115,13 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("GoogleEventId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -126,9 +133,11 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
@@ -144,6 +153,40 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.CalendarToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CalendarTokens");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Professor", b =>
@@ -418,8 +461,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         {
                             Id = new Guid("7e3892c0-9374-49fa-a3fd-53db637a40a2"),
                             Deleted = false,
-                            Email = "gardin.olivera@unas.edu.pe",
-                            FirstName = "Gardin",
+                            Email = "gardyn.olivera@unas.edu.pe",
+                            FirstName = "Gardyn",
                             LastName = "Olivera Ruiz",
                             Password = "$2a$12$Blal/uiFIJdYsCLTMUik/egLbfg3XhbnxBC6Sb5IKz2ZYhiU/MzL2",
                             Role = 1,
@@ -450,6 +493,45 @@ namespace CleanArchitecture.Infrastructure.Migrations
                             Status = 0,
                             TenantId = new Guid("b542bf25-134c-47a2-a0df-84ed14d03c4a")
                         });
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.UserCalendar", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CalendarId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CalendarName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IframeUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeZone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCalendars");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.AdvisoryContract", b =>
@@ -498,6 +580,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.CalendarToken", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.User", "User")
+                        .WithMany("CalendarTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Professor", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Entities.ResearchGroup", "ResearchGroup")
@@ -531,7 +624,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Student", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Entities.User", "User")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -550,6 +643,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.UserCalendar", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.User", "User")
+                        .WithMany("UserCalendars")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ResearchGroup", b =>
                 {
                     b.Navigation("Professors");
@@ -564,7 +668,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("CalendarTokens");
+
+                    b.Navigation("UserCalendars");
                 });
 #pragma warning restore 612, 618
         }

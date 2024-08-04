@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Api.Services;
+using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,58 +18,76 @@ namespace CleanArchitecture.Api.Controllers
             _calendarService = new GoogleCalendarService();
         }
 
-        [HttpGet("events")]
-        public async Task<IActionResult> GetEvents()
+        [HttpGet("events/{professorEmail}")]
+        public async Task<IActionResult> GetEvents(string professorEmail)
         {
-            var events = await _calendarService.GetUpcomingEventsAsync();
+            var events = await _calendarService.GetAdvisorCalendarAsync(professorEmail);
             return Ok(events);
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateEvent([FromBody] EventModel model)
+        [HttpPost("createAppointment")]
+        public async Task<IActionResult> CreateStudentAppointment([FromBody] StudentAppointmentModel model)
         {
-            var eventLink = await _calendarService.CreateEventAsync(model.Summary, model.Location, model.Description, model.StartDateTime, model.EndDateTime);
+            var eventLink = await _calendarService.CreateStudentAppointmentAsync(model.ProfessorEmail, model.StudentEmail, model.StartDateTime, model.EndDateTime, model.Description);
             return Ok(new { Link = eventLink });
         }
 
-        [HttpDelete("cancel/{eventId}")]
-        public async Task<IActionResult> CancelEvent(string eventId)
+        [HttpPost("cancelEvent")]
+        public async Task<IActionResult> CancelEvent([FromBody] CancelEventModel model)
         {
-            var success = await _calendarService.CancelEventAsync(eventId);
-            if (success)
-                return Ok();
-            else
-                return BadRequest();
+            var success = await _calendarService.CancelEventAsync(model.EventId);
+            return success ? Ok() : BadRequest();
         }
 
-        [HttpGet("advisor/{advisorEmail}")]
-        public async Task<IActionResult> GetAdvisorCalendar(string advisorEmail)
+        [HttpPost("setNotificationPreferences")]
+        public async Task<IActionResult> SetNotificationPreferences([FromBody] SetNotificationPreferencesModel model)
         {
-            var events = await _calendarService.GetAdvisorCalendarAsync(advisorEmail);
-            return Ok(events);
-        }
-
-        [HttpPost("setNotification/{eventId}")]
-        public async Task<IActionResult> SetNotificationPreferences(string eventId, [FromBody] EventReminder[] reminders)
-        {
-            var eventLink = await _calendarService.SetNotificationPreferencesAsync(eventId, reminders);
+            var eventLink = await _calendarService.SetNotificationPreferencesAsync(model.EventId, model.Reminders);
             return Ok(new { Link = eventLink });
         }
 
-        [HttpPut("update/{eventId}")]
-        public async Task<IActionResult> UpdateEvent(string eventId, [FromBody] EventModel model)
+        [HttpPost("updateEvent")]
+        public async Task<IActionResult> UpdateEvent([FromBody] UpdateEventModel model)
         {
-            var eventLink = await _calendarService.UpdateEventAsync(eventId, model.Summary, model.Location, model.Description, model.StartDateTime, model.EndDateTime);
+            var eventLink = await _calendarService.UpdateEventAsync(model.EventId, model.Summary, model.Location, model.Description, model.StartDateTime, model.EndDateTime);
             return Ok(new { Link = eventLink });
         }
-    }
 
-    public class EventModel
-    {
-        public string Summary { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
-        public DateTime StartDateTime { get; set; }
-        public DateTime EndDateTime { get; set; }
+
+    
+
+        public class CreateCalendarModel
+        {
+            public string Summary { get; set; }
+        }
+        public class StudentAppointmentModel
+        {
+            public string ProfessorEmail { get; set; }
+            public string StudentEmail { get; set; }
+            public DateTime StartDateTime { get; set; }
+            public DateTime EndDateTime { get; set; }
+            public string Description { get; set; }
+        }
+
+        public class CancelEventModel
+        {
+            public string EventId { get; set; }
+        }
+
+        public class SetNotificationPreferencesModel
+        {
+            public string EventId { get; set; }
+            public EventReminder[] Reminders { get; set; }
+        }
+
+        public class UpdateEventModel
+        {
+            public string EventId { get; set; }
+            public string Summary { get; set; }
+            public string Location { get; set; }
+            public string Description { get; set; }
+            public DateTime StartDateTime { get; set; }
+            public DateTime EndDateTime { get; set; }
+        }
     }
 }

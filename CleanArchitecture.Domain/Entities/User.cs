@@ -2,84 +2,92 @@ using System;
 using System.Collections.Generic;
 using CleanArchitecture.Domain.Enums;
 
-namespace CleanArchitecture.Domain.Entities;
-
-public class User : Entity
+namespace CleanArchitecture.Domain.Entities
 {
-    public string Email { get; private set; }
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public string Password { get; private set; }
-    public UserRole Role { get; private set; }
-    public UserStatus Status { get; private set; }
-    public DateTimeOffset? LastLoggedinDate { get; private set; }
-
-    public string FullName => $"{FirstName}, {LastName}";
-
-    public Guid TenantId { get; private set; }
-    public virtual Tenant Tenant { get; private set; } = null!;
-    public virtual ICollection<Student> Users { get; private set; } = new HashSet<Student>();
-    public User(
-        Guid id,
-        Guid tenantId,
-        string email,
-        string firstName,
-        string lastName,
-        string password,
-        UserRole role,
-        UserStatus status = UserStatus.Active) : base(id)
+    public class User : Entity
     {
-        Email = email;
-        TenantId = tenantId;
-        FirstName = firstName;
-        LastName = lastName;
-        Password = password;
-        Role = role;
-        Status = status;
-    }
+        public string Email { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string Password { get; private set; }
+        public UserRole Role { get; private set; }
+        public UserStatus Status { get; private set; }
+        public DateTimeOffset? LastLoggedinDate { get; private set; }
 
-    public void SetEmail(string email)
-    {
-        Email = email;
-    }
+        public string FullName => $"{FirstName}, {LastName}";
 
-    public void SetFirstName(string firstName)
-    {
-        FirstName = firstName;
-    }
+        public Guid TenantId { get; private set; }
+        public virtual Tenant Tenant { get; private set; } = null!;
+        public virtual ICollection<CalendarToken> CalendarTokens { get; private set; } = new HashSet<CalendarToken>();
+        public virtual ICollection<UserCalendar> UserCalendars { get; private set; } = new HashSet<UserCalendar>();
 
-    public void SetLastName(string lastName)
-    {
-        LastName = lastName;
-    }
+        public User(
+            Guid id,
+            Guid tenantId,
+            string email,
+            string firstName,
+            string lastName,
+            string password,
+            UserRole role,
+            UserStatus status = UserStatus.Active) : base(id)
+        {
+            Email = email;
+            TenantId = tenantId;
+            FirstName = firstName;
+            LastName = lastName;
+            Password = password;
+            Role = role;
+            Status = status;
+        }
 
-    public void SetPassword(string password)
-    {
-        Password = password;
-    }
+        public void SetEmail(string email)
+        {
+            Email = email;
+        }
 
-    public void SetRole(UserRole role)
-    {
-        Role = role;
-    }
+        public void SetFirstName(string firstName)
+        {
+            FirstName = firstName;
+        }
 
-    public void SetTenant(Guid tenantId)
-    {
-        TenantId = tenantId;
-    }
+        public void SetLastName(string lastName)
+        {
+            LastName = lastName;
+        }
 
-    public void SetLastLoggedinDate(DateTimeOffset lastLoggedinDate)
-    {
-        LastLoggedinDate = lastLoggedinDate;
-    }
+        public void SetPassword(string password)
+        {
+            Password = password;
+        }
 
-    public void SetInactive()
-    {
-        Status = UserStatus.Inactive;
-    }
+        public void SetRole(UserRole role)
+        {
+            Role = role;
+        }
 
-    public void SetActive()
-    {
-        Status = UserStatus.Active;
+        public void SetTenant(Guid tenantId)
+        {
+            TenantId = tenantId;
+        }
+
+        public void SetLastLoggedinDate(DateTimeOffset lastLoggedinDate)
+        {
+            LastLoggedinDate = lastLoggedinDate;
+        }
+
+        public void SetInactive()
+        {
+            Status = UserStatus.Inactive;
+        }
+
+        public void SetActive()
+        {
+            Status = UserStatus.Active;
+        }
+
+        public void AddUserCalendar(UserCalendar userCalendar)
+        {
+            UserCalendars.Add(userCalendar);
+        }
     }
 }

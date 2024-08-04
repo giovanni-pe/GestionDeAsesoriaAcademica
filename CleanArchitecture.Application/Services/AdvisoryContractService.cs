@@ -19,6 +19,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using CleanArchitecture.Application.Queries.AdvisoryContracts.GetAdvisoryContractByResearchLineId;
 using System.Collections.Generic;
 using CleanArchitecture.Domain.Commands.AdvisoryContracts.AcceptAdvisoryContract;
+using Grpc.Core;
 
 namespace CleanArchitecture.Application.Services;
 /// <summary>
@@ -81,9 +82,14 @@ public sealed class AdvisoryContractService : IAdvisoryContractService
         var advisoryContracts = await _bus.QueryAsync(new GetAdvisoryContractByResearchLineIdQuery(researchLineId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm));
         return advisoryContracts;
     }
-    public async Task<PagedResult<AdvisoryContractViewModel>> GetAdvisoryContractsByProfessorIdAsync(Guid ProfessorId, int pageNumber, int pageSize, SortQuery? sortQuery = null, bool includeDeleted = false, string? searchTerm = null)
+    public async Task<PagedResult<AdvisoryContractViewModel>> GetAdvisoryContractsByProfessorIdAsync(Guid ProfessorId,int status, int pageNumber, int pageSize, SortQuery? sortQuery = null, bool includeDeleted = false, string? searchTerm = null)
     {
-        var advisoryContracts = await _bus.QueryAsync(new GetAdvisoryContractsByProfessorIdQuery(ProfessorId, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm));
+        var advisoryContracts = await _bus.QueryAsync(new GetAdvisoryContractsByProfessorIdQuery(ProfessorId,status, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm));
+        return advisoryContracts;
+    }
+    public async Task<PagedResult<AdvisoryContractViewModel>> GetAdvisoryContractsByStudentIdAsync(Guid UserId, int status, int pageNumber, int pageSize, SortQuery? sortQuery = null, bool includeDeleted = false, string? searchTerm = null)
+    {
+        var advisoryContracts = await _bus.QueryAsync(new GetAdvisoryContractsByStudentIdQuery(UserId, status, pageNumber, pageSize, sortQuery, includeDeleted, searchTerm));
         return advisoryContracts;
     }
     public async Task AcceptAdvisoryContractAsync(Guid advisoryContractId, string acceptanceMessage)

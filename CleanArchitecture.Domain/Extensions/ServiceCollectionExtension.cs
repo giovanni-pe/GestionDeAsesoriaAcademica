@@ -39,7 +39,7 @@ using CleanArchitecture.Domain.Commands.AdvisoryContracts.DeleteAdvisoryContract
 using CleanArchitecture.Shared.Events.AdvisoryContract;
 using CleanArchitecture.Domain.Commands.AdvisoryContracts.AcceptAdvisoryContract;
 using CleanArchitecture.Domain.Commands.AdvisoryContracts;
-
+using CleanArchitecture.Domain.Commands.Calendars.CreateCalendar;
 
 namespace CleanArchitecture.Domain.Extensions;
 
@@ -64,7 +64,10 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<DeleteResearchGroupCommand>, DeleteResearchGroupCommandHandler>();
         // Appointment
         services.AddScoped<IRequestHandler<CreateAppointmentCommand>, CreateAppointmentCommandHandler>();
-      
+        
+
+
+
         services.AddScoped<IRequestHandler<UpdateAppointmentCommand>, UpdateAppointmentCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteAppointmentCommand>, DeleteAppointmentCommandHandler>();
@@ -86,6 +89,9 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRequestHandler<UpdateAdvisoryContractCommand>, UpdateAdvisoryContractCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteAdvisoryContractCommand>, DeleteAdvisoryContractCommandHandler>();
         services.AddScoped<IRequestHandler<AcceptAdvisoryContractCommand>, AcceptAdvisoryContractCommandHandler>();
+
+        // UserCalendar
+        services.AddScoped<IRequestHandler<CreateCalendarCommand>, CreateCalendarCommandHandler>();
         return services;
     }
 

@@ -85,11 +85,11 @@ namespace CleanArchitecture.Api.Controllers
             return Response(id);
         }
        
-        [HttpGet("current")]
+      //  [HttpGet("current")]
         
         //public async Task<IActionResult> GetCurrentStudent()
         //{
-        //    var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+          //var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
         //    Console.WriteLine(userId);
         //    if (Guid.TryParse(userId, out var userGuid))
         //    {

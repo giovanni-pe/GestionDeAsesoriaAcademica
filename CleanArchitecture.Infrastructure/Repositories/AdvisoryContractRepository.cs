@@ -35,5 +35,6 @@ public sealed class AdvisoryContractRepository : BaseRepository<AdvisoryContract
         _context.AdvisoryContracts.Update(advisoryContract);
        await _context.SaveChangesAsync();
     }
+
 }
 

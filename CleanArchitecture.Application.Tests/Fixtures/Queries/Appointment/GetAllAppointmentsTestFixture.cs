@@ -35,7 +35,7 @@ public sealed class GetAllAppointmentsTestFixture : QueryHandlerBaseFixture
 
             DateTime.UtcNow, // Fecha de la Appointment (puedes usar DateTime.Now si lo prefieres)
             "Estado de la Appointment", // Estado de la Appointment
-            "Asunto de la Appointment","test","test"); // Asunto de la Appointment
+            "Asunto de la Appointment",1,"test",DateTime.Now,DateTime.Now,"description"); // Asunto de la Appointment
 
         if (deleted)
         {

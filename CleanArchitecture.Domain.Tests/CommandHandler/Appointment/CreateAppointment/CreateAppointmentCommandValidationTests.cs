@@ -40,7 +40,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.CreateAppoin
             DateTime? startDate = null,
             string professorProgress = "Test Professor Progress",
             string studentProgress = "Test Student Progress",
-            string status="new",
+            int status=1,
             string googleEventId="eventid")
         {
             return new CreateAppointmentCommand(
@@ -50,7 +50,7 @@ namespace CleanArchitecture.Domain.Tests.CommandHandler.Appointment.CreateAppoin
                 calendarId ?? Guid.NewGuid(),
                 startDate ?? DateTime.UtcNow,
                 professorProgress,
-                studentProgress,status,googleEventId);
+                studentProgress, status, googleEventId,"profesor mail","student mail",DateTime.Now,DateTime.Now,"description");
         }
     }
 }

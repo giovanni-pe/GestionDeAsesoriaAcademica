@@ -5,6 +5,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,9 +23,11 @@ namespace CleanArchitecture.Api.Services
 
         private Config LoadConfig()
         {
-            string configContent = File.ReadAllText("calendarSettings.json"); ;
+            string configContent = File.ReadAllText("calendarSettings.json");
             return JsonConvert.DeserializeObject<Config>(configContent);
         }
+      
+
 
         private async Task<CalendarService> GetCalendarServiceAsync()
         {
@@ -48,52 +51,9 @@ namespace CleanArchitecture.Api.Services
             });
         }
 
-        public async Task<Events> GetUpcomingEventsAsync(int maxResults = 10)
-        {
-            var service = await GetCalendarServiceAsync();
+       
 
-            EventsResource.ListRequest request = service.Events.List(_config.CalendarId);
-            request.TimeMin = DateTime.Now; 
-            request.ShowDeleted = _config.ShowDeleted;
-            request.SingleEvents = _config.SingleEvents;
-            request.MaxResults = maxResults;
-            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-            return await request.ExecuteAsync();
-        }
-
-        public async Task<string> CreateEventAsync(string summary, string location, string description, DateTime startDateTime, DateTime endDateTime)
-        {
-            var service = await GetCalendarServiceAsync();
-
-            Event newEvent = new Event()
-            {
-                Summary = summary,
-                Location = location,
-                Description = description,
-                Start = new EventDateTime()
-                {
-                    DateTime = startDateTime,
-                    TimeZone = _config.DefaultTimeZone,
-                },
-                End = new EventDateTime()
-                {
-                    DateTime = endDateTime,
-                    TimeZone = _config.DefaultTimeZone,
-                },
-                Recurrence = new String[] { _config.Recurrence },
-                Attendees = new EventAttendee[] { },
-                Reminders = new Event.RemindersData()
-                {
-                    UseDefault = _config.UseDefaultReminders,
-                    Overrides = _config.DefaultReminders
-                }
-            };
-
-            EventsResource.InsertRequest request = service.Events.Insert(newEvent, _config.CalendarId);
-            Event createdEvent = await request.ExecuteAsync();
-            return createdEvent.HtmlLink;
-        }
-
+        
         public async Task<bool> CancelEventAsync(string eventId)
         {
             var service = await GetCalendarServiceAsync();
@@ -165,6 +125,42 @@ namespace CleanArchitecture.Api.Services
             EventsResource.UpdateRequest updateRequest = service.Events.Update(eventToUpdate, _config.CalendarId, eventId);
             Event updatedEvent = await updateRequest.ExecuteAsync();
             return updatedEvent.HtmlLink;
+        }
+  
+
+        public async Task<string> CreateStudentAppointmentAsync(string professorEmail, string studentEmail, DateTime startDateTime, DateTime endDateTime, string description)
+        {
+            var service = await GetCalendarServiceAsync();
+
+            Event newEvent = new Event()
+            {
+                Summary = "Student Appointment",
+                Description = description,
+                Start = new EventDateTime()
+                {
+                    DateTime = startDateTime,
+                    TimeZone = _config.DefaultTimeZone,
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = endDateTime,
+                    TimeZone = _config.DefaultTimeZone,
+                },
+                Attendees = new EventAttendee[]
+                {
+                    new EventAttendee() { Email = professorEmail },
+                    new EventAttendee() { Email = studentEmail }
+                },
+                Reminders = new Event.RemindersData()
+                {
+                    UseDefault = _config.UseDefaultReminders,
+                    Overrides = _config.DefaultReminders
+                }
+            };
+
+            EventsResource.InsertRequest request = service.Events.Insert(newEvent, _config.CalendarId);
+            Event createdEvent = await request.ExecuteAsync();
+            return createdEvent.HtmlLink;
         }
 
         private class Config
